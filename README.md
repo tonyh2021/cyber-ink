@@ -95,7 +95,7 @@ Style evolves over time
 ```
 POST   /api/articles                    # Create article
 DELETE /api/articles/[slug]             # Delete article
-GET    /api/articles/[slug]/tree        # Get branch tree
+GET    /api/articles/[slug]              # Aggregated: tree + nodes + evals + meta
 POST   /api/articles/[slug]/generate    # Generate v1
 POST   /api/articles/[slug]/branch      # Fork v1 → v2-x
 POST   /api/articles/[slug]/optimize    # In-place optimize
@@ -112,6 +112,7 @@ GET    /api/evaluate/[slug]/[node]       # Get node scores
 ### Style
 
 ```
+GET    /api/styles                       # List all styles
 GET    /api/styles/active               # Get active style
 POST   /api/styles/regenerate           # Regenerate with feedback
 POST   /api/styles/set-active           # Switch active version

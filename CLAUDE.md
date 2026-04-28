@@ -74,7 +74,7 @@ v1              # Root (depth 1)
 
 | Group | Key Endpoints |
 |-------|--------------|
-| Article | `POST /api/articles`, `GET /api/articles/[slug]` (aggregated: tree+nodes+evals+meta), `POST .../generate`, `POST .../branch`, `POST .../optimize`, `POST .../promote` |
+| Article | `POST /api/articles`, `DELETE /api/articles/[slug]`, `GET /api/articles/[slug]` (aggregated: tree+nodes+evals+meta), `POST .../generate`, `POST .../branch`, `POST .../optimize`, `POST .../promote` |
 | Evaluation | `POST /api/evaluate/node`, `GET /api/evaluate/[slug]/[node]` |
 | Style | `GET /api/styles`, `GET /api/styles/active`, `POST /api/styles/regenerate`, `POST /api/styles/set-active` |
 | Feedback | `POST /api/feedback`, `GET /api/feedback`, `DELETE /api/feedback/[id]` |
