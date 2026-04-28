@@ -88,6 +88,18 @@ v1              # Root (depth 1)
 - **Evaluation**: Auto-scored after every generation (clarity, style_match, information_density, reader_engagement, hallucination_risk, overall_score). Scores are advisory only — user always has final promote authority.
 - **Style Feedback Loop**: User marks good content → feedback stored → style regeneration uses pre-stored reference articles (`/references/`) + feedback → analysis model multi-round processing → new style version. Feedback belongs to the style system, not articles.
 
+## Design System
+
+- **Dual theme**: Dark (default) + Light, controlled via `data-theme="dark|light"` on `<html>`, respects `prefers-color-scheme`
+- **Implementation**: CSS custom properties swap only — no component rewrite between themes
+- **Token naming**: `--brand-accent`, `--surface-root`, `--surface-panel`, `--surface-card`, `--surface-canvas`, `--text-primary`, `--text-secondary`, `--text-muted`, `--border-default`, `--color-success/warning/danger`, etc.
+- **Fonts**: Inter (UI chrome) / JetBrains Mono (AI-generated content + node labels) — this boundary is sacred
+- **Brand accent**: Dark `#00d4ff` / Light `#0088a8` (darkened for WCAG AA on light backgrounds)
+- **Writing canvas**: Dark `#1e1e2e` / Light `#f7f6f1` (warm paper tint — the ONE warm exception in the palette)
+- **Radius scale**: 4px (tags) / 8px (buttons, inputs) / 12px (cards) / 16px (modals only)
+- **Depth model**: Dark uses surface layering; Light uses subtle shadows
+- **Preview files**: `preview-dark.html` and `preview.html` — visual token catalog for both themes
+
 ## Code Conventions
 
 - All code, comments, variable names, and UI copy in English.
