@@ -12,7 +12,7 @@ Core principles: Control-first · Material-driven · Markdown-native · Evaluati
 
 - **Framework**: Next.js (App Router)
 - **AI SDK**: Vercel AI SDK
-- **Models**: Configured via `/data/config.json` — writing model (Claude), analysis/evaluation model (GPT-4o-mini)
+- **Models**: Configured via `/data/config.json` — two roles: writing (Claude), analysis (GPT-4o-mini, handles analysis + evaluation + style extraction)
 - **Markdown parsing**: gray-matter
 - **Diff rendering**: react-diff-viewer-continued
 - **Search**: tavily-sdk
@@ -48,7 +48,7 @@ v1              # Root (depth 1)
 
 - `generate`: creates v1
 - `branch`: forks v1 only → v2-x (depth-2 nodes cannot branch further)
-- `optimize`: in-place rewrite on any node
+- `optimize`: irreversible in-place rewrite on any node (no history kept)
 
 ## Data Layout
 
@@ -57,9 +57,10 @@ v1              # Root (depth 1)
   config.json                          # Model provider/model config
   /profiles/default.md                 # Channel identity (read-only)
   /styles/[style-name]/
-    v1.md, v2.md, active.md            # Style versions + pointer
-    /feedback/[slug]-[node].md         # Full-node feedback
-    /feedback/[slug]-[node]-para.md    # Paragraph-level feedback
+    v1.md, v2.md, active.md            # Style versions + pointer (active.md also serves as rollback)
+    /feedback/[slug]-[node].md         # Full-node feedback (boolean: one file per node)
+    /feedback/[slug]-[node]-para.md    # Paragraph-level feedback (single file, multiple paragraphs)
+    /references/ref-001.md, ...        # Pre-stored reference articles for style regeneration
   /articles/[slug]/
     source.md                          # Dehydrated semantic kernel
     meta.md                            # Article metadata (YAML frontmatter)
@@ -73,18 +74,19 @@ v1              # Root (depth 1)
 
 | Group | Key Endpoints |
 |-------|--------------|
-| Writing | `POST /api/articles`, `POST .../generate`, `POST .../branch`, `POST .../optimize`, `POST .../promote` |
+| Article | `POST /api/articles`, `GET /api/articles/[slug]` (aggregated: tree+nodes+evals+meta), `POST .../generate`, `POST .../branch`, `POST .../optimize`, `POST .../promote` |
 | Evaluation | `POST /api/evaluate/node`, `GET /api/evaluate/[slug]/[node]` |
-| Style | `GET /api/styles/active`, `POST /api/styles/regenerate`, `POST /api/styles/set-active` |
+| Style | `GET /api/styles`, `GET /api/styles/active`, `POST /api/styles/regenerate`, `POST /api/styles/set-active` |
 | Feedback | `POST /api/feedback`, `GET /api/feedback`, `DELETE /api/feedback/[id]` |
 | Material | `POST /api/material/dehydrate`, `POST /api/material/search` |
+| Profile | `GET /api/profiles/default` |
 
 ## Key Concepts
 
 - **Dehydration**: Extracts semantic kernel (core_ideas, arguments, facts, quotes, entities, quality_flags) from raw material — not a summary, but "semantic fuel" for writing.
 - **Prompt Builder**: Deterministic system prompt assembled from profile + active style + dehydrated source + user instruction + language + output format.
 - **Evaluation**: Auto-scored after every generation (clarity, style_match, information_density, reader_engagement, hallucination_risk, overall_score). Scores are advisory only — user always has final promote authority.
-- **Style Feedback Loop**: User marks good content → feedback stored → style regeneration uses external articles + feedback as few-shot examples → new style version.
+- **Style Feedback Loop**: User marks good content → feedback stored → style regeneration uses pre-stored reference articles (`/references/`) + feedback → analysis model multi-round processing → new style version. Feedback belongs to the style system, not articles.
 
 ## Code Conventions
 
