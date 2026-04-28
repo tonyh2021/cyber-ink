@@ -1,0 +1,44 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# build
+dist/
+build/
+
+# env
+.env
+.env*.local
+
+# debug
+.pnpm-debug.log*
+
+# os
+.DS_Store
+Thumbs.db
+
+# ide
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# user data
+/data/articles/
+/data/styles/*/feedback/
+
+.cursor/
+
+.claude/
+
+PRD+Arch.md
