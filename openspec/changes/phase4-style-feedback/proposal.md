@@ -7,6 +7,7 @@ Implement the style management system (versioned styles, active pointer, rollbac
 ## Depends on
 
 - Phase 3 (evaluation, working writing loop with nodes to give feedback on)
+- Phase 1 (seed style used since Phase 1, now gets full management)
 
 ## Scope
 
@@ -19,9 +20,10 @@ Implement the style management system (versioned styles, active pointer, rollbac
   /feedback/
     [slug]-[node].md               # Full-node feedback (boolean: one file per node)
     [slug]-[node]-para.md          # Paragraph-level feedback (single file, multiple paragraphs)
-  /references/
-    ref-001.md, ...                # Pre-stored reference articles for style regeneration
 ```
+
+/data/references/
+  ref-001.md, ...                  # Global pre-stored reference articles for style regeneration
 
 **active.md structure:**
 
@@ -42,8 +44,8 @@ User can switch `active.md` to any historical version via `set-active` API for r
 
 | Type | Trigger | Storage filename | Semantics |
 |------|---------|-----------------|-----------|
-| Full node | Click ★ Mark as Good on node page | `[slug]-[node].md` | Boolean: create file = good, delete = remove |
-| Paragraph | Select text → floating ★ Save this paragraph | `[slug]-[node]-para.md` | Single file, append paragraphs |
+| Full node | Click Mark as Good on node page | `[slug]-[node].md` | Boolean: create file = good, delete = remove |
+| Paragraph | Select text → floating Save this paragraph | `[slug]-[node]-para.md` | Single file, append paragraphs |
 
 **Storage location:** `/data/styles/[style-name]/feedback/`
 
@@ -86,7 +88,7 @@ createdAt: "2025-01-01"
 - Article node page — Mark as Good / Save paragraph
 - Style page — View feedback list (deletable) + Regenerate Style with Feedback button
 
-### UX Contract (Phase 4)
+### UX Contract
 
 - Feedback interactions must be user-initiated only; no automatic prompting or implicit capture.
 - Full-node feedback uses boolean semantics in UX:
@@ -107,7 +109,7 @@ createdAt: "2025-01-01"
 ### Style Regeneration
 
 ```
-/references/ pre-stored reference articles (5–15)
+/data/references/ pre-stored reference articles (5–15, global)
        +
 /feedback/ satisfied content (positive examples)
        ↓

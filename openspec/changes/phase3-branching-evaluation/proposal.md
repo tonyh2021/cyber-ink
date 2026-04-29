@@ -6,7 +6,8 @@ Implement the branching system (fork v1 → v2-x variants), optimize (in-place r
 
 ## Depends on
 
-- Phase 2 (generation engine, Prompt Builder, source.md)
+- Phase 1 (generation pipeline, prompt builder)
+- Phase 2 (article CRUD, full workspace page, material input)
 
 ## Scope
 
@@ -28,7 +29,7 @@ v1              # Root (depth 1)
 - Depth-2 nodes cannot branch further, only optimize
 - Max 4 sibling branches (enforced)
 - Optimize is in-place rewrite with no history — use branch for exploring different directions
-- Branch uses the Prompt Builder with source.md + user's branch instruction
+- Branch uses the Prompt Builder with raw material + user's branch instruction
 - After branch/optimize, auto-trigger evaluation
 
 ### Evaluation System
@@ -57,7 +58,7 @@ Auto-triggered after every generate / branch / optimize. Written to `/evaluation
 - User can promote **any** node regardless of score
 - Promote flow: select node → copy content → `final.md` → update `meta.md` status to `"final"`
 
-### UX Contract (Phase 3)
+### UX Contract
 
 - The version tree must visually distinguish `bestNode` from other nodes (highlight only, never auto-promote).
 - Evaluation display must clearly communicate "advisory only"; users can still promote any node.
@@ -79,7 +80,7 @@ GET  /api/evaluate/[slug]/[node]          # Read node evaluation scores
 
 ### Retroactive: Auto-evaluate on generate
 
-Phase 2's generate endpoint should now auto-trigger evaluation after v1 is written. This is wired up in this phase.
+Phase 1's generate endpoint and Phase 2's full workspace should now auto-trigger evaluation after v1 is written. This is wired up in this phase.
 
 ## Non-goals
 

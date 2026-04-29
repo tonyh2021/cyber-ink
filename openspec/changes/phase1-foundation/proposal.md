@@ -1,30 +1,41 @@
-# Phase 1 — Foundation & Data Layer
+# Phase 1 — Generation Pipeline
 
 ## Summary
 
-Set up Next.js project scaffolding, data directory structure, config system, profile, and basic article CRUD. This phase establishes the persistence layer and the skeleton that all subsequent phases build on.
+Set up the project, data layer, prompt builder, and a minimal workspace page that streams a generated draft from preset inputs. The user provides only a writing instruction — everything else (profile, style, source material) is pre-seeded. This phase proves the core generation loop end-to-end.
 
 ## Motivation
 
-Every other feature depends on the filesystem data layer and config system being in place. Article CRUD is the backbone — create an article workspace, read its aggregated state, delete it.
+Generation is the core value of CyberInk. Rather than building CRUD and navigation chrome first, Phase 1 delivers a working creation flow: instruction in → streamed draft out. All surrounding features (article management, dehydration, evaluation, branching) build on top of this proven pipeline.
 
 ## Scope
 
 ### Project Setup
 
-- Next.js App Router project initialization
-- Vercel AI SDK, gray-matter, react-diff-viewer-continued, tavily-sdk dependencies
+- Next.js App Router, TypeScript, Tailwind CSS v4
+- shadcn/ui for UI primitives (wraps Radix, rethemed with token system)
+- Vercel AI SDK (`ai`, `@ai-sdk/anthropic`, `@ai-sdk/openai`)
 - `.env` for API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY, TAVILY_API_KEY)
 
-### Data Directory Structure
+### Data Layer
+
+Filesystem helpers, types, and seed data:
 
 ```
 /data/
-  config.json                          # Model configuration
+  config.json                          # Models + language (user-configurable)
   /profiles/
-    default.md                         # Channel identity (read-only)
-  /styles/                             # Prepared for Phase 4
-  /articles/                           # Article workspaces
+    default.md                         # Channel identity (preset)
+  /styles/
+    default/
+      active.md                        # Seed style (preset)
+  /articles/
+    seed-article/                      # Pre-created article workspace
+      source.md                        # Pre-filled dehydrated material
+      meta.md                          # Article metadata
+      tree.json                        # Empty tree
+      /nodes/                          # Generation writes here
+      /evaluation/                     # Empty (Phase 3)
 ```
 
 ### config.json
@@ -32,78 +43,68 @@ Every other feature depends on the filesystem data layer and config system being
 ```json
 {
   "models": {
-    "writing": {
-      "provider": "anthropic",
-      "model": "claude-sonnet-4-5"
-    },
-    "analysis": {
-      "provider": "openai",
-      "model": "gpt-4o-mini"
-    }
-  }
+    "writing": { "provider": "anthropic", "model": "claude-sonnet-4-5" },
+    "analysis": { "provider": "openai", "model": "gpt-4o-mini" }
+  },
+  "language": "zh"
 }
 ```
 
-Two model roles: `writing` (main generation) and `analysis` (evaluation, scoring, style extraction).
+Phase 1: read-only (user edits file manually). Future phases: settings UI reads + writes config.json.
 
-### Profile
+### Prompt Builder
 
-`/data/profiles/default.md` — channel identity, target audience, writing tone. Read-only, loaded by Prompt Builder in Phase 2.
-
-### Article CRUD
-
-**Create article** — initializes the workspace:
+Deterministic system prompt assembly:
 
 ```
-/data/articles/[slug]/
-  source.md          # Empty, populated in Phase 2
-  meta.md            # Metadata with YAML frontmatter
-  tree.json          # Empty tree structure
-  /nodes/            # Empty, populated in Phase 2
-  /evaluation/       # Empty, populated in Phase 3
+Profile (default.md)
+  + Active style (styles/default/active.md)
+  + Dehydrated source (articles/[slug]/source.md)
+  + User instruction (from textarea)
+  + Language (from config.json)
+  + Output format (Markdown)
+  → System prompt for writing model
 ```
 
-**meta.md structure:**
+### Generation Engine
 
-```yaml
----
-title: "..."
-slug: "..."
-language: "zh"            # zh | en
-status: "draft"           # draft | final
-styleRef: "tech-vibe"
-styleVersion: "v2"
-createdAt: "..."
-updatedAt: "..."
----
+- `POST /api/articles/[slug]/generate` — accepts `{ instruction: string }`
+- Reads config.json for model selection and language
+- Calls Prompt Builder to assemble the full prompt
+- Streams response from writing model via Vercel AI SDK
+- On completion: saves `nodes/v1.md`, updates `tree.json` (rootNode, latestNode = "v1")
+
+### Workspace Page
+
+Minimal UI — no app shell, no sidebar, no navigation:
+
 ```
+┌────────────────────────────────────────────┐
+│  Instruction input (textarea)              │
+└────────────────────────────────────────────┘
+  [ Generate ]
 
-**tree.json initial state:**
-
-```json
-{
-  "rootNode": null,
-  "bestNode": null,
-  "latestNode": null,
-  "nodes": {}
-}
+┌────────────────────────────────────────────┐
+│                                            │
+│  Streaming output area                     │
+│  (Markdown rendered, JetBrains Mono)       │
+│                                            │
+└────────────────────────────────────────────┘
 ```
-
-**Delete article** — removes the entire `/data/articles/[slug]/` directory.
-
-**Get article (aggregated)** — returns tree.json + all node contents + all evaluation scores + meta.md in a single response.
 
 ### APIs
 
 ```
-POST   /api/articles                      # Create article workspace
-DELETE /api/articles/[slug]               # Delete article
-GET    /api/articles/[slug]               # Aggregated: tree + nodes + evals + meta
-GET    /api/profiles/default              # Read profile content
+POST   /api/articles/[slug]/generate     # Stream generation
+GET    /api/profiles/default             # Read profile
 ```
 
 ## Non-goals
 
-- No generation, evaluation, or branching logic yet
-- No style system setup beyond empty directory
-- No UI (API-only in this phase)
+- No dashboard or article list page
+- No article CRUD UI (create/delete dialogs)
+- No app shell (top nav, sidebar, navigation)
+- No dehydration (source.md is pre-filled)
+- No evaluation, branching, or optimize
+- No style system beyond seed file
+- No settings UI (config.json edited manually)

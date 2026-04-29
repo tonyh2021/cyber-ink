@@ -1,112 +1,62 @@
-# Phase 2 — Material Ingestion & Writing
+# Phase 2 — Material Ingestion & Article Management
 
 ## Summary
 
-Implement the material ingestion pipeline (text paste + Tavily search + dehydration) and the core writing system (Prompt Builder + Generation Engine). After this phase, users can ingest material, dehydrate it into a semantic kernel, and generate a first draft (v1).
+Implement material ingestion (text paste), article CRUD, and the full workspace page in an article-centric layout. After this phase, users can create articles, paste raw material, and generate drafts through a complete writing workflow UI.
 
 ## Depends on
 
-- Phase 1 (data layer, article CRUD, config, profile)
+- Phase 1 (generation pipeline, prompt builder, filesystem helpers, types, design system)
 
 ## Scope
 
 ### Material Input
 
-Two input sources:
+Single input source:
 - **Text paste** — user pastes raw material directly
-- **Tavily search** — search query returns relevant content
 
-### Dehydration Engine
+### Article CRUD
 
-Extracts semantic kernel from raw material → writes `source.md` (bound to article, not shared across articles).
+- **Create** — title + language → initializes workspace directory (meta.md, tree.json, /nodes/, /evaluation/)
+- **Delete** — removes entire article directory
+- **List** — article summaries for dashboard/sidebar
+- **Get** — aggregated: tree + nodes + evals + meta
 
-**source.md structure:**
+### Full Workspace Page
 
-```yaml
----
-dehydratedAt: "2025-01-01"
----
+Expands Phase 1's minimal workspace into the complete article workspace:
+- Material input panel (text paste)
+- Instruction input + generate (reuses Phase 1 generation pipeline)
+- Node display with tree context
+- Article metadata display
 
-## core_ideas
-- ...
+### Dashboard Page
 
-## arguments
-- ...
+- No standalone dashboard route in this phase.
+- Article list is provided by the workspace sidebar only.
+- Dashboard-style overview is deferred to Phase 2.5.
 
-## facts
-- ...
+### UX Contract
 
-## quotes
-- ...
-
-## entities
-- ...
-
-## quality_flags
-- noise | bias | redundancy
-```
-
-Positioning: Semantic Writing Kernel — "semantic fuel" for writing, not a summary. Uses the `analysis` model role.
-
-### Prompt Builder
-
-```ts
-build({
-  profile,       // Channel identity (from /profiles/default.md)
-  style,         // Active style version content (from /styles/)
-  source,        // Dehydrated semantic kernel (source.md)
-  instruction,   // User additional instruction
-  language,      // zh | en
-  output_format  // Output format requirements
-})
-// Output: Deterministic System Prompt
-```
-
-**Deterministic:** same inputs must produce the same system prompt. No randomness.
-
-### Generation Engine
-
-Uses the `writing` model role for streaming generation.
-
-**Generate flow:**
-1. Load profile, active style, source.md
-2. Prompt Builder assembles system prompt
-3. Writing model generates content (streaming)
-4. Write output → `/nodes/v1.md`
-5. Update `tree.json`:
-
-```json
-{
-  "rootNode": "v1",
-  "bestNode": "v1",
-  "latestNode": "v1",
-  "nodes": {
-    "v1": { "parent": null, "depth": 1, "children": [] }
-  }
-}
-```
-
-### UX Contract (Phase 2)
-
-- Material input must expose two explicit entry paths with clear intent labels:
-  - paste raw text
-  - search and import results
-- Dehydration is a user-triggered step; completion must be visible before generation starts.
-- Generation must present streaming output feedback so users can perceive progress while content is being produced.
-- The first successful generation must establish a visible `v1` node context (not hidden as a background-only write).
-- Prompt customization inputs (`instruction`, `language`, `output_format`) must be explicit and user-controlled.
-- If required inputs are missing (for example, no usable material), the UI should block generate with actionable guidance.
+- Material input exposes a single entry path: paste raw text
+- Generation presents streaming output (built in Phase 1, integrated here)
+- Missing inputs block generate with actionable guidance
 
 ### APIs
 
 ```
-POST /api/material/dehydrate              # Dehydrate raw material → source.md
-POST /api/material/search                 # Tavily search
-POST /api/articles/[slug]/generate        # Generate v1 (streaming)
+POST /api/articles                      # Create article workspace
+GET  /api/articles                      # List article summaries
+GET  /api/articles/[slug]               # Aggregated: tree + nodes + evals + meta
+DELETE /api/articles/[slug]             # Delete article
+GET  /api/profiles/default              # Read profile (exists from Phase 1)
 ```
 
 ## Non-goals
 
+- No dehydration engine (deferred to later phase) — raw material is passed directly to prompt builder
 - No branching or optimize yet (Phase 3)
 - No auto-evaluation after generation yet (Phase 3)
-- No style management (Phase 4) — uses whatever active style exists
+- No style management (Phase 4) — uses seed style from Phase 1
+- No standalone app shell polish (top nav architecture, responsive collapse refinements)
+- No dedicated dashboard page or dashboard routing decisions (moved to Phase 2.5)

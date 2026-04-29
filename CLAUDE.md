@@ -15,7 +15,6 @@ Core principles: Control-first · Material-driven · Markdown-native · Evaluati
 - **Models**: Configured via `/data/config.json` — two roles: writing (Claude), analysis (GPT-4o-mini, handles analysis + evaluation + style extraction)
 - **Markdown parsing**: gray-matter
 - **Diff rendering**: react-diff-viewer-continued
-- **Search**: tavily-sdk
 - **Config**: API keys in `.env` only
 
 ## Build & Dev Commands
@@ -29,7 +28,7 @@ pnpm lint            # Lint check
 
 ## Architecture — Three Layers
 
-1. **Ingestion Layer** — Text paste / Tavily search input
+1. **Ingestion Layer** — Text paste input
 2. **Intelligence Layer** — Dehydration Engine → Prompt Builder → Generation Engine → Branch Manager → Evaluation Engine → Feedback Collector
 3. **Persistence Layer** — Markdown-native filesystem, tree.json, config.json, Git-compatible
 
@@ -78,7 +77,7 @@ v1              # Root (depth 1)
 | Evaluation | `POST /api/evaluate/node`, `GET /api/evaluate/[slug]/[node]` |
 | Style | `GET /api/styles`, `GET /api/styles/active`, `POST /api/styles/regenerate`, `POST /api/styles/set-active` |
 | Feedback | `POST /api/feedback`, `GET /api/feedback`, `DELETE /api/feedback/[id]` |
-| Material | `POST /api/material/dehydrate`, `POST /api/material/search` |
+| Material | `POST /api/material/dehydrate` |
 | Profile | `GET /api/profiles/default` |
 
 ## Key Concepts
