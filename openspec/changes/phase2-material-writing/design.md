@@ -30,17 +30,24 @@ This phase must add material ingestion, article lifecycle management, and expand
 - No style management (Phase 4) — uses seed style from Phase 1
 - No standalone app shell polish (top nav, responsive sidebar) — `phase-ui-shell-dashboard` (after Phase 3)
 - No dedicated dashboard page or dashboard routing — `phase-ui-shell-dashboard` (after Phase 3)
+- No multiple source files per article — single `source.md`, user appends to add material
 
 ## Decisions
 
-### 1. Article workspace directory structure
+### 1. Slug generation — opaque ID, not title-derived
+
+**Choice:** Slugs are auto-generated as `art-YYYYMMDD-NNN` (e.g. `art-20260429-001`). The title is stored in `meta.md` and displayed in the UI; the slug is a stable identifier only.
+
+**Why:** The project targets Chinese-language writing. CJK titles produce percent-encoded URLs and filesystem paths that are hard to work with in terminals and logs. An opaque slug decouples the URL from the title entirely — titles can be changed freely without affecting URLs, directory names, or cross-references.
+
+### 2. Article workspace directory structure
 
 **Choice:** Each article gets a self-contained directory under `/data/articles/[slug]/`:
 
 ```
-/data/articles/[slug]/
+/data/articles/art-20260429-001/
   source.md          # Raw material (text paste, no dehydration yet)
-  meta.md            # Article metadata (YAML frontmatter: title, language, status, dates)
+  meta.json          # Article metadata (title, language, status, dates)
   tree.json          # Branching structure (initialized empty, populated by Phase 3)
   /nodes/            # Generated content nodes (v1.md written by generate)
   /evaluation/       # Evaluation scores (empty until Phase 3)
@@ -48,43 +55,61 @@ This phase must add material ingestion, article lifecycle management, and expand
 
 **Why:** Filesystem-native structure keeps articles self-contained and Git-friendly. Each article is an independent directory that can be moved, backed up, or deleted atomically.
 
-### 2. Article CRUD via filesystem operations
+### 3. Article CRUD via filesystem operations
 
 **Choice:** Article CRUD maps directly to filesystem operations — no database layer.
 
 | Operation | Implementation |
 |-----------|---------------|
-| **Create** | `mkdir` article directory + write `meta.md` + initialize `tree.json` + create `/nodes/` and `/evaluation/` |
-| **Delete** | `rm -rf` article directory |
-| **List** | `readdir` on `/data/articles/`, parse each `meta.md` frontmatter for summaries |
-| **Get** | Read and aggregate `tree.json` + all `/nodes/*.md` + all `/evaluation/*.json` + `meta.md` |
+| **Create** | `mkdir` article directory + write `meta.json` + initialize empty `tree.json` + create empty `source.md` + create `/nodes/` and `/evaluation/` |
+| **Delete** | `rm -rf` article directory (replaces Phase 1's reset-only DELETE) |
+| **List** | `readdir` on `/data/articles/`, read each `meta.json` for summaries |
+| **Get** | Read and aggregate `tree.json` + all `/nodes/*.md` + all `/evaluation/*.json` + `meta.json` (returns `evaluations: {}` until Phase 3) |
 
 **Why over database:** The project's core principle is Markdown-native persistence. Filesystem operations are atomic at the directory level, require no migration, and produce a Git-diffable history.
 
-### 3. Material input as direct text paste (no dehydration)
+### 4. Material input — single source.md, save on generate
 
-**Choice:** In this phase, raw material goes directly into `source.md` without dehydration. The prompt builder receives the raw text as-is.
+**Choice:** Raw material goes into a single `source.md` without dehydration. The prompt builder receives the raw text as-is. Material is persisted when the user clicks Generate — not on every keystroke or blur.
 
-**Why:** Dehydration (semantic kernel extraction) is a separate concern. Deferring it lets us validate the full writing workflow end-to-end before adding the extraction layer. The prompt builder already accepts source content as a string — no interface change needed when dehydration is added later.
+**Why:**
+- Single file: users paste all material into one textarea, appending additional material as needed. Multiple source files add UI complexity (list management, per-source editing) without proportional value at this stage.
+- Save on generate: keeps the mental model simple — "generate" is the commit point. No auto-save state indicators or stale-data conflicts. When dehydration is added later, the generate flow is the natural place for it.
 
-### 4. Workspace page layout — article-centric panels
+### 5. Dynamic routing — `/articles/[slug]`
 
-**Choice:** Expand Phase 1's minimal workspace into a multi-panel article workspace:
+**Choice:** Each article gets its own URL via Next.js dynamic route: `/articles/[slug]`. Selecting an article in the sidebar navigates to its route.
 
-- **Material input panel** — textarea for raw text paste
-- **Instruction input + Generate** — reuses Phase 1 components
-- **Node display** — shows generated content with tree context (v1 only in this phase)
-- **Article metadata** — title, language, status, dates
+**Why:** Native to Next.js App Router. Gives browser back/forward navigation, bookmarkable URLs, and clean separation between articles. Client-side slug switching would be simpler but fights the framework.
 
-**Why:** All panels are co-located on one page rather than separate routes. The writing workflow is inherently sequential (paste → instruct → generate → review) and benefits from seeing all context at once.
+### 6. DELETE semantics — true delete
 
-### 5. App shell deferred — sidebar-only article list
+**Choice:** `DELETE /api/articles/[slug]` performs `rm -rf` on the article directory. The Phase 1 "reset" behavior (clear nodes, reset tree.json) is removed.
 
-**Choice:** Article list is provided by the workspace sidebar only. No standalone dashboard route, no top navigation bar, no responsive sidebar polish.
+**Why:** With proper article CRUD, there is no use case for resetting an article while keeping its directory. Users who want to start over can delete and recreate.
 
-**Why:** The app shell wraps the full writing loop (generate → branch → evaluate → promote). Building it before branching and evaluation exist means redesigning it later. `phase-ui-shell-dashboard` ships after Phase 3 when the complete loop is available.
+### 7. Workspace component split
 
-### 6. API design
+**Choice:** Expand the flat `Workspace` component into sub-components:
+
+```
+Workspace
+├── ArticleSidebar          # Article list + create button
+├── MaterialPanel            # Text paste textarea
+├── InstructionPanel         # Instruction input + generate (reuses Phase 1 components)
+├── NodeDisplay              # Generated content + tree context
+└── MetadataPanel            # Title, language, status, dates
+```
+
+**Why:** Phase 2 turns the workspace from a single-purpose form into a multi-panel layout. Splitting early keeps each component focused and testable. The panel boundaries map to distinct data sources (source.md, meta.json, tree.json, nodes/).
+
+### 8. Empty state — "Create your first article"
+
+**Choice:** When no articles exist, show a centered prompt encouraging the user to create their first article, with a prominent create button.
+
+**Why:** An empty sidebar + disabled workspace is confusing. A clear call-to-action guides new users into the workflow immediately.
+
+### 9. API design
 
 ```
 POST /api/articles                      # Create article workspace
@@ -97,13 +122,11 @@ GET  /api/articles                      # List article summaries
 GET  /api/articles/[slug]               # Aggregated article data
   → 200: { meta, tree, nodes, evaluations }
 
-DELETE /api/articles/[slug]             # Delete article
+DELETE /api/articles/[slug]             # Delete article (rm -rf)
   → 204
-
-GET  /api/profiles/default              # Read profile (exists from Phase 1)
 ```
 
-Slug is derived from title via kebab-case normalization. Conflicts append a numeric suffix.
+Slug auto-generated as `art-YYYYMMDD-NNN`. NNN is a sequential counter within the day to handle collisions.
 
 ## Risks / Trade-offs
 
@@ -113,9 +136,13 @@ Slug is derived from title via kebab-case normalization. Conflicts append a nume
 
 - **Sidebar-only article list limits discoverability**: Without a dashboard, users must use the sidebar to find articles. → Mitigation: acceptable as a temporary state. `phase-ui-shell-dashboard` adds the dashboard after Phase 3.
 
+- **Opaque slugs are not human-memorable**: Users can't guess an article's URL from its title. → Mitigation: users navigate via sidebar, not by typing URLs. Title is always visible in the UI.
+
 ## UX Contract
 
-- Material input exposes a single entry path: paste raw text.
+- Material input exposes a single entry path: paste raw text into a textarea. Users append additional material to the same textarea.
+- Material is persisted when the user clicks Generate — not auto-saved.
 - Generation presents streaming output (built in Phase 1, integrated here).
 - Missing inputs block generate with actionable guidance (disabled button + hint text).
-- Article sidebar shows article list with title and status; selecting an article loads its workspace.
+- Article sidebar shows article list with title and status; selecting an article navigates to `/articles/[slug]`.
+- Empty state (no articles) shows a "Create your first article" prompt with a create button.

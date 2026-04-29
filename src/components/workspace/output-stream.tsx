@@ -6,7 +6,10 @@ import {
   type HTMLAttributes,
   type PropsWithChildren,
 } from "react";
-import ReactMarkdown, { type Components, type ExtraProps } from "react-markdown";
+import ReactMarkdown, {
+  type Components,
+  type ExtraProps,
+} from "react-markdown";
 import { useStreamBuffer } from "@/hooks/use-stream-buffer";
 
 interface OutputStreamProps {
@@ -22,10 +25,8 @@ interface OutputStreamProps {
 type MdComponentProps = PropsWithChildren<HTMLAttributes<HTMLElement>> &
   ExtraProps;
 
-function memoMdComponent(
-  Tag: string,
-): FC<MdComponentProps> {
-  const Component: FC<MdComponentProps> = ({ node, ...props }) => {
+function memoMdComponent(Tag: string): FC<MdComponentProps> {
+  const Component: FC<MdComponentProps> = ({ ...props }) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const El = Tag as any;
     return <El {...props} />;
@@ -34,26 +35,47 @@ function memoMdComponent(
 
   return memo(Component, (prev, next) => {
     if (!prev.node || !next.node) return false;
-    const strip = ({ position, data, ...rest }: Record<string, unknown>) =>
-      rest;
+    const strip = (properties: Record<string, unknown>) => {
+      const sanitized = { ...properties };
+      delete sanitized.position;
+      delete sanitized.data;
+      return sanitized;
+    };
     return (
       JSON.stringify(strip(prev.node.properties as Record<string, unknown>)) ===
         JSON.stringify(
           strip(next.node.properties as Record<string, unknown>),
         ) &&
-      JSON.stringify(prev.node.children) ===
-        JSON.stringify(next.node.children)
+      JSON.stringify(prev.node.children) === JSON.stringify(next.node.children)
     );
   });
 }
 
 const markdownComponents: Components = Object.fromEntries(
   [
-    "h1", "h2", "h3", "h4", "h5", "h6",
-    "p", "ul", "ol", "li",
-    "blockquote", "pre", "code", "hr",
-    "a", "strong", "em",
-    "table", "thead", "tbody", "tr", "th", "td",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "p",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "pre",
+    "code",
+    "hr",
+    "a",
+    "strong",
+    "em",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
   ].map((tag) => [tag, memoMdComponent(tag)]),
 );
 
@@ -130,9 +152,7 @@ export function OutputStream({ content, isLoading }: OutputStreamProps) {
       >
         {frozen && <FrozenMarkdown content={frozen} />}
         {tail && (
-          <ReactMarkdown components={markdownComponents}>
-            {tail}
-          </ReactMarkdown>
+          <ReactMarkdown components={markdownComponents}>{tail}</ReactMarkdown>
         )}
       </div>
     </div>

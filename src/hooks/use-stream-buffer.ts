@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 class TextStreamAnimator {
   private animationFrameId: number | null = null;
@@ -27,6 +27,19 @@ class TextStreamAnimator {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;
     }
+  }
+
+  syncToSource(text: string) {
+    this.currentText = text;
+    this.targetText = text;
+  }
+
+  resetCurrentText() {
+    this.currentText = "";
+  }
+
+  setTargetText(text: string) {
+    this.targetText = text;
   }
 
   private animate = () => {
@@ -61,26 +74,23 @@ class TextStreamAnimator {
 
 export function useStreamBuffer(source: string, isStreaming: boolean) {
   const [displayedText, setDisplayedText] = useState("");
-
-  const [animator] = useState<TextStreamAnimator>(
+  const animator = useMemo(
     () => new TextStreamAnimator("", setDisplayedText),
+    [],
   );
 
   useEffect(() => {
     if (!isStreaming) {
       animator.stop();
-      animator.currentText = source;
-      animator.targetText = source;
-      setDisplayedText(source);
+      animator.syncToSource(source);
       return;
     }
 
     if (!source.startsWith(animator.targetText)) {
-      animator.currentText = "";
-      setDisplayedText("");
+      animator.resetCurrentText();
     }
 
-    animator.targetText = source;
+    animator.setTargetText(source);
     animator.start();
   }, [source, isStreaming, animator]);
 
@@ -88,8 +98,9 @@ export function useStreamBuffer(source: string, isStreaming: boolean) {
     return () => animator.stop();
   }, [animator]);
 
+  const effectiveDisplayedText = isStreaming ? displayedText : source;
   const isBuffering =
-    isStreaming && displayedText.length < source.length;
+    isStreaming && effectiveDisplayedText.length < source.length;
 
-  return { displayedText, isBuffering };
+  return { displayedText: effectiveDisplayedText, isBuffering };
 }
