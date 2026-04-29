@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY_1 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

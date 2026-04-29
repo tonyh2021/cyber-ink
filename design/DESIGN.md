@@ -95,18 +95,17 @@ Colors are authored in oklch for perceptual uniformity — theme switching only 
 
 | Token         | CSS Variable         | Light               | Dark                     | oklch (L light / L dark, C, H) | Usage |
 | ------------- | -------------------- | ------------------- | ------------------------ | ------------------------------ | ----- |
-| Root          | `--surface-root`     | `#f5f5f8`           | `#0d0d14`                | L 0.97 / 0.10, C 0.005, H 280 | Page background canvas |
-| Panel         | `--surface-panel`    | `#ededf2`           | `#1e1e2e`                | L 0.94 / 0.18, C 0.005, H 280 | Sidebar, panels, secondary surfaces |
+| Root          | `--surface-root`     | `#fafafc`           | `#0d0d14`                | L 0.98 / 0.10, C 0.005, H 280 | Page background, nav sidebar |
+| Panel         | `--surface-panel`    | `#f5f5f8`           | `#1e1e2e`                | L 0.97 / 0.18, C 0.005, H 280 | Panels, secondary surfaces |
 | Card          | `--surface-card`     | `#ffffff`           | `#2a2a3e`                | L 1.00 / 0.24, C 0.005, H 280 | Card backgrounds, node blocks |
 | Elevated      | `--surface-elevated` | `#ffffff`           | `#323248`                | L 1.00 / 0.28, C 0.005, H 280 | Hover cards, dropdowns, tooltips |
 | Canvas        | `--surface-canvas`   | `#f7f6f1`           | `#1e1e2e`                | L 0.97 / 0.18, C 0.010, H 85 | Writing area (warm paper tint in light) |
-| Border        | `--border-default`   | `#d0d0da`           | `#3a3a52`                | L 0.85 / 0.30, C 0.005, H 280 | Standard borders, dividers |
+| Border        | `--border-default`   | `rgba(0,0,0,0.06)`  | `rgba(255,255,255,0.08)` | Semi-transparent, adapts to background | All borders, dividers, card edges |
 | Border Active | `--border-active`    | `#006b85`           | `#00d4ff`                | = `--brand-accent` | Active/selected borders |
-| Border Subtle | `--border-subtle`    | `rgba(0,0,0,0.06)`  | `rgba(255,255,255,0.06)` | black/white at alpha 0.06 | Subtle inner borders |
 
 **Surface layering model:**
 
-- Light: L 0.97 → 0.94 → 1.00 (whiter = higher), all C 0.005 H 280
+- Light: L 0.98 → 0.97 → 1.00 (whiter = higher), all C 0.005 H 280
 - Dark: L 0.10 → 0.18 → 0.24 → 0.28 (lighter = higher), all C 0.005 H 280
 
 ### 2.4 Semantic / Functional
@@ -179,23 +178,24 @@ Colors are authored in oklch for perceptual uniformity — theme switching only 
 
 ### Grid & Container
 
+- **App shell:** Nav sidebar (220px expanded / 56px collapsed) + content area (flex)
 - **Dashboard:** 3-column article card grid (responsive → 2 → 1)
-- **Article Workspace:** Sidebar (240px) + Canvas (flex) + Right Panel (320px)
-- **Version Tree:** Horizontal node tree, centered in panel
+- **Article Workspace:** Input panel (440px) + Output panel (flex: node tree + writing canvas + eval bar)
+- **Version Tree:** Horizontal node tree, above writing canvas
 - **Style Page:** 2-column (config left, preview right)
 - **Max content width:** 1440px, centered
 
 ### Panel Structure (Article Workspace)
 
 ```
-+------------+------------------------+--------------+
-| Sidebar    | Writing Canvas         | Right Panel  |
-| 240px      | flex-grow              | 320px        |
-|            |                        |              |
-| Material   | Node Content           | Evaluation   |
-| Source     | (selected node)        | Scores       |
-| Tree Nav   |                        | Diff View    |
-+------------+------------------------+--------------+
++------+------------------+----------------------------------+
+| Nav  | Input Panel      | Output Panel                     |
+| 56px | 440px            | flex-grow                        |
+| or   |                  |                                  |
+| 220px| Metadata         | Node Tree + Actions              |
+|      | Material         | Writing Canvas (surface-canvas)  |
+|      | Instruction      | Evaluation Bar                   |
++------+------------------+----------------------------------+
 ```
 
 ### Whitespace Philosophy
@@ -219,7 +219,7 @@ Colors are authored in oklch for perceptual uniformity — theme switching only 
 
 **Depth philosophy:**
 
-- **Light:** depth comes from subtle cool-toned shadows — cards float above the gray root. Shadows stay minimal; never warm.
+- **Light:** depth comes from subtle cool-toned shadows — cards float via semi-transparent `border-default` + soft shadow (`0 2px 8px rgba(0,0,0,0.06)`), not hard opaque borders. Nav sidebar uses outer shadow for layering. Shadows stay minimal; never warm.
 - **Dark:** depth comes from surface color layering — no heavy shadows needed. Glow effects replace traditional shadows for active states.
 
 ---
@@ -341,12 +341,13 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 
 | Property   | Value                                                                                  |
 | ---------- | -------------------------------------------------------------------------------------- |
-| Background | Light: `var(--surface-card)` / Dark: `var(--surface-panel)`                            |
-| Border     | 1px solid `var(--border-default)`                                                      |
+| Background | `var(--surface-card)`                                                                  |
+| Border     | 1px solid `var(--border-default)` (semi-transparent, adapts to background)               |
+| Shadow     | `0 2px 8px rgba(0,0,0,0.06)` — cards float via shadow, not hard line frames           |
 | Radius     | 12px                                                                                   |
 | Padding    | 20px                                                                                   |
 | Hover      | border `var(--brand-accent)`, Light: shadow Raised(1) / Dark: bg `var(--surface-card)` |
-| Layout     | Status badge inline top-right                                                          |
+| Layout     | Canvas preview (top, `var(--surface-canvas)` bg) + badge + title + metadata            |
 
 **Node Card (Version Tree)**
 
@@ -412,24 +413,23 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 
 ### 8.4 Navigation
 
-**Top Navigation**
+**Nav Sidebar (replaces top nav — all navigation consolidated into sidebar)**
 
-| Property      | Value                                                              |
-| ------------- | ------------------------------------------------------------------ |
-| Background    | `var(--surface-root)`                                              |
-| Border-bottom | 1px solid `var(--border-default)`                                  |
-| Height        | 56px                                                               |
-| Logo          | Source Sans 3 18px weight 700, `var(--brand-accent)`                       |
-| Nav links     | Source Sans 3 14px, `var(--text-secondary)`, active: `var(--text-primary)` |
+| Property       | Expanded (220px)                                                         | Collapsed (56px)                     |
+| -------------- | ------------------------------------------------------------------------ | ------------------------------------ |
+| Background     | `var(--surface-root)`                                                    | `var(--surface-root)`                |
+| Depth          | outer shadow `0 3px 16px rgba(0,0,0,0.08)` (z-index above content)      | same                                 |
+| Logo           | Source Sans 3 18px weight 700, `var(--brand-accent)`, "CyberInk"         | "CI" abbreviation (click to expand)  |
+| Nav links      | icon 16px + Source Sans 3 14px, active: `var(--brand-accent-dim)` bg     | icon-only, 36×36 hit area            |
+| Collapse toggle| `panel-left-close` icon in logo row                                      | click "CI" logo to expand            |
+| Bottom section | "New Article" full-width primary button + theme toggle with label        | "+" icon button + compact toggle     |
 
-**Left Sidebar**
+**Nav link states:**
 
-| Property       | Value                                                                     |
-| -------------- | ------------------------------------------------------------------------- |
-| Background     | `var(--surface-panel)`                                                    |
-| Border-right   | 1px solid `var(--border-default)`                                         |
-| Width          | 240px                                                                     |
-| Section labels | Source Sans 3 11px weight 600, `var(--text-muted)`, uppercase, letter-spacing 1px |
+| State    | Icon fill          | Text fill            | Background               |
+| -------- | ------------------ | -------------------- | ------------------------ |
+| Default  | `var(--text-muted)`| `var(--text-secondary)` | transparent           |
+| Active   | `var(--text-accent)` | `var(--text-accent)` | `var(--brand-accent-dim)` |
 
 ### 8.5 Tags & Badges
 
@@ -540,7 +540,7 @@ Common: radius 4px, Source Sans 3 12px weight 600
 
 ### Collapsing Strategy
 
-- **Sidebar:** full (240px) → icon-only (56px) → bottom sheet (mobile)
+- **Nav sidebar:** full (220px) → icon-only (56px) → bottom sheet (mobile)
 - **Right panel:** persistent → on-demand drawer → hidden (mobile)
 - **Version tree:** horizontal → vertical stack (mobile)
 - **Writing canvas:** full padding (32px 40px) → reduced (16px mobile)
@@ -556,7 +556,7 @@ Common: radius 4px, Source Sans 3 12px weight 600
 - **Normal text** (< 18px / < 14px bold): contrast ratio ≥ 4.5:1
 - **Large text** (≥ 18px / ≥ 14px bold): contrast ratio ≥ 3:1
 - **Non-text UI** (borders, icons, focus rings): contrast ratio ≥ 3:1 against adjacent color
-- Brand accent is pre-validated: `#006b85` on `#f5f5f8` = 5.6:1 (light), `#00d4ff` on `#0d0d14` = 12.1:1 (dark)
+- Brand accent is pre-validated: `#006b85` on `#fafafc` = 5.5:1 (light), `#00d4ff` on `#0d0d14` = 12.1:1 (dark)
 - `--text-muted` is exempt from AA minimums — used only for placeholders and disabled labels (WCAG 1.4.3 exempts disabled UI)
 - `--border-default` is decorative (visual separation only, not informational) — exempt from 3:1 non-text UI requirement
 
@@ -619,14 +619,14 @@ Evaluation scores must never rely on color alone:
 | ---------------------- | --------- | --------- |
 | `--brand-accent`       | `#006b85` | `#00d4ff` |
 | `--brand-accent-hover` | `#005a70` | `#00b8e0` |
-| `--surface-root`       | `#f5f5f8` | `#0d0d14` |
-| `--surface-panel`      | `#ededf2` | `#1e1e2e` |
+| `--surface-root`       | `#fafafc` | `#0d0d14` |
+| `--surface-panel`      | `#f5f5f8` | `#1e1e2e` |
 | `--surface-card`       | `#ffffff` | `#2a2a3e` |
 | `--surface-canvas`     | `#f7f6f1` | `#1e1e2e` |
 | `--text-primary`       | `#1a1a2e` | `#e8e8f0` |
 | `--text-secondary`     | `#4a4a5e` | `#a8a8bc` |
 | `--text-muted`         | `#8b8b9a` | `#6b6b80` |
-| `--border-default`     | `#d0d0da` | `#3a3a52` |
+| `--border-default`     | `rgba(0,0,0,0.06)` | `rgba(255,255,255,0.08)` |
 | `--color-success`      | `#007a54` | `#00c896` |
 | `--color-warning`      | `#9a6800` | `#f0a500` |
 | `--color-danger`       | `#c4203e` | `#ff6685` |
@@ -634,7 +634,7 @@ Evaluation scores must never rely on color alone:
 
 ### Example Component Prompts
 
-- "Create a dashboard article card: `var(--surface-panel)` background, 1px solid `var(--border-default)` border, 12px radius. Title Source Sans 3 16px weight 600 `var(--text-primary)`. Hover: border `var(--brand-accent)`."
+- "Create a dashboard article card: `var(--surface-card)` background, 1px solid `var(--border-default)` border, shadow `0 2px 8px rgba(0,0,0,0.06)`, 12px radius. Title Source Sans 3 16px weight 600 `var(--text-primary)`. Hover: border `var(--brand-accent)`."
 - "Design a node card: `var(--surface-card)` background, 8px radius, JetBrains Mono 11px `var(--text-accent)` label. Selected: Accent Glow shadow."
 - "Build a primary button: `var(--brand-accent)` background, 8px radius, 8px 20px padding. Hover: `var(--brand-accent-hover)`."
 - "Create writing canvas: `var(--surface-canvas)` background, 12px radius, 32px 40px padding. JetBrains Mono 14px `var(--text-primary)` line-height 1.8."

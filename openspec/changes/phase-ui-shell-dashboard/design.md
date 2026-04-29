@@ -33,13 +33,26 @@ Current state:
 ### 1. App shell layout structure
 
 **Choice:**
-- Top navigation bar (56px): logo, primary navigation links (Dashboard / Workspace), theme toggle
-- Left sidebar: article list with responsive collapse behavior
+- Collapsible left sidebar: logo, primary navigation links (Dashboard / Workspace / Styles), "New Article" CTA, theme toggle
 - Main content area: renders dashboard or workspace route
+- No top navigation bar — all navigation consolidated into sidebar
 
-**Why 56px top nav:** Consistent with common SaaS app patterns. Tall enough for comfortable click targets, short enough to maximize content area.
+**Sidebar states:**
+- Expanded (220px): logo "CyberInk" + text labels + collapse toggle (`panel-left-close` icon)
+- Collapsed (56px): abbreviated logo "CI" (click to expand) + icon-only navigation + "+" button + compact theme toggle
 
-**Why top nav + sidebar over sidebar-only:** Top navigation provides global context (which app, which section). Sidebar provides article-level context. Separating these concerns avoids an overloaded sidebar.
+**Why sidebar-only over top nav + sidebar:** Consolidating navigation into one vertical rail eliminates the 56px top bar, maximizing vertical content space. The sidebar serves both global context (which section) and actions (create, theme) without splitting concerns across two chrome surfaces. Clicking the collapsed "CI" logo to expand is more discoverable than a separate toggle icon.
+
+**Surface colors (light mode):**
+- Sidebar: `$surface-root` (`#fafafc`) — very subtle off-white, enough contrast against content area to create layering without appearing grey/dirty
+- Content area: `$surface-card` (`#ffffff`) — pure white for a clean, spacious feel
+- Sidebar depth: outer shadow (`x:3, blur:16, #00000014`) instead of border line — sidebar z-index above content area to ensure shadow renders on top
+- Dark mode: sidebar uses `$surface-panel`, content area inherits from root
+
+**Card styling:**
+- Border: `$border-default` — semi-transparent, adapts to any background
+- Depth: subtle outer shadow (`y:2, blur:8, rgba(0,0,0,0.06)`) — cards float via shadow, not hard line frames
+- Applies to all cards (ArticleCard, stat cards), inputs, and dividers
 
 ### 2. Dashboard as discovery surface, not editing surface
 
@@ -71,11 +84,13 @@ No new backend APIs in this phase.
 ### 4. Responsive sidebar behavior
 
 **Choice:**
-- Desktop (≥1024px): sidebar always visible, collapsible via toggle
-- Tablet (768–1023px): sidebar collapsed by default, toggleable
+- Desktop (≥1024px): sidebar expanded by default, collapsible via toggle icon or clicking "CI" logo
+- Tablet (768–1023px): sidebar collapsed by default (icon-only, 56px), expandable
 - Mobile (<768px): sidebar as overlay drawer
 
 **Why these breakpoints:** Standard responsive breakpoints that match the content density needs. The workspace content area needs substantial width for material + output panels.
+
+**Workspace default:** Sidebar starts collapsed on all breakpoints to maximize writing space. Users expand on demand.
 
 ## Risks / Trade-offs
 
@@ -89,4 +104,5 @@ No new backend APIs in this phase.
 
 - Workspace-first writing flow from Phase 2 remains intact after shell integration.
 - Dashboard acts as a discovery and management surface; it does not replace workspace editing flow.
-- No duplicate article management logic between sidebar and dashboard: both must rely on the same CRUD API contracts.
+- No duplicate article management logic: dashboard is the sole article list/discovery surface; workspace has no article sidebar.
+- Navigation sidebar is the only chrome element — no top navigation bar. Sidebar collapses to 56px icon rail to maximize content space.
