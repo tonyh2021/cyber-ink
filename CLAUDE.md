@@ -97,7 +97,7 @@ v1              # Root (depth 1)
 - **Writing canvas**: Dark `#1e1e2e` / Light `#f7f6f1` (warm paper tint — the ONE warm exception in the palette)
 - **Radius scale**: 4px (tags) / 8px (buttons, inputs) / 12px (cards) / 16px (modals only)
 - **Depth model**: Dark uses surface layering; Light uses subtle shadows
-- **Preview files**: `preview-dark.html` and `preview.html` — visual token catalog for both themes
+- **Design file**: `design/cyber-ink.pen` — visual token catalog and component showcase (Pencil format)
 
 ## Code Conventions
 
