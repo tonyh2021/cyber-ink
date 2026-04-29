@@ -1,9 +1,9 @@
 {
-  "name": "cyber-ink-scaffold",
+  "name": "cyber-ink",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
   "scripts": {
-    "dev": "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY_1 next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
