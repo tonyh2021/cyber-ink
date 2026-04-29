@@ -5078,7 +5078,7 @@
                   "name": "logo",
                   "fill": "$brand-accent",
                   "content": "CyberInk",
-                  "fontFamily": "Source Sans 3",
+                  "fontFamily": "$font-ui",
                   "fontSize": 18,
                   "fontWeight": "700",
                   "letterSpacing": -0.5
@@ -5133,7 +5133,7 @@
                       "name": "ndText",
                       "fill": "$text-accent",
                       "content": "Dashboard",
-                      "fontFamily": "Source Sans 3",
+                      "fontFamily": "$font-ui",
                       "fontSize": 14,
                       "fontWeight": "600"
                     }
@@ -5168,7 +5168,7 @@
                       "name": "nwText",
                       "fill": "$text-secondary",
                       "content": "Workspace",
-                      "fontFamily": "Source Sans 3",
+                      "fontFamily": "$font-ui",
                       "fontSize": 14,
                       "fontWeight": "500"
                     }
@@ -5203,7 +5203,7 @@
                       "name": "nsText",
                       "fill": "$text-secondary",
                       "content": "Styles",
-                      "fontFamily": "Source Sans 3",
+                      "fontFamily": "$font-ui",
                       "fontSize": 14,
                       "fontWeight": "500"
                     }
@@ -5250,9 +5250,9 @@
                     {
                       "type": "text",
                       "id": "l3gMD",
-                      "fill": "#8b8b9a",
+                      "fill": "$text-muted",
                       "content": "Dark mode",
-                      "fontFamily": "Source Sans 3",
+                      "fontFamily": "$font-ui",
                       "fontSize": 12,
                       "fontWeight": "normal"
                     },
@@ -5263,7 +5263,7 @@
                       "height": 16,
                       "iconFontName": "moon",
                       "iconFontFamily": "lucide",
-                      "fill": "#8b8b9a"
+                      "fill": "$text-muted"
                     }
                   ]
                 }
@@ -5313,7 +5313,9 @@
                   "fill": "$surface-card",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
+                    "thickness": {
+                      "right": 1
+                    },
                     "fill": "$border-default"
                   },
                   "layout": "vertical",
@@ -5557,9 +5559,9 @@
                                   "type": "text",
                                   "id": "zbcFH",
                                   "name": "nhScoreT",
-                                  "fill": "#ffffff",
+                                  "fill": "$text-on-accent",
                                   "content": "0.85",
-                                  "fontFamily": "JetBrains Mono",
+                                  "fontFamily": "$font-mono",
                                   "fontSize": 11,
                                   "fontWeight": "700"
                                 }
@@ -5929,7 +5931,7 @@
             "blur": 16
           },
           "layout": "vertical",
-          "gap": 16,
+          "gap": 24,
           "padding": [
             20,
             12
@@ -6140,9 +6142,9 @@
                           "type": "text",
                           "id": "Vcp11",
                           "name": "sub1",
-                          "fill": "#006b85",
+                          "fill": "$text-accent",
                           "content": "3 versions · active: v2-a",
-                          "fontFamily": "Source Sans 3",
+                          "fontFamily": "$font-ui",
                           "fontSize": 11,
                           "fontWeight": "normal"
                         }
@@ -6177,9 +6179,9 @@
                           "type": "text",
                           "id": "RvBEt",
                           "name": "sub2",
-                          "fill": "#4a4a5e",
+                          "fill": "$text-secondary",
                           "content": "5 versions · active: v3",
-                          "fontFamily": "Source Sans 3",
+                          "fontFamily": "$font-ui",
                           "fontSize": 11,
                           "fontWeight": "normal"
                         }
@@ -6214,9 +6216,9 @@
                           "type": "text",
                           "id": "J4hAiJ",
                           "name": "sub3",
-                          "fill": "#4a4a5e",
+                          "fill": "$text-secondary",
                           "content": "1 version",
-                          "fontFamily": "Source Sans 3",
+                          "fontFamily": "$font-ui",
                           "fontSize": 11,
                           "fontWeight": "normal"
                         }
@@ -6271,7 +6273,7 @@
                       "height": 16,
                       "iconFontName": "moon",
                       "iconFontFamily": "lucide",
-                      "fill": "#8b8b9a"
+                      "fill": "$text-muted"
                     }
                   ]
                 }
