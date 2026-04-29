@@ -1,50 +1,28 @@
-# phase-ui-shell-dashboard — App Shell & Dashboard
+## Why
 
-**OpenSpec change id:** `phase-ui-shell-dashboard` (canonical name for shell + dashboard work; supersedes any informal “Phase 2.5” wording elsewhere.)
+After Phase 3, the full writing loop exists but the app lacks product-level navigation. There is no app shell, no dashboard for article discovery, and sidebar behavior is minimal. Users need a proper navigation structure and overview surface to manage multiple articles across the complete workflow.
 
-## Summary
+## What Changes
 
-Implement product-level navigation shell and dashboard surfaces after the core writing loop is functional. This phase isolates layout and navigation decisions from the writing pipeline to reduce delivery risk.
+- Implement app shell: top navigation (56px) with logo, primary navigation, and theme toggle; sidebar with responsive collapse
+- Add dedicated dashboard route with article overview cards/list and create/delete entry points
+- Establish stable shell composition for workspace and dashboard routes
+- Ensure workspace-first writing flow from Phase 2 remains intact after shell integration
 
-## Depends on
+## Capabilities
 
-- Phase 3 (branching, evaluation, promotion — full writing loop complete)
+### New Capabilities
 
-**Ordering:** Phase 2 defers standalone dashboard and app shell polish here; this change ships **after Phase 3** so the shell wraps a complete generate → branch → evaluate → promote loop.
+- `app-shell`: Product-level navigation shell with top nav (logo, navigation, theme toggle), responsive sidebar, and stable composition wrapping workspace and dashboard routes
+- `dashboard`: Article discovery and management surface with overview cards/list, create/delete entry points, and clear navigation to workspace
 
-## Scope
+### Modified Capabilities
 
-### App Shell
+_(none)_
 
-- Top navigation (56px): logo, primary navigation, theme toggle
-- Sidebar behavior and responsive collapse refinements
-- Stable shell composition for workspace and dashboard routes
+## Impact
 
-### Dashboard
-
-- Dedicated dashboard route with article overview cards/list
-- Create/delete entry points aligned with article CRUD APIs
-- Clear navigation between dashboard and workspace
-
-### UX Contract
-
-- Workspace-first writing flow from Phase 2 remains intact after shell integration.
-- Dashboard acts as a discovery and management surface; it does not replace workspace editing flow.
-- No duplicate article management logic between sidebar and dashboard: both must rely on the same CRUD API contracts.
-
-## APIs
-
-No new backend APIs required in this phase. Reuse:
-
-```
-POST /api/articles
-GET  /api/articles
-DELETE /api/articles/[slug]
-GET  /api/articles/[slug]
-```
-
-## Non-goals
-
-- No branching/evaluation/style-loop logic changes
-- No material dehydration model changes
-- No export/diff functionality (Phase 5)
+- **Code**: New layout components (shell, top nav, sidebar), dashboard page route, responsive behavior
+- **APIs**: No new backend APIs — reuses existing article CRUD endpoints (`POST/GET/DELETE /api/articles`, `GET /api/articles/[slug]`)
+- **Dependencies**: No new dependencies
+- **Risk**: Low — purely presentational layer over existing APIs; no changes to writing pipeline or data model

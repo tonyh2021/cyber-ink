@@ -1,64 +1,30 @@
-# Phase 2 — Material Ingestion & Article Management
+## Why
 
-## Summary
+Phase 1 proves the generation pipeline with preset inputs. Users still cannot create articles, paste raw material, or manage their workspace. Without material ingestion and article CRUD, the tool is a demo — not a usable writing workflow.
 
-Implement material ingestion (text paste), article CRUD, and the full workspace page in an article-centric layout. After this phase, users can create articles, paste raw material, and generate drafts through a complete writing workflow UI.
+## What Changes
 
-## Depends on
+- Add material input via text paste — users paste raw material directly into the workspace
+- Implement article CRUD: create (title + language → initialize workspace directory), delete, list, get (aggregated: tree + nodes + evals + meta)
+- Expand Phase 1's minimal workspace into a full article workspace with material input panel, instruction input, node display with tree context, and article metadata
+- Article list served via workspace sidebar only (no standalone dashboard route yet)
 
-- Phase 1 (generation pipeline, prompt builder, filesystem helpers, types, design system)
+## Capabilities
 
-## Scope
+### New Capabilities
 
-### Material Input
+- `material-input`: Text paste input for raw material ingestion, with validation that blocks generation when inputs are missing
+- `article-crud`: Article lifecycle management — create workspace directory (meta.md, tree.json, /nodes/, /evaluation/), delete, list summaries, get aggregated article data
+- `article-workspace`: Full workspace page layout combining material input, instruction input, generation output, node display with tree context, and metadata display
 
-Single input source:
+### Modified Capabilities
 
-- **Text paste** — user pastes raw material directly
+_(none)_
 
-### Article CRUD
+## Impact
 
-- **Create** — title + language → initializes workspace directory (meta.md, tree.json, /nodes/, /evaluation/)
-- **Delete** — removes entire article directory
-- **List** — article summaries for the workspace sidebar (same APIs later power the dashboard in `phase-ui-shell-dashboard`)
-- **Get** — aggregated: tree + nodes + evals + meta
-
-### Full Workspace Page
-
-Expands Phase 1's minimal workspace into the complete article workspace:
-
-- Material input panel (text paste)
-- Instruction input + generate (reuses Phase 1 generation pipeline)
-- Node display with tree context
-- Article metadata display
-
-### App shell & dashboard (deferred)
-
-- No standalone dashboard route in this phase.
-- Article list is provided by the workspace sidebar only.
-- Dedicated **app shell** (top nav, responsive sidebar) and **dashboard route** ship in **`phase-ui-shell-dashboard`**, which **depends on Phase 3** (after the full writing loop exists).
-
-### UX Contract
-
-- Material input exposes a single entry path: paste raw text
-- Generation presents streaming output (built in Phase 1, integrated here)
-- Missing inputs block generate with actionable guidance
-
-### APIs
-
-```
-POST /api/articles                      # Create article workspace
-GET  /api/articles                      # List article summaries
-GET  /api/articles/[slug]               # Aggregated: tree + nodes + evals + meta
-DELETE /api/articles/[slug]             # Delete article
-GET  /api/profiles/default              # Read profile (exists from Phase 1)
-```
-
-## Non-goals
-
-- No dehydration engine (deferred to later phase) — raw material is passed directly to prompt builder
-- No branching or optimize yet (Phase 3)
-- No auto-evaluation after generation yet (Phase 3)
-- No style management (Phase 4) — uses seed style from Phase 1
-- No standalone app shell polish (top nav, responsive sidebar) — `phase-ui-shell-dashboard` (after Phase 3)
-- No dedicated dashboard page or dashboard routing — `phase-ui-shell-dashboard` (after Phase 3)
+- **Code**: New API routes (`POST/GET/DELETE /api/articles`, `GET /api/articles/[slug]`), workspace page expansion, material input component
+- **APIs**: 4 new endpoints for article CRUD; `GET /api/profiles/default` reused from Phase 1
+- **Dependencies**: No new dependencies beyond Phase 1 stack
+- **Data**: New article directories created under `/data/articles/` with standard structure (source.md, meta.md, tree.json, /nodes/, /evaluation/)
+- **Risk**: Low — extends existing generation pipeline with CRUD and input surfaces
