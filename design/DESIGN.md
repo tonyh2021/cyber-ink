@@ -11,8 +11,8 @@ Both themes share the same cool undertone, the same typography, the same spatial
 **Key Characteristics:**
 
 - Cyber Cyan as singular brand accent — never decorative, always functional
-- Inter for UI chrome, JetBrains Mono for AI-generated content and node labels — the font boundary signals the AI boundary
-- Three-tier token architecture: `--base-*` (raw values) / `--sema-*` (semantic roles) / `--comp-*` (component-specific)
+- Source Sans 3 for UI chrome, JetBrains Mono for AI-generated content and node labels — the font boundary signals the AI boundary
+- Flat semantic token architecture: `--brand-*`, `--surface-*`, `--text-*`, `--color-*` — components reference token names, not hex values
 - Restrained border-radius: 4px–16px, no pills
 - Content-first layout — the writing canvas is the primary visual element
 - Cool neutrals only — warm tones are forbidden everywhere except the light-mode writing canvas
@@ -29,61 +29,104 @@ Both themes share the same cool undertone, the same typography, the same spatial
 
 All color values are listed as **Light | Dark**. Components reference the semantic token name, not hex values.
 
+### oklch Implementation Guide
+
+Colors are authored in oklch for perceptual uniformity — theme switching only changes the **L (lightness)** channel while **C (chroma)** and **H (hue)** stay constant. Hex values below are the computed fallbacks.
+
+**Base palette (define once in `:root`):**
+
+| Token        | CSS Variable  | C (Chroma) | H (Hue) | Notes                  |
+| ------------ | ------------- | ---------- | -------- | ---------------------- |
+| Brand Cyan   | `--h-brand`   | 0.155      | 197      | Primary brand identity |
+| Success      | `--h-success` | 0.140      | 165      | Positive signals       |
+| Warning      | `--h-warning` | 0.150      | 75       | Caution signals        |
+| Danger       | `--h-danger`  | 0.180      | 15       | Negative signals       |
+| Focus        | `--h-focus`   | 0.160      | 260      | Keyboard navigation    |
+| Best Node    | `--h-best`    | 0.140      | 90       | Gold highlight         |
+| Neutral      | `--h-neutral` | 0.010      | 280      | Cool slate undertone   |
+
+**Lightness scale (per theme):**
+
+| Role       | Light L | Dark L | Usage                          |
+| ---------- | ------- | ------ | ------------------------------ |
+| Foreground | 0.48–0.52 | 0.70–0.75 | Solid text/icons on backgrounds |
+| Hover      | 0.40–0.44 | 0.62–0.67 | L - 0.08 from foreground       |
+| Dim wash   | foreground at 0.08 alpha | foreground at 0.15 alpha | Subtle background tints |
+
+**CSS implementation pattern:**
+
+```css
+:root {
+  --c-brand: 0.155;
+  --h-brand: 197;
+}
+[data-theme="light"] {
+  --brand-accent: oklch(0.48 var(--c-brand) var(--h-brand));
+  --brand-accent-hover: oklch(0.40 var(--c-brand) var(--h-brand));
+}
+[data-theme="dark"] {
+  --brand-accent: oklch(0.75 var(--c-brand) var(--h-brand));
+  --brand-accent-hover: oklch(0.67 var(--c-brand) var(--h-brand));
+}
+```
+
+**Compatibility:** oklch requires Safari 15.4+, Chrome 111+. Use `@csstools/postcss-oklab-function` for hex fallback generation at build time.
+
 ### 2.1 Brand Accent
 
-| Token      | CSS Variable           | Light                  | Dark                   | Usage                                       |
-| ---------- | ---------------------- | ---------------------- | ---------------------- | ------------------------------------------- |
-| Cyber Cyan | `--brand-accent`       | `#0088a8`              | `#00d4ff`              | Primary CTA, active states, brand accent    |
-| Cyan Hover | `--brand-accent-hover` | `#006d88`              | `#00b8e0`              | Hover/pressed state for cyan elements       |
-| Cyan Dim   | `--brand-accent-dim`   | `rgba(0,136,168,0.08)` | `rgba(0,212,255,0.15)` | Subtle wash for selected states, highlights |
+| Token      | CSS Variable           | Light | Dark | oklch (L light / L dark, C, H) | Usage |
+| ---------- | ---------------------- | ----- | ---- | ------------------------------ | ----- |
+| Cyber Cyan | `--brand-accent`       | `#006b85` | `#00d4ff` | L 0.48 / 0.75, C 0.155, H 197 | Primary CTA, active states, brand accent |
+| Cyan Hover | `--brand-accent-hover` | `#005a70` | `#00b8e0` | L 0.40 / 0.67, C 0.155, H 197 | Hover/pressed state for cyan elements |
+| Cyan Dim   | `--brand-accent-dim`   | `rgba(0,107,133,0.08)` | `rgba(0,212,255,0.15)` | accent at alpha 0.08 / 0.15 | Subtle wash for selected states, highlights |
 
-> **Why darken cyan in light mode?** `#00d4ff` on white yields contrast ratio ~2.8:1 (fails WCAG AA). `#0088a8` on white yields ~4.6:1 (passes AA). Brand hue 187° is preserved; only lightness shifts.
+> **Why darken cyan in light mode?** `#00d4ff` on white yields contrast ratio ~2.8:1 (fails WCAG AA). `#006b85` on white yields ~6.1:1 (passes AA with margin). Brand hue 197° is preserved; only lightness shifts — this is exactly the oklch model in action.
 
 ### 2.2 Text
 
-| Token     | CSS Variable       | Light     | Dark      | Usage                          |
-| --------- | ------------------ | --------- | --------- | ------------------------------ |
-| Primary   | `--text-primary`   | `#1a1a2e` | `#e8e8f0` | Main body text                 |
-| Secondary | `--text-secondary` | `#4a4a5e` | `#a8a8bc` | Descriptions, metadata         |
-| Muted     | `--text-muted`     | `#8b8b9a` | `#6b6b80` | Placeholders, disabled labels  |
-| Accent    | `--text-accent`    | `#0088a8` | `#00d4ff` | Active labels, links, node IDs |
+| Token     | CSS Variable       | Light     | Dark      | oklch (L light / L dark, C, H) | Usage |
+| --------- | ------------------ | --------- | --------- | ------------------------------ | ----- |
+| Primary   | `--text-primary`   | `#1a1a2e` | `#e8e8f0` | L 0.20 / 0.93, C 0.010, H 280 | Main body text |
+| Secondary | `--text-secondary` | `#4a4a5e` | `#a8a8bc` | L 0.40 / 0.73, C 0.010, H 280 | Descriptions, metadata |
+| Muted     | `--text-muted`     | `#8b8b9a` | `#6b6b80` | L 0.62 / 0.50, C 0.010, H 280 | Placeholders, disabled labels |
+| Accent    | `--text-accent`    | `#006b85` | `#00d4ff` | = `--brand-accent` | Active labels, links, node IDs |
 
 ### 2.3 Surface & Border
 
-| Token         | CSS Variable         | Light               | Dark                     | Usage                                      |
-| ------------- | -------------------- | ------------------- | ------------------------ | ------------------------------------------ |
-| Root          | `--surface-root`     | `#f5f5f8`           | `#0d0d14`                | Page background canvas                     |
-| Panel         | `--surface-panel`    | `#ededf2`           | `#1e1e2e`                | Sidebar, panels, secondary surfaces        |
-| Card          | `--surface-card`     | `#ffffff`           | `#2a2a3e`                | Card backgrounds, node blocks              |
-| Elevated      | `--surface-elevated` | `#ffffff`           | `#323248`                | Hover cards, dropdowns, tooltips           |
-| Canvas        | `--surface-canvas`   | `#f7f6f1`           | `#1e1e2e`                | Writing area (warm paper tint in light)    |
-| Border        | `--border-default`   | `#d0d0da`           | `#3a3a52`                | Standard borders, dividers                 |
-| Border Active | `--border-active`    | `#0088a8`           | `#00d4ff`                | Active/selected borders                    |
-| Border Subtle | `--border-subtle`    | `rgba(0,0,0,0.06)`  | `rgba(255,255,255,0.06)` | Subtle inner borders                       |
+| Token         | CSS Variable         | Light               | Dark                     | oklch (L light / L dark, C, H) | Usage |
+| ------------- | -------------------- | ------------------- | ------------------------ | ------------------------------ | ----- |
+| Root          | `--surface-root`     | `#f5f5f8`           | `#0d0d14`                | L 0.97 / 0.10, C 0.005, H 280 | Page background canvas |
+| Panel         | `--surface-panel`    | `#ededf2`           | `#1e1e2e`                | L 0.94 / 0.18, C 0.005, H 280 | Sidebar, panels, secondary surfaces |
+| Card          | `--surface-card`     | `#ffffff`           | `#2a2a3e`                | L 1.00 / 0.24, C 0.005, H 280 | Card backgrounds, node blocks |
+| Elevated      | `--surface-elevated` | `#ffffff`           | `#323248`                | L 1.00 / 0.28, C 0.005, H 280 | Hover cards, dropdowns, tooltips |
+| Canvas        | `--surface-canvas`   | `#f7f6f1`           | `#1e1e2e`                | L 0.97 / 0.18, C 0.010, H 85 | Writing area (warm paper tint in light) |
+| Border        | `--border-default`   | `#d0d0da`           | `#3a3a52`                | L 0.85 / 0.30, C 0.005, H 280 | Standard borders, dividers |
+| Border Active | `--border-active`    | `#006b85`           | `#00d4ff`                | = `--brand-accent` | Active/selected borders |
+| Border Subtle | `--border-subtle`    | `rgba(0,0,0,0.06)`  | `rgba(255,255,255,0.06)` | black/white at alpha 0.06 | Subtle inner borders |
 
 **Surface layering model:**
 
-- Light: `#f5f5f8` → `#ededf2` → `#ffffff` (whiter = higher)
-- Dark: `#0d0d14` → `#1e1e2e` → `#2a2a3e` → `#323248` (lighter = higher)
+- Light: L 0.97 → 0.94 → 1.00 (whiter = higher), all C 0.005 H 280
+- Dark: L 0.10 → 0.18 → 0.24 → 0.28 (lighter = higher), all C 0.005 H 280
 
 ### 2.4 Semantic / Functional
 
-| Token     | CSS Variable        | Light     | Dark      | Usage                                   |
-| --------- | ------------------- | --------- | --------- | --------------------------------------- |
-| Success   | `--color-success`   | `#008a60` | `#00c896` | Score high (>=0.80), promote eligible   |
-| Warning   | `--color-warning`   | `#9a6800` | `#f0a500` | Score mid (0.60–0.79), review suggested |
-| Danger    | `--color-danger`    | `#c4203e` | `#ff4566` | Score low (<0.60), hallucination risk   |
-| Focus     | `--color-focus`     | `#3d63cc` | `#4d7cff` | Focus rings, keyboard navigation        |
-| Best Node | `--color-best-node` | `#8a7000` | `#ffd700` | bestNode highlight in version tree      |
+| Token     | CSS Variable        | Light     | Dark      | oklch (L light / L dark, C, H) | Usage |
+| --------- | ------------------- | --------- | --------- | ------------------------------ | ----- |
+| Success   | `--color-success`   | `#007a54` | `#00c896` | L 0.48 / 0.72, C 0.140, H 165 | Score high (>=0.80), promote eligible |
+| Warning   | `--color-warning`   | `#9a6800` | `#f0a500` | L 0.52 / 0.72, C 0.150, H 75 | Score mid (0.60–0.79), review suggested |
+| Danger    | `--color-danger`    | `#c4203e` | `#ff6685` | L 0.50 / 0.73, C 0.180, H 15 | Score low (<0.60), hallucination risk |
+| Focus     | `--color-focus`     | `#3d63cc` | `#4d7cff` | L 0.48 / 0.62, C 0.160, H 260 | Focus rings, keyboard navigation |
+| Best Node | `--color-best-node` | `#8a7000` | `#ffd700` | L 0.52 / 0.85, C 0.140, H 90 | bestNode highlight in version tree |
 
 ### 2.5 Diff
 
 | Token            | CSS Variable         | Light                  | Dark                    |
 | ---------------- | -------------------- | ---------------------- | ----------------------- |
-| Diff Add BG      | `--diff-add-bg`      | `rgba(0,138,96,0.10)`  | `rgba(0,200,150,0.15)`  |
-| Diff Remove BG   | `--diff-remove-bg`   | `rgba(196,32,62,0.10)` | `rgba(255,69,102,0.15)` |
-| Diff Add Text    | `--diff-add-text`    | `#008a60`              | `#00c896`               |
-| Diff Remove Text | `--diff-remove-text` | `#c4203e`              | `#ff4566`               |
+| Diff Add BG      | `--diff-add-bg`      | `rgba(0,122,84,0.10)`  | `rgba(0,200,150,0.15)`  |
+| Diff Remove BG   | `--diff-remove-bg`   | `rgba(196,32,62,0.10)` | `rgba(255,102,133,0.15)` |
+| Diff Add Text    | `--diff-add-text`    | `#007a54`              | `#00c896`               |
+| Diff Remove Text | `--diff-remove-text` | `#c4203e`              | `#ff6685`               |
 
 ---
 
@@ -91,25 +134,27 @@ All color values are listed as **Light | Dark**. Components reference the semant
 
 ### Font Family
 
-- **UI:** Inter — fallbacks: -apple-system, system-ui, Segoe UI, Helvetica Neue, Arial
-- **Content / Mono:** JetBrains Mono — fallbacks: Fira Code, Cascadia Code, Consolas, monospace
+- **UI:** Source Sans 3 — fallbacks: Source Han Sans, -apple-system, system-ui, Segoe UI, Helvetica Neue, Arial
+- **UI (CJK):** Source Han Sans (思源黑体) — fallback: Noto Sans SC, PingFang SC, Microsoft YaHei
+- **Content / Mono:** JetBrains Mono — fallbacks: Source Han Mono, Fira Code, Cascadia Code, Consolas, monospace
+- **Content / Mono (CJK):** Source Han Mono (思源等宽) — fallback: Noto Sans Mono CJK SC
 
 ### Type Scale
 
 | Role           | Font           | Size            | Weight  | Line Height | Letter Spacing | Notes             |
 | -------------- | -------------- | --------------- | ------- | ----------- | -------------- | ----------------- |
-| Display Hero   | Inter          | 48px (3rem)     | 700     | 1.1         | -1.5px         | Brand moments     |
-| Page Title     | Inter          | 28px (1.75rem)  | 600     | 1.2         | -0.8px         | Section headers   |
-| Card Title     | Inter          | 16px (1rem)     | 600     | 1.4         | -0.2px         | Article titles    |
-| Body           | Inter          | 14px (0.875rem) | 400     | 1.6         | normal         | Standard UI text  |
-| Caption        | Inter          | 12px (0.75rem)  | 400–500 | 1.5         | normal         | Metadata, tags    |
+| Display Hero   | Source Sans 3  | 48px (3rem)     | 700     | 1.1         | -1.5px         | Brand moments     |
+| Page Title     | Source Sans 3  | 28px (1.75rem)  | 600     | 1.2         | -0.8px         | Section headers   |
+| Card Title     | Source Sans 3  | 16px (1rem)     | 600     | 1.4         | -0.2px         | Article titles    |
+| Body           | Source Sans 3  | 14px (0.875rem) | 400     | 1.6         | normal         | Standard UI text  |
+| Caption        | Source Sans 3  | 12px (0.75rem)  | 400–500 | 1.5         | normal         | Metadata, tags    |
 | Node Label     | JetBrains Mono | 11px (0.688rem) | 500     | normal      | 0.5px          | v1, v2-a labels   |
 | Content Output | JetBrains Mono | 14px (0.875rem) | 400     | 1.8         | normal         | Draft rendering   |
-| Score Display  | Inter          | 32px (2rem)     | 700     | 1           | -1px           | Evaluation scores |
+| Score Display  | Source Sans 3  | 32px (2rem)     | 700     | 1           | -1px           | Evaluation scores |
 
 ### Typography Principles
 
-- **Dual-font identity:** Inter = UI chrome, JetBrains Mono = AI output. This boundary is sacred.
+- **Dual-font identity:** Source Sans 3 (+ Source Han Sans) = UI chrome, JetBrains Mono (+ Source Han Mono) = AI output. This boundary is sacred.
 - **Negative tracking on titles:** -0.8px to -1.5px for a sharp, editorial feel
 - **High line-height for content:** 1.8 on content output ensures comfortable long-form reading
 - **Compact range:** 11px–48px; most functional UI lives at 12–16px
@@ -169,7 +214,7 @@ All color values are listed as **Light | Dark**. Components reference the semant
 | Raised (1)    | `0 1px 3px rgba(0,0,0,0.08)`     | `0 2px 8px rgba(0,0,0,0.4)`     | Cards on hover        |
 | Floating (2)  | `0 4px 16px rgba(0,0,0,0.10)`    | `0 8px 24px rgba(0,0,0,0.6)`    | Dropdowns, tooltips   |
 | Modal (3)     | `0 8px 32px rgba(0,0,0,0.14)`    | `0 16px 48px rgba(0,0,0,0.8)`   | Modals, dialogs       |
-| Glow (Accent) | `0 0 0 2px rgba(0,136,168,0.15)` | `0 0 0 2px rgba(0,212,255,0.2)` | Active/selected nodes |
+| Glow (Accent) | `0 0 0 2px rgba(0,107,133,0.15)` | `0 0 0 2px rgba(0,212,255,0.2)` | Active/selected nodes |
 | Gold Glow     | `0 0 0 2px rgba(138,112,0,0.15)` | `0 0 0 2px rgba(255,215,0,0.2)` | Best node highlight   |
 
 **Depth philosophy:**
@@ -179,7 +224,47 @@ All color values are listed as **Light | Dark**. Components reference the semant
 
 ---
 
-## 6. Iconography (Theme-Agnostic Structure)
+## 6. Motion & Transitions (Theme-Agnostic)
+
+### Duration Scale
+
+| Token               | Value  | Usage                                          |
+| ------------------- | ------ | ---------------------------------------------- |
+| `--duration-fast`   | 100ms  | Color shifts, opacity toggles, icon swaps      |
+| `--duration-normal` | 200ms  | Button hover, border highlight, card lift       |
+| `--duration-slow`   | 350ms  | Panel expand/collapse, drawer slide, modal open |
+
+### Easing Curves
+
+| Token              | Value                        | Usage                              |
+| ------------------ | ---------------------------- | ---------------------------------- |
+| `--ease-default`   | `cubic-bezier(0.4, 0, 0.2, 1)` | General-purpose (Material standard) |
+| `--ease-enter`     | `cubic-bezier(0, 0, 0.2, 1)`   | Elements appearing (decelerate in)  |
+| `--ease-exit`      | `cubic-bezier(0.4, 0, 1, 1)`   | Elements leaving (accelerate out)   |
+
+### Common Patterns
+
+| Pattern              | Duration | Easing        | Properties                         |
+| -------------------- | -------- | ------------- | ---------------------------------- |
+| Button hover         | fast     | default       | `background-color, border-color`   |
+| Card hover lift      | normal   | default       | `border-color, box-shadow`         |
+| Input focus ring     | fast     | default       | `border-color, box-shadow`         |
+| Sidebar toggle       | slow     | enter / exit  | `width, opacity`                   |
+| Modal open           | slow     | enter         | `opacity, transform: scale(0.97→1)` |
+| Modal close          | normal   | exit          | `opacity, transform: scale(1→0.97)` |
+| Dropdown open        | normal   | enter         | `opacity, transform: translateY(-4px→0)` |
+| Node selection       | fast     | default       | `border-color, box-shadow`         |
+| Streaming cursor     | 1000ms   | `steps(1)`    | `opacity` 0↔1 blink               |
+
+### Principles
+
+- **Snappy chrome, gentle content:** UI controls respond instantly (fast); layout changes ease in (slow)
+- **No bounce, no overshoot:** cubic-bezier only — no spring physics. The tool is professional, not playful
+- **Reduce motion:** respect `prefers-reduced-motion: reduce` — collapse all transitions to 0ms, disable cursor blink
+
+---
+
+## 7. Iconography (Theme-Agnostic Structure)
 
 - **Library:** Lucide Icons (consistent with Next.js ecosystem)
 - **Sizes:** 16px (inline), 20px (standard), 24px (prominent)
@@ -193,11 +278,11 @@ All color values are listed as **Light | Dark**. Components reference the semant
 
 ---
 
-## 7. Components
+## 8. Components
 
 All components use **semantic token names**. Dimensions (padding, radius, font size) are theme-agnostic. Color values vary by theme — use the CSS variable, not the hex.
 
-### 7.1 Buttons
+### 8.1 Buttons
 
 **Primary**
 
@@ -250,7 +335,7 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 | Size       | 32px × 32px                                                      |
 | Hover      | icon `var(--brand-accent)`, background `var(--surface-elevated)` |
 
-### 7.2 Cards & Containers
+### 8.2 Cards & Containers
 
 **Article Card (Dashboard)**
 
@@ -287,14 +372,15 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 
 **Evaluation Score Card**
 
-| Property    | Value                                                 |
-| ----------- | ----------------------------------------------------- |
-| Background  | Light: `var(--surface-card)` / Dark: `var(--surface-panel)` |
-| Border-left | 3px solid (success/warning/danger by score tier)      |
-| Radius      | 8px                                                   |
-| Score       | Inter 32px weight 700, color by score tier            |
+| Property   | Value                                                        |
+| ---------- | ------------------------------------------------------------ |
+| Background | Light: `var(--surface-card)` / Dark: `var(--surface-panel)`  |
+| Border     | 1px solid `var(--border-default)`                            |
+| Radius     | 8px                                                          |
+| Indicator  | 6px circle (top-right of score), fill by score tier color    |
+| Score      | Source Sans 3 32px weight 700, color by score tier                   |
 
-### 7.3 Inputs & Forms
+### 8.3 Inputs & Forms
 
 **Text Input**
 
@@ -311,7 +397,7 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 
 - Same as text input
 - Min-height: 160px
-- Font: Inter 14px, line-height 1.6
+- Font: Source Sans 3 14px, line-height 1.6
 - Resize: vertical only
 
 **Select / Dropdown**
@@ -324,7 +410,7 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 | Text       | `var(--text-primary)`             |
 | Chevron    | `var(--text-muted)`               |
 
-### 7.4 Navigation
+### 8.4 Navigation
 
 **Top Navigation**
 
@@ -333,8 +419,8 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 | Background    | `var(--surface-root)`                                              |
 | Border-bottom | 1px solid `var(--border-default)`                                  |
 | Height        | 56px                                                               |
-| Logo          | Inter 18px weight 700, `var(--brand-accent)`                       |
-| Nav links     | Inter 14px, `var(--text-secondary)`, active: `var(--text-primary)` |
+| Logo          | Source Sans 3 18px weight 700, `var(--brand-accent)`                       |
+| Nav links     | Source Sans 3 14px, `var(--text-secondary)`, active: `var(--text-primary)` |
 
 **Left Sidebar**
 
@@ -343,9 +429,9 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 | Background     | `var(--surface-panel)`                                                    |
 | Border-right   | 1px solid `var(--border-default)`                                         |
 | Width          | 240px                                                                     |
-| Section labels | Inter 11px weight 600, `var(--text-muted)`, uppercase, letter-spacing 1px |
+| Section labels | Source Sans 3 11px weight 600, `var(--text-muted)`, uppercase, letter-spacing 1px |
 
-### 7.5 Tags & Badges
+### 8.5 Tags & Badges
 
 **Status Badge**
 
@@ -354,7 +440,7 @@ All components use **semantic token names**. Dimensions (padding, radius, font s
 | `draft` | `var(--brand-accent-dim)` | `var(--brand-accent)`  | `var(--brand-accent)` at 0.3/0.2 alpha |
 | `final` | success at 0.1/0.08 alpha | `var(--color-success)` | success at 0.3/0.2 alpha               |
 
-Common: radius 4px, padding 2px 8px, Inter 11px weight 500
+Common: radius 4px, padding 2px 8px, Source Sans 3 11px weight 500
 
 **Score Badge**
 
@@ -364,7 +450,7 @@ Common: radius 4px, padding 2px 8px, Inter 11px weight 500
 | Mid (0.60–0.79) | warning at 0.1/0.08 alpha | `var(--color-warning)` |
 | Low (<0.60)     | danger at 0.1/0.08 alpha  | `var(--color-danger)`  |
 
-Common: radius 4px, Inter 12px weight 600
+Common: radius 4px, Source Sans 3 12px weight 600
 
 **Node Depth Badge**
 
@@ -374,7 +460,7 @@ Common: radius 4px, Inter 12px weight 600
 
 ---
 
-## 8. Special UI Patterns
+## 9. Special UI Patterns
 
 ### Version Tree Visualization
 
@@ -395,8 +481,8 @@ Common: radius 4px, Inter 12px weight 600
 
 - 5 metrics rendered as horizontal bars
 - Bar fill: gradient from `var(--surface-card)` to score-tier color
-- Labels: Inter 12px `var(--text-secondary)`
-- Overall score: Inter 32px centered, color by score tier
+- Labels: Source Sans 3 12px `var(--text-secondary)`
+- Overall score: Source Sans 3 32px centered, color by score tier
 
 ### Feedback Mark UI
 
@@ -413,14 +499,14 @@ Common: radius 4px, Inter 12px weight 600
 
 ---
 
-## 9. Do's and Don'ts
+## 10. Do's and Don'ts
 
 ### Do
 
 - Reference semantic CSS variables (`var(--brand-accent)`) — never hardcode hex values in components
 - Maintain the cool undertone in both themes — all neutrals lean slate, not sand
 - Apply Cyber Cyan only for active, interactive, brand moments — never decorative
-- Use Inter for all UI chrome, JetBrains Mono for all AI output and node labels
+- Use Source Sans 3 / Source Han Sans for all UI chrome, JetBrains Mono / Source Han Mono for all AI output and node labels
 - Apply restrained radius: 8px for inputs/buttons, 12px for cards — precise, not rounded
 - Score-color everything evaluation-related: success / warning / danger tiers
 - Light: use subtle shadows for depth; Dark: use surface layering for depth
@@ -435,12 +521,12 @@ Common: radius 4px, Inter 12px weight 600
 - Don't add heavy drop shadows in either theme
 - Don't use `#00d4ff` for text on light backgrounds — it fails WCAG AA contrast
 - Don't introduce warm accent colors — cyan + slate is the complete palette
-- Don't use Inter for AI-generated content — the font boundary is sacred
+- Don't use Source Sans 3 for AI-generated content — the font boundary is sacred
 - Don't change spacing, radius, or layout between themes — only color tokens differ
 
 ---
 
-## 10. Responsive Behavior
+## 11. Responsive Behavior
 
 ### Breakpoints
 
@@ -462,14 +548,77 @@ Common: radius 4px, Inter 12px weight 600
 
 ---
 
-## 11. Quick Reference for Agents
+## 12. Accessibility
+
+### Contrast Requirements
+
+- **Target:** WCAG 2.1 AA minimum across both themes
+- **Normal text** (< 18px / < 14px bold): contrast ratio ≥ 4.5:1
+- **Large text** (≥ 18px / ≥ 14px bold): contrast ratio ≥ 3:1
+- **Non-text UI** (borders, icons, focus rings): contrast ratio ≥ 3:1 against adjacent color
+- Brand accent is pre-validated: `#006b85` on `#f5f5f8` = 5.6:1 (light), `#00d4ff` on `#0d0d14` = 12.1:1 (dark)
+- `--text-muted` is exempt from AA minimums — used only for placeholders and disabled labels (WCAG 1.4.3 exempts disabled UI)
+- `--border-default` is decorative (visual separation only, not informational) — exempt from 3:1 non-text UI requirement
+
+### Focus Indicators
+
+| Property  | Value                                                        |
+| --------- | ------------------------------------------------------------ |
+| Style     | `2px solid var(--color-focus)` outline                       |
+| Offset    | `2px` (outline-offset, ensures gap from element edge)        |
+| Radius    | Follows element's border-radius                              |
+| Glow      | `0 0 0 4px var(--brand-accent-dim)` as secondary indicator  |
+| Visible   | Always visible on `:focus-visible`; hidden on mouse `:focus` |
+
+### Touch & Click Targets
+
+- **Minimum interactive size:** 44px × 44px (WCAG 2.5.8 Target Size)
+- **Minimum spacing between targets:** 8px
+- Compact elements (badges, node labels) that are not interactive are exempt
+- Icon buttons (32px visual) must have 44px hit area via padding or `min-width`/`min-height`
+
+### Color Independence
+
+Evaluation scores must never rely on color alone:
+
+| Signal          | Color                  | Secondary Indicator          |
+| --------------- | ---------------------- | ---------------------------- |
+| High (≥ 0.80)   | `var(--color-success)` | Numeric value + "▲" prefix   |
+| Mid (0.60–0.79) | `var(--color-warning)` | Numeric value + "●" prefix   |
+| Low (< 0.60)    | `var(--color-danger)`  | Numeric value + "▼" prefix   |
+| Best Node       | `var(--color-best-node)` | Star icon (★) beside label |
+
+### Keyboard Navigation
+
+- All interactive elements reachable via `Tab` / `Shift+Tab`
+- Version tree nodes: arrow keys for spatial navigation (← → ↑ ↓)
+- Modal: focus trapped inside; `Escape` closes
+- Writing canvas: `Tab` exits to next UI element (not trapped)
+- Skip link: hidden "Skip to canvas" link at top, visible on focus
+
+### Motion Accessibility
+
+- Respect `prefers-reduced-motion: reduce` — collapse all transitions to 0ms
+- Disable streaming cursor blink animation
+- Sidebar and modal transitions become instant
+
+### Semantic Markup
+
+- Use `role="tree"` + `role="treeitem"` for version tree
+- Evaluation bars: `role="meter"` with `aria-valuenow`, `aria-valuemin="0"`, `aria-valuemax="1"`
+- Status badges: `aria-label` includes status text (e.g., "Status: Draft")
+- Live generation output: `aria-live="polite"` on streaming content container
+
+---
+
+## 13. Quick Reference for Agents
 
 ### Color Token Map (Light / Dark)
 
 | Token                  | Light     | Dark      |
 | ---------------------- | --------- | --------- |
-| `--brand-accent`       | `#0088a8` | `#00d4ff` |
-| `--brand-accent-hover` | `#006d88` | `#00b8e0` |
+| `--brand-accent`       | `#006b85` | `#00d4ff` |
+| `--brand-accent-hover` | `#005a70` | `#00b8e0` |
 | `--surface-root`       | `#f5f5f8` | `#0d0d14` |
 | `--surface-panel`      | `#ededf2` | `#1e1e2e` |
 | `--surface-card`       | `#ffffff` | `#2a2a3e` |
@@ -478,14 +627,14 @@ Common: radius 4px, Inter 12px weight 600
 | `--text-secondary`     | `#4a4a5e` | `#a8a8bc` |
 | `--text-muted`         | `#8b8b9a` | `#6b6b80` |
 | `--border-default`     | `#d0d0da` | `#3a3a52` |
-| `--color-success`      | `#008a60` | `#00c896` |
+| `--color-success`      | `#007a54` | `#00c896` |
 | `--color-warning`      | `#9a6800` | `#f0a500` |
-| `--color-danger`       | `#c4203e` | `#ff4566` |
+| `--color-danger`       | `#c4203e` | `#ff6685` |
 | `--color-best-node`    | `#8a7000` | `#ffd700` |
 
 ### Example Component Prompts
 
-- "Create a dashboard article card: `var(--surface-panel)` background, 1px solid `var(--border-default)` border, 12px radius. Title Inter 16px weight 600 `var(--text-primary)`. Hover: border `var(--brand-accent)`."
+- "Create a dashboard article card: `var(--surface-panel)` background, 1px solid `var(--border-default)` border, 12px radius. Title Source Sans 3 16px weight 600 `var(--text-primary)`. Hover: border `var(--brand-accent)`."
 - "Design a node card: `var(--surface-card)` background, 8px radius, JetBrains Mono 11px `var(--text-accent)` label. Selected: Accent Glow shadow."
 - "Build a primary button: `var(--brand-accent)` background, 8px radius, 8px 20px padding. Hover: `var(--brand-accent-hover)`."
 - "Create writing canvas: `var(--surface-canvas)` background, 12px radius, 32px 40px padding. JetBrains Mono 14px `var(--text-primary)` line-height 1.8."
@@ -494,7 +643,7 @@ Common: radius 4px, Inter 12px weight 600
 
 - Cyan for active/interactive only — never decorative
 - 8px radius on buttons/inputs, 12px on cards
-- Inter for UI, JetBrains Mono for output
+- Source Sans 3 for UI, JetBrains Mono for output
 - Score-color all evaluation UI: success / warning / danger tiers
 - Light: subtle shadows for depth; Dark: surface layering for depth
 - Light canvas `#f7f6f1` = warm paper; everything else stays cool
