@@ -5240,7 +5240,7 @@
                 },
                 {
                   "type": "frame",
-                  "id": "nsfeq",
+                  "id": "w0c8V0",
                   "name": "themeRow",
                   "width": "fill_container",
                   "padding": 8,
@@ -5249,35 +5249,21 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "U87FF",
-                      "name": "themeLabel",
-                      "fill": "$text-muted",
+                      "id": "l3gMD",
+                      "fill": "#8b8b9a",
                       "content": "Dark mode",
                       "fontFamily": "Source Sans 3",
                       "fontSize": 12,
                       "fontWeight": "normal"
                     },
                     {
-                      "type": "frame",
-                      "id": "KyXce",
-                      "name": "themeToggle",
-                      "width": 36,
-                      "height": 20,
-                      "fill": "$brand-accent",
-                      "cornerRadius": 10,
-                      "padding": 2,
-                      "justifyContent": "end",
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "ellipse",
-                          "id": "Lawd3",
-                          "name": "knob",
-                          "fill": "#ffffff",
-                          "width": 16,
-                          "height": 16
-                        }
-                      ]
+                      "type": "icon_font",
+                      "id": "n3Ndb1",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "moon",
+                      "iconFontFamily": "lucide",
+                      "fill": "#8b8b9a"
                     }
                   ]
                 }
@@ -6279,23 +6265,1086 @@
                       "fontWeight": "normal"
                     },
                     {
+                      "type": "icon_font",
+                      "id": "k57uI",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "moon",
+                      "iconFontFamily": "lucide",
+                      "fill": "#8b8b9a"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Mvbyo",
+      "x": 1520,
+      "y": 5881,
+      "name": "Dashboard Page (Collapsed)",
+      "width": 1440,
+      "height": 900,
+      "fill": "#fafafc",
+      "children": [
+        {
+          "type": "frame",
+          "id": "wUd21",
+          "layoutPosition": "absolute",
+          "x": 0,
+          "y": 0,
+          "name": "NavSidebar-collapsed",
+          "width": 56,
+          "height": 900,
+          "fill": "#fafafc",
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 3
+            },
+            "blur": 16
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            20,
+            0
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "f0Ant5",
+              "name": "logoRow",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QuiiE",
+                  "fill": "#006b85",
+                  "content": "CI",
+                  "fontFamily": "Source Sans 3",
+                  "fontSize": 18,
+                  "fontWeight": "700",
+                  "letterSpacing": -0.5
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "C81AET",
+              "name": "NavLinks",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "g4s8Mb",
+                  "name": "navDash",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#006b8514",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    0
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "xbwQ2",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "layout-dashboard",
+                      "iconFontFamily": "lucide",
+                      "fill": "#006b85"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "tPE5W",
+                  "name": "navWork",
+                  "width": 32,
+                  "height": 32,
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    0
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "V7Ds4V",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "pen-line",
+                      "iconFontFamily": "lucide",
+                      "fill": "#8b8b9a"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cIKbe",
+                  "name": "navStyles",
+                  "width": 32,
+                  "height": 32,
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    0
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "SC0Im",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "palette",
+                      "iconFontFamily": "lucide",
+                      "fill": "#8b8b9a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "d3zt4",
+              "name": "spacer",
+              "width": "fill_container",
+              "height": "fill_container"
+            },
+            {
+              "type": "frame",
+              "id": "AghaF",
+              "name": "bottomSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "xNJTv",
+                  "name": "newArticleBtn",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#006b85",
+                  "cornerRadius": 8,
+                  "padding": [
+                    8,
+                    0
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "nyQbn",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "plus",
+                      "iconFontFamily": "lucide",
+                      "fill": "#ffffff"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon_font",
+                  "id": "jDecX",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "sun",
+                  "iconFontFamily": "lucide",
+                  "fill": "#8b8b9a"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "qQrOk",
+          "layoutPosition": "absolute",
+          "x": 56,
+          "y": 0,
+          "name": "MainContent-expanded",
+          "width": 1384,
+          "height": 900,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "k2igB",
+              "name": "DashContent",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "#ffffff",
+              "layout": "vertical",
+              "gap": 32,
+              "padding": [
+                32,
+                40
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "n25k3q",
+                  "name": "pageHeader",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
                       "type": "frame",
-                      "id": "OHJnH",
-                      "name": "themeToggle",
-                      "width": 36,
-                      "height": 20,
-                      "fill": "$brand-accent",
-                      "cornerRadius": 10,
-                      "padding": 2,
-                      "justifyContent": "end",
-                      "alignItems": "center",
+                      "id": "S3vqn",
+                      "name": "headerLeft",
+                      "layout": "vertical",
+                      "gap": 4,
                       "children": [
                         {
-                          "type": "ellipse",
-                          "id": "m4RSYn",
-                          "fill": "#ffffff",
-                          "width": 16,
-                          "height": 16
+                          "type": "text",
+                          "id": "oQO7Z",
+                          "fill": "#1a1a2e",
+                          "content": "Dashboard",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 24,
+                          "fontWeight": "700",
+                          "letterSpacing": -0.5
+                        },
+                        {
+                          "type": "text",
+                          "id": "tISSc",
+                          "fill": "#8b8b9a",
+                          "content": "Overview of your writing workspace",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "psReG",
+                  "name": "StatsRow",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "L2it8s",
+                      "name": "stat1",
+                      "width": 140,
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": [
+                        16,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Hy1ho",
+                          "fill": "#8b8b9a",
+                          "content": "Total Articles",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "sZ3FH",
+                          "fill": "#1a1a2e",
+                          "content": "6",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 28,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "IgD1C",
+                      "name": "stat2",
+                      "width": 140,
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": [
+                        16,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "r7yMC",
+                          "fill": "#8b8b9a",
+                          "content": "Total Versions",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "LoupY",
+                          "fill": "#1a1a2e",
+                          "content": "16",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 28,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "J6Bgc2",
+                      "name": "stat3",
+                      "width": 140,
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": [
+                        16,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "RFukC",
+                          "fill": "#8b8b9a",
+                          "content": "Active Style",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qob0w",
+                          "fill": "#1a1a2e",
+                          "content": "v2",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 28,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "w0UQ9p",
+                  "name": "sectionHeader",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "g5f2a3",
+                      "fill": "#1a1a2e",
+                      "content": "Recent Articles",
+                      "fontFamily": "Source Sans 3",
+                      "fontSize": 16,
+                      "fontWeight": "600",
+                      "letterSpacing": -0.2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "D5u6sW",
+                  "name": "CardGrid",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "vL8gp",
+                      "name": "card1",
+                      "clip": true,
+                      "width": "fill_container",
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "f3u7B9",
+                          "name": "c1p",
+                          "width": "fill_container",
+                          "height": 88,
+                          "fill": "#f7f6f1",
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "CAoZj",
+                              "fill": "#8b8b9a",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "The regulatory landscape for artificial intelligence is shifting rapidly. Three distinct frameworks have emerged...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "PgFfO",
+                          "name": "c1m",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 20,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "Ew34U",
+                              "name": "titleRow",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "DJCXZ",
+                                  "fill": "#1a1a2e",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "AI Regulation Trends",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 16,
+                                  "fontWeight": "600",
+                                  "letterSpacing": -0.2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "kGx8M",
+                                  "fill": "#8b8b9a",
+                                  "content": "2026-04-28",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "Yh1eO",
+                              "fill": "#4a4a5e",
+                              "content": "3 versions · active: v2-a",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "wCXji",
+                      "name": "card2",
+                      "clip": true,
+                      "width": "fill_container",
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "puTsJ",
+                          "name": "c2p",
+                          "width": "fill_container",
+                          "height": 88,
+                          "fill": "#f7f6f1",
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "wBfpY",
+                              "fill": "#8b8b9a",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Southeast Asia's startup funding surged 40% in Q3, driven by AI-native companies and cross-border fintech...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "kpakL",
+                          "name": "c2m",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 20,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "eNCAt",
+                              "name": "titleRow",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Z4nWD",
+                                  "fill": "#1a1a2e",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Startup Ecosystem Report",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 16,
+                                  "fontWeight": "600",
+                                  "letterSpacing": -0.2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Ozl9e",
+                                  "fill": "#8b8b9a",
+                                  "content": "2026-04-25",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "fnIZz",
+                              "fill": "#4a4a5e",
+                              "content": "5 versions · active: v3",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "u0iBFa",
+                      "name": "card3",
+                      "clip": true,
+                      "width": "fill_container",
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "b4hm66",
+                          "name": "c3p",
+                          "width": "fill_container",
+                          "height": 88,
+                          "fill": "#f7f6f1",
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ubghl",
+                              "fill": "#8b8b9a",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Carbon border adjustment mechanisms are reshaping global trade flows. The EU's CBAM pilot data reveals...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "a9pEf",
+                          "name": "c3m",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 20,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "D0f6c",
+                              "name": "titleRow",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ADmiD",
+                                  "fill": "#1a1a2e",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Climate Policy Analysis",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 16,
+                                  "fontWeight": "600",
+                                  "letterSpacing": -0.2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "LIp86",
+                                  "fill": "#8b8b9a",
+                                  "content": "2026-04-27",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "ClDwp",
+                              "fill": "#4a4a5e",
+                              "content": "1 version",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "N4B35g",
+                  "name": "CardGrid2",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "x16vK",
+                      "name": "card4",
+                      "clip": true,
+                      "width": "fill_container",
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "zhdGX",
+                          "name": "c4p",
+                          "width": "fill_container",
+                          "height": 88,
+                          "fill": "#f7f6f1",
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nDfIi",
+                              "fill": "#8b8b9a",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Quantum advantage claims are accelerating beyond academic benchmarks into practical optimization problems...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "RLxuW",
+                          "name": "c4m",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 20,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "ZVqn3",
+                              "name": "titleRow",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "b3spKu",
+                                  "fill": "#1a1a2e",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Quantum Computing Review",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 16,
+                                  "fontWeight": "600",
+                                  "letterSpacing": -0.2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "lJ010",
+                                  "fill": "#8b8b9a",
+                                  "content": "2026-04-22",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "H0jfCt",
+                              "fill": "#4a4a5e",
+                              "content": "4 versions · active: v2-b",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JNIO6",
+                      "name": "card5",
+                      "clip": true,
+                      "width": "fill_container",
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ZrVOx",
+                          "name": "c5p",
+                          "width": "fill_container",
+                          "height": 88,
+                          "fill": "#f7f6f1",
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "IwvUy",
+                              "fill": "#8b8b9a",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Longitudinal data from 2,000+ companies reveals nuanced productivity patterns in hybrid work arrangements...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "J9XHPi",
+                          "name": "c5m",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 20,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "olGUT",
+                              "name": "titleRow",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "U9z477",
+                                  "fill": "#1a1a2e",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Remote Work Productivity",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 16,
+                                  "fontWeight": "600",
+                                  "letterSpacing": -0.2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Jz7XU",
+                                  "fill": "#8b8b9a",
+                                  "content": "2026-04-20",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "U8WTv4",
+                              "fill": "#4a4a5e",
+                              "content": "2 versions · active: v1",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "p0aUvP",
+                      "name": "card6",
+                      "clip": true,
+                      "width": "fill_container",
+                      "fill": "#ffffff",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#0000000F"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000F",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "uuW2H",
+                          "name": "c6p",
+                          "width": "fill_container",
+                          "height": 88,
+                          "fill": "#f7f6f1",
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "EDghQ",
+                              "fill": "#8b8b9a",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "CRISPR-based gene therapies are moving from clinical trials to market approvals at an unprecedented pace...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "JetBrains Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "YcxFp",
+                          "name": "c6m",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 20,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "EVU4B",
+                              "name": "titleRow",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "pD7TL",
+                                  "fill": "#1a1a2e",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Biotech Breakthroughs",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 16,
+                                  "fontWeight": "600",
+                                  "letterSpacing": -0.2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "MGBLE",
+                                  "fill": "#8b8b9a",
+                                  "content": "2026-04-18",
+                                  "fontFamily": "Source Sans 3",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "n38aj",
+                              "fill": "#4a4a5e",
+                              "content": "1 version",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
                         }
                       ]
                     }
