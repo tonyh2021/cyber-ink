@@ -156,6 +156,37 @@
   --shadow-gold-glow: 0 0 0 2px rgba(138, 112, 0, 0.15);
 }
 
+/* Streaming cursor — inline after the last element in the output */
+.output-stream[data-streaming] > *:last-child::after,
+.output-stream[data-streaming] > *:last-child > *:last-child::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: var(--brand-accent);
+  animation: pulse 1.5s ease-in-out infinite;
+  margin-left: 0.125rem;
+  vertical-align: text-bottom;
+}
+
+/* Only show the deepest match */
+.output-stream[data-streaming] > *:last-child::after {
+  content: none;
+}
+.output-stream[data-streaming] > *:last-child > *:last-child::after {
+  content: "";
+}
+
+/* Fallback: when last child has no children (e.g. bare <hr>) */
+.output-stream[data-streaming] > *:last-child:not(:has(*))::after {
+  content: "";
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
