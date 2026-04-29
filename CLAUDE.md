@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CyberInk — A file-system-based AI writing decision engine with branching exploration, auto-evaluation, and style self-learning feedback loop. Users ingest material, generate tree-structured drafts (2-level max), evaluate quality, and promote a final version. Style fingerprints evolve through user feedback.
+CyberInk — A file-system-based AI writing decision engine with version exploration, auto-evaluation, and style self-learning feedback loop. Users ingest material, generate sequential drafts, optimize variants, evaluate quality, and select an active version. Style fingerprints evolve through user feedback.
 
-Core principles: Control-first · Material-driven · Markdown-native · Evaluation-looped · Tree-structured · Self-improving
+Core principles: Control-first · Material-driven · Markdown-native · Evaluation-looped · Version-structured · Self-improving
 
 ## Tech Stack
 
@@ -29,25 +29,27 @@ pnpm lint            # Lint check
 ## Architecture — Three Layers
 
 1. **Ingestion Layer** — Text paste input
-2. **Intelligence Layer** — Dehydration Engine → Prompt Builder → Generation Engine → Branch Manager → Evaluation Engine → Feedback Collector
+2. **Intelligence Layer** — Dehydration Engine → Prompt Builder → Generation Engine → Evaluation Engine → Feedback Collector
 3. **Persistence Layer** — Markdown-native filesystem, tree.json, config.json, Git-compatible
 
 ### Core Flow
 
-Material → dehydrate → `source.md` → Prompt Builder (profile + style + source + instruction) → generate `v1.md` → auto-evaluate → user branches/optimizes → evaluate → highlight bestNode → user promotes → `final.md`
+Material → dehydrate → `source.md` → Prompt Builder (profile + style + source + instruction) → generate `v1.md` → auto-evaluate → user generates more versions / optimizes → evaluate → user sets activeNode
 
-### Branching Model (2-level cap)
+### Version Model
 
 ```
-v1              # Root (depth 1)
-├── v2-a        # Branch (depth 2)
-├── v2-b        # Branch (depth 2, max 4 siblings)
-└── v2-c        # Branch (depth 2)
+v1              # generate 1
+v2              # generate 2
+├── v2-a        # optimize of v2
+├── v2-b        # optimize of v2
+v3              # generate 3
+├── v3-a        # optimize of v3
 ```
 
-- `generate`: creates v1
-- `branch`: forks v1 only → v2-x (depth-2 nodes cannot branch further)
-- `optimize`: irreversible in-place rewrite on any node (no history kept)
+- `generate`: creates sequential versions (v1, v2, v3, ...) — each is an independent generation from source material
+- `optimize`: creates a variant of a specific version (v2 → v2-a, v2-b, ...) — one level only, optimize outputs cannot be optimized further
+- `activeNode`: tracks the user's currently selected node in `tree.json`
 
 ## Data Layout
 
@@ -63,17 +65,16 @@ v1              # Root (depth 1)
   /articles/[slug]/
     source.md                          # Dehydrated semantic kernel
     meta.md                            # Article metadata (YAML frontmatter)
-    tree.json                          # Branching structure + bestNode
-    final.md                           # Promoted final version
-    /nodes/v1.md, v2-a.md, ...         # Generated content nodes
-    /evaluation/v1.json, v2-a.json     # Evaluation scores per node
+    tree.json                          # Version structure + activeNode
+    /nodes/v1.md, v2.md, v2-a.md, ... # Generated content nodes
+    /evaluation/v1.json, v2.json, ... # Evaluation scores per node
 ```
 
 ## API Routes
 
 | Group      | Key Endpoints                                                                                                                                                                                        |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Article    | `POST /api/articles`, `DELETE /api/articles/[slug]`, `GET /api/articles/[slug]` (aggregated: tree+nodes+evals+meta), `POST .../generate`, `POST .../branch`, `POST .../optimize`, `POST .../promote` |
+| Article    | `POST /api/articles`, `DELETE /api/articles/[slug]`, `GET /api/articles/[slug]` (aggregated: tree+nodes+evals+meta), `POST .../generate`, `POST .../optimize` |
 | Evaluation | `POST /api/evaluate/node`, `GET /api/evaluate/[slug]/[node]`                                                                                                                                         |
 | Style      | `GET /api/styles`, `GET /api/styles/active`, `POST /api/styles/regenerate`, `POST /api/styles/set-active`                                                                                            |
 | Feedback   | `POST /api/feedback`, `GET /api/feedback`, `DELETE /api/feedback/[id]`                                                                                                                               |
@@ -84,7 +85,7 @@ v1              # Root (depth 1)
 
 - **Dehydration**: Extracts semantic kernel (core_ideas, arguments, facts, quotes, entities, quality_flags) from raw material — not a summary, but "semantic fuel" for writing.
 - **Prompt Builder**: Deterministic system prompt assembled from profile + active style + dehydrated source + user instruction + language + output format.
-- **Evaluation**: Auto-scored after every generation (clarity, style_match, information_density, reader_engagement, hallucination_risk, overall_score). Scores are advisory only — user always has final promote authority.
+- **Evaluation**: Auto-scored after every generation (clarity, style_match, information_density, reader_engagement, hallucination_risk, overall_score). Scores are advisory only — user selects activeNode at their discretion.
 - **Style Feedback Loop**: User marks good content → feedback stored → style regeneration uses pre-stored reference articles (`/references/`) + feedback → analysis model multi-round processing → new style version. Feedback belongs to the style system, not articles.
 
 ## Design System
@@ -104,4 +105,4 @@ v1              # Root (depth 1)
 - All code, comments, variable names, and UI copy in English.
 - Markdown files use YAML frontmatter (parsed with gray-matter).
 - Evaluation scores are 0–1 floats stored as JSON.
-- `tree.json` is the single source of truth for node relationships and bestNode.
+- `tree.json` is the single source of truth for node relationships and activeNode.

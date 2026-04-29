@@ -25,7 +25,7 @@ This phase must add material ingestion, article lifecycle management, and expand
 
 **Non-Goals:**
 - No dehydration engine — raw material is passed directly to prompt builder
-- No branching or optimize (Phase 3)
+- No optimize (Phase 3)
 - No auto-evaluation after generation (Phase 3)
 - No style management (Phase 4) — uses seed style from Phase 1
 - No standalone app shell polish (top nav, responsive sidebar) — `phase-ui-shell-dashboard` (after Phase 3)
@@ -47,8 +47,8 @@ This phase must add material ingestion, article lifecycle management, and expand
 ```
 /data/articles/art-20260429-001/
   source.md          # Raw material (text paste, no dehydration yet)
-  meta.json          # Article metadata (title, language, status, dates)
-  tree.json          # Branching structure (initialized empty, populated by Phase 3)
+  meta.json          # Article metadata (title, language, dates)
+  tree.json          # Version structure + activeNode
   /nodes/            # Generated content nodes (v1.md written by generate)
   /evaluation/       # Evaluation scores (empty until Phase 3)
 ```
@@ -98,7 +98,7 @@ Workspace
 ├── MaterialPanel            # Text paste textarea
 ├── InstructionPanel         # Instruction input + generate (reuses Phase 1 components)
 ├── NodeDisplay              # Generated content + tree context
-└── MetadataPanel            # Title, language, status, dates
+└── MetadataPanel            # Title, language, dates
 ```
 
 **Why:** Phase 2 turns the workspace from a single-purpose form into a multi-panel layout. Splitting early keeps each component focused and testable. The panel boundaries map to distinct data sources (source.md, meta.json, tree.json, nodes/).
@@ -144,5 +144,5 @@ Slug auto-generated as `art-YYYYMMDD-NNN`. NNN is a sequential counter within th
 - Material is persisted when the user clicks Generate — not auto-saved.
 - Generation presents streaming output (built in Phase 1, integrated here).
 - Missing inputs block generate with actionable guidance (disabled button + hint text).
-- Article sidebar shows article list with title and status; selecting an article navigates to `/articles/[slug]`.
+- Article sidebar shows article list with title; selecting an article navigates to `/articles/[slug]`.
 - Empty state (no articles) shows a "Create your first article" prompt with a create button.

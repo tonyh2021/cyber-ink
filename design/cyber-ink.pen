@@ -1939,19 +1939,6 @@
                   "width": "fill_container",
                   "name": "ac1",
                   "descendants": {
-                    "HlnHn": {
-                      "children": [
-                        {
-                          "id": "TMXAI",
-                          "type": "ref",
-                          "ref": "T85mKa",
-                          "name": "badge1"
-                        }
-                      ]
-                    },
-                    "Q94Qt": {
-                      "content": "AI Regulation Trends"
-                    },
                     "a1oUT": {
                       "content": "3 nodes · best: v2-a · score 0.85"
                     }
@@ -1964,19 +1951,6 @@
                   "width": "fill_container",
                   "name": "ac2",
                   "descendants": {
-                    "HlnHn": {
-                      "children": [
-                        {
-                          "id": "l8i6fB",
-                          "type": "ref",
-                          "ref": "SSO4w",
-                          "name": "badge2"
-                        }
-                      ]
-                    },
-                    "Q94Qt": {
-                      "content": "Startup Ecosystem Report"
-                    },
                     "a1oUT": {
                       "content": "5 nodes · promoted · score 0.92"
                     }
@@ -1989,19 +1963,6 @@
                   "width": "fill_container",
                   "name": "ac3",
                   "descendants": {
-                    "HlnHn": {
-                      "children": [
-                        {
-                          "id": "YbRDu",
-                          "type": "ref",
-                          "ref": "T85mKa",
-                          "name": "badge3"
-                        }
-                      ]
-                    },
-                    "Q94Qt": {
-                      "content": "Climate Policy Analysis"
-                    },
                     "a1oUT": {
                       "content": "1 node · awaiting evaluation"
                     }
@@ -4259,23 +4220,36 @@
                   "children": [
                     {
                       "type": "frame",
-                      "id": "HlnHn",
-                      "slot": [
-                        "BadgeDraft",
-                        "BadgeFinal"
-                      ],
-                      "width": "fit_content(0)",
-                      "height": "fit_content(0)"
-                    },
-                    {
-                      "type": "text",
-                      "id": "Q94Qt",
-                      "fill": "$text-primary",
-                      "content": "Article Title",
-                      "fontFamily": "$font-ui",
-                      "fontSize": 16,
-                      "fontWeight": "600",
-                      "letterSpacing": -0.2
+                      "id": "KLN6b",
+                      "name": "titleRow",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Q94Qt",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Article Title",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 16,
+                          "fontWeight": "600",
+                          "letterSpacing": -0.2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "HlnHn",
+                          "slot": [
+                            "BadgeDraft",
+                            "BadgeFinal"
+                          ],
+                          "width": "fit_content(0)",
+                          "height": "fit_content(0)"
+                        }
+                      ]
                     },
                     {
                       "type": "text",
@@ -4706,24 +4680,40 @@
                           "textGrowth": "fixed-width",
                           "width": "fill_container"
                         },
-                        "HlnHn": {
+                        "KLN6b": {
                           "type": "frame",
-                          "id": "dna0M",
-                          "name": "badgeSlot",
+                          "id": "p71GS",
+                          "name": "titleRow",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
                           "children": [
                             {
-                              "id": "N3moWb",
-                              "type": "ref",
-                              "ref": "T85mKa",
-                              "name": "badge1"
+                              "type": "text",
+                              "id": "XSxby",
+                              "fill": "#1a1a2e",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "AI Regulation Trends",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "letterSpacing": -0.2
+                            },
+                            {
+                              "type": "text",
+                              "id": "z78hI",
+                              "fill": "#8b8b9a",
+                              "content": "2026-04-28",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
-                        "Q94Qt": {
-                          "content": "AI Regulation Trends"
-                        },
                         "a1oUT": {
-                          "content": "3 nodes · best: v2-a"
+                          "content": "3 versions · active: v2-a"
                         }
                       }
                     },
@@ -4750,24 +4740,40 @@
                           "textGrowth": "fixed-width",
                           "width": "fill_container"
                         },
-                        "HlnHn": {
+                        "KLN6b": {
                           "type": "frame",
-                          "id": "xzwPB",
-                          "name": "badgeSlot",
+                          "id": "H77oXy",
+                          "name": "titleRow",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
                           "children": [
                             {
-                              "id": "zfjBo",
-                              "type": "ref",
-                              "ref": "SSO4w",
-                              "name": "badge2"
+                              "type": "text",
+                              "id": "a6dPK4",
+                              "fill": "#1a1a2e",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Startup Ecosystem Report",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "letterSpacing": -0.2
+                            },
+                            {
+                              "type": "text",
+                              "id": "EZRtj",
+                              "fill": "#8b8b9a",
+                              "content": "2026-04-25",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
-                        "Q94Qt": {
-                          "content": "Startup Ecosystem Report"
-                        },
                         "a1oUT": {
-                          "content": "5 nodes · promoted"
+                          "content": "5 versions · active: v3"
                         }
                       }
                     },
@@ -4794,24 +4800,40 @@
                           "textGrowth": "fixed-width",
                           "width": "fill_container"
                         },
-                        "HlnHn": {
+                        "KLN6b": {
                           "type": "frame",
-                          "id": "y50cm",
-                          "name": "badgeSlot",
+                          "id": "QqYmu",
+                          "name": "titleRow",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
                           "children": [
                             {
-                              "id": "BnSvt",
-                              "type": "ref",
-                              "ref": "T85mKa",
-                              "name": "badge3"
+                              "type": "text",
+                              "id": "N0s788",
+                              "fill": "#1a1a2e",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Climate Policy Analysis",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "letterSpacing": -0.2
+                            },
+                            {
+                              "type": "text",
+                              "id": "xOHqQ",
+                              "fill": "#8b8b9a",
+                              "content": "2026-04-27",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
-                        "Q94Qt": {
-                          "content": "Climate Policy Analysis"
-                        },
                         "a1oUT": {
-                          "content": "1 node · awaiting"
+                          "content": "1 version"
                         }
                       }
                     }
@@ -4847,24 +4869,40 @@
                           "textGrowth": "fixed-width",
                           "width": "fill_container"
                         },
-                        "HlnHn": {
+                        "KLN6b": {
                           "type": "frame",
-                          "id": "K4mzM",
-                          "name": "badgeSlot",
+                          "id": "sFJhn",
+                          "name": "titleRow",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
                           "children": [
                             {
-                              "id": "wFyJG",
-                              "type": "ref",
-                              "ref": "SSO4w",
-                              "name": "badge4"
+                              "type": "text",
+                              "id": "TmxDz",
+                              "fill": "#1a1a2e",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Quantum Computing Review",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "letterSpacing": -0.2
+                            },
+                            {
+                              "type": "text",
+                              "id": "CAfSN",
+                              "fill": "#8b8b9a",
+                              "content": "2026-04-22",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
-                        "Q94Qt": {
-                          "content": "Quantum Computing Review"
-                        },
                         "a1oUT": {
-                          "content": "4 nodes · promoted"
+                          "content": "4 versions · active: v2-b"
                         }
                       }
                     },
@@ -4891,24 +4929,40 @@
                           "textGrowth": "fixed-width",
                           "width": "fill_container"
                         },
-                        "HlnHn": {
+                        "KLN6b": {
                           "type": "frame",
-                          "id": "U8XzSL",
-                          "name": "badgeSlot",
+                          "id": "d59lR",
+                          "name": "titleRow",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
                           "children": [
                             {
-                              "id": "igdv1",
-                              "type": "ref",
-                              "ref": "T85mKa",
-                              "name": "badge5"
+                              "type": "text",
+                              "id": "Dbwdr",
+                              "fill": "#1a1a2e",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Remote Work Productivity",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "letterSpacing": -0.2
+                            },
+                            {
+                              "type": "text",
+                              "id": "J4kXPL",
+                              "fill": "#8b8b9a",
+                              "content": "2026-04-20",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
-                        "Q94Qt": {
-                          "content": "Remote Work Productivity"
-                        },
                         "a1oUT": {
-                          "content": "2 nodes · best: v1"
+                          "content": "2 versions · active: v1"
                         }
                       }
                     },
@@ -4935,24 +4989,40 @@
                           "textGrowth": "fixed-width",
                           "width": "fill_container"
                         },
-                        "HlnHn": {
+                        "KLN6b": {
                           "type": "frame",
-                          "id": "Xe3jA",
-                          "name": "badgeSlot",
+                          "id": "gPfOO",
+                          "name": "titleRow",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
                           "children": [
                             {
-                              "id": "XnzBw",
-                              "type": "ref",
-                              "ref": "T85mKa",
-                              "name": "badge6"
+                              "type": "text",
+                              "id": "mWwTc",
+                              "fill": "#1a1a2e",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Biotech Breakthroughs",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 16,
+                              "fontWeight": "600",
+                              "letterSpacing": -0.2
+                            },
+                            {
+                              "type": "text",
+                              "id": "xydCO",
+                              "fill": "#8b8b9a",
+                              "content": "2026-04-18",
+                              "fontFamily": "Source Sans 3",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
-                        "Q94Qt": {
-                          "content": "Biotech Breakthroughs"
-                        },
                         "a1oUT": {
-                          "content": "1 node · awaiting"
+                          "content": "1 version"
                         }
                       }
                     }
@@ -5234,10 +5304,10 @@
           "type": "frame",
           "id": "Y6YiuD",
           "layoutPosition": "absolute",
-          "x": 56,
+          "x": 220,
           "y": 0,
           "name": "MainBody",
-          "width": 1384,
+          "width": 1220,
           "height": 900,
           "layout": "vertical",
           "children": [
@@ -5281,7 +5351,7 @@
                           "name": "metaTitle",
                           "fill": "$text-primary",
                           "content": "AI Regulation Trends",
-                          "fontFamily": "Source Sans 3",
+                          "fontFamily": "$font-ui",
                           "fontSize": 18,
                           "fontWeight": "700",
                           "letterSpacing": -0.3
@@ -5294,18 +5364,12 @@
                           "alignItems": "center",
                           "children": [
                             {
-                              "id": "r3WBP",
-                              "type": "ref",
-                              "ref": "T85mKa",
-                              "name": "statusBadge"
-                            },
-                            {
                               "type": "text",
                               "id": "fyiPU",
                               "name": "metaDate",
                               "fill": "$text-muted",
                               "content": "2026-04-29 · EN · art-20260429-001",
-                              "fontFamily": "Source Sans 3",
+                              "fontFamily": "$font-ui",
                               "fontSize": 12,
                               "fontWeight": "normal"
                             }
@@ -5328,7 +5392,7 @@
                           "name": "matLabel",
                           "fill": "$text-secondary",
                           "content": "Material",
-                          "fontFamily": "Source Sans 3",
+                          "fontFamily": "$font-ui",
                           "fontSize": 13,
                           "fontWeight": "600"
                         },
@@ -5357,8 +5421,8 @@
                               "width": "fill_container",
                               "content": "The regulatory landscape for artificial intelligence is shifting rapidly across major economic blocs. Three distinct regulatory frameworks have emerged...\n\n1. The EU's AI Act establishes a risk-based classification system\n2. The US executive order focuses on safety testing and reporting\n3. China's approach emphasizes algorithmic governance and content control",
                               "lineHeight": 1.6,
-                              "fontFamily": "JetBrains Mono",
-                              "fontSize": 11,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 14,
                               "fontWeight": "normal"
                             }
                           ]
@@ -5379,7 +5443,7 @@
                           "name": "instrLabel",
                           "fill": "$text-secondary",
                           "content": "Instruction",
-                          "fontFamily": "Source Sans 3",
+                          "fontFamily": "$font-ui",
                           "fontSize": 13,
                           "fontWeight": "600"
                         },
@@ -5405,9 +5469,9 @@
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
                               "content": "e.g. Write a sharp analytical piece focusing on regulatory competition...",
-                              "lineHeight": 1.5,
-                              "fontFamily": "JetBrains Mono",
-                              "fontSize": 11,
+                              "lineHeight": 1.6,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 14,
                               "fontWeight": "normal"
                             }
                           ]
@@ -5474,7 +5538,7 @@
                               "name": "nhLabel",
                               "fill": "$text-primary",
                               "content": "Generated Output",
-                              "fontFamily": "Source Sans 3",
+                              "fontFamily": "$font-ui",
                               "fontSize": 14,
                               "fontWeight": "600"
                             },
@@ -5484,7 +5548,7 @@
                               "name": "nhNode",
                               "fill": "$brand-accent",
                               "content": "v1",
-                              "fontFamily": "JetBrains Mono",
+                              "fontFamily": "$font-mono",
                               "fontSize": 12,
                               "fontWeight": "600"
                             },
@@ -5521,6 +5585,8 @@
                           "type": "frame",
                           "id": "zU5A2",
                           "name": "nhRight",
+                          "width": "fit_content(197)",
+                          "height": "fit_content(36)",
                           "gap": 8,
                           "alignItems": "center",
                           "children": [
@@ -5529,6 +5595,7 @@
                               "type": "ref",
                               "ref": "x9sJqT",
                               "name": "optimizeBtn",
+                              "enabled": false,
                               "descendants": {
                                 "jKBb9": {
                                   "content": "Optimize"
@@ -5540,6 +5607,7 @@
                               "type": "ref",
                               "ref": "vIidR",
                               "name": "promoteBtn",
+                              "enabled": false,
                               "descendants": {
                                 "qFPom": {
                                   "content": "Promote"
@@ -5586,43 +5654,6 @@
                           }
                         },
                         {
-                          "id": "mx2oX",
-                          "type": "ref",
-                          "ref": "a1kCa",
-                          "name": "node-v2a",
-                          "descendants": {
-                            "pwOth": {
-                              "content": "v2-a"
-                            },
-                            "R8YTPn": {
-                              "content": "0.79",
-                              "enabled": false
-                            },
-                            "c5NeE": {
-                              "content": "branch"
-                            }
-                          }
-                        },
-                        {
-                          "id": "v3Qw44",
-                          "type": "ref",
-                          "ref": "a1kCa",
-                          "name": "node-v2b",
-                          "descendants": {
-                            "pwOth": {
-                              "content": "v2-b"
-                            },
-                            "R8YTPn": {
-                              "content": "0.82",
-                              "fill": "$color-success",
-                              "enabled": false
-                            },
-                            "c5NeE": {
-                              "content": "branch"
-                            }
-                          }
-                        },
-                        {
                           "type": "frame",
                           "id": "ZmNo7",
                           "name": "spacer",
@@ -5634,6 +5665,7 @@
                           "type": "ref",
                           "ref": "Saw3J",
                           "fill": "$brand-accent-dim",
+                          "enabled": false,
                           "descendants": {
                             "m2D8a": {
                               "iconFontName": "git-branch",
@@ -5666,7 +5698,7 @@
                           "width": "fill_container",
                           "content": "The regulatory landscape for artificial intelligence is shifting rapidly across the world's major economic blocs, revealing fundamentally different philosophies about the relationship between technological innovation and governmental oversight.\n\nDistinct frameworks have crystallized in the past eighteen months. The European Union's AI Act, adopted in March 2024, establishes the world's first comprehensive risk-based classification system. High-risk applications — from biometric identification in critical infrastructure management — face mandatory conformity assessments, while general-purpose AI models must meet transparency obligations that scale with their systemic influence.\n\nThe United States has taken a markedly different path. Executive Order 14110, signed in October 2023, expresses the EU's prescriptive categorization in favor of safety testing mandates and voluntary commitments from frontier AI developers. The approach reflects a philosophical preference for industry self-governance, tempered by federal oversight at the frontier of capability.\n\nChina's regulatory architecture, meanwhile, has evolved through a series of targeted regulations — on algorithmic recommendations (2023), deep synthesis (2023), and generative AI services (2023). Rather than a single omnibus law, Beijing has constructed a layered system that prioritizes content governance and social stability alongside innovation promotion.",
                           "lineHeight": 1.8,
-                          "fontFamily": "JetBrains Mono",
+                          "fontFamily": "$font-mono",
                           "fontSize": 13,
                           "fontWeight": "normal"
                         }
@@ -5697,7 +5729,7 @@
                           "name": "evLabel",
                           "fill": "$text-secondary",
                           "content": "Evaluation",
-                          "fontFamily": "Source Sans 3",
+                          "fontFamily": "$font-ui",
                           "fontSize": 12,
                           "fontWeight": "600"
                         },
@@ -5714,7 +5746,7 @@
                               "name": "ev1l",
                               "fill": "$text-muted",
                               "content": "Clarity",
-                              "fontFamily": "Source Sans 3",
+                              "fontFamily": "$font-ui",
                               "fontSize": 11,
                               "fontWeight": "normal"
                             },
@@ -5724,7 +5756,7 @@
                               "name": "ev1v",
                               "fill": "$color-success",
                               "content": "0.86",
-                              "fontFamily": "JetBrains Mono",
+                              "fontFamily": "$font-mono",
                               "fontSize": 11,
                               "fontWeight": "600"
                             }
@@ -5743,7 +5775,7 @@
                               "name": "ev2l",
                               "fill": "$text-muted",
                               "content": "Style",
-                              "fontFamily": "Source Sans 3",
+                              "fontFamily": "$font-ui",
                               "fontSize": 11,
                               "fontWeight": "normal"
                             },
@@ -5753,7 +5785,7 @@
                               "name": "ev2v",
                               "fill": "$color-success",
                               "content": "0.81",
-                              "fontFamily": "JetBrains Mono",
+                              "fontFamily": "$font-mono",
                               "fontSize": 11,
                               "fontWeight": "600"
                             }
@@ -5772,7 +5804,7 @@
                               "name": "ev3l",
                               "fill": "$text-muted",
                               "content": "Info Density",
-                              "fontFamily": "Source Sans 3",
+                              "fontFamily": "$font-ui",
                               "fontSize": 11,
                               "fontWeight": "normal"
                             },
@@ -5782,7 +5814,7 @@
                               "name": "ev3v",
                               "fill": "$color-warning",
                               "content": "0.79",
-                              "fontFamily": "JetBrains Mono",
+                              "fontFamily": "$font-mono",
                               "fontSize": 11,
                               "fontWeight": "600"
                             }
@@ -5801,7 +5833,7 @@
                               "name": "ev4l",
                               "fill": "$text-muted",
                               "content": "Engagement",
-                              "fontFamily": "Source Sans 3",
+                              "fontFamily": "$font-ui",
                               "fontSize": 11,
                               "fontWeight": "normal"
                             },
@@ -5811,7 +5843,7 @@
                               "name": "ev4v",
                               "fill": "$color-success",
                               "content": "0.84",
-                              "fontFamily": "JetBrains Mono",
+                              "fontFamily": "$font-mono",
                               "fontSize": 11,
                               "fontWeight": "600"
                             }
@@ -5830,7 +5862,7 @@
                               "name": "ev5l",
                               "fill": "$text-muted",
                               "content": "Hallucination",
-                              "fontFamily": "Source Sans 3",
+                              "fontFamily": "$font-ui",
                               "fontSize": 11,
                               "fontWeight": "normal"
                             },
@@ -5840,7 +5872,7 @@
                               "name": "ev5v",
                               "fill": "$color-success",
                               "content": "0.92",
-                              "fontFamily": "JetBrains Mono",
+                              "fontFamily": "$font-mono",
                               "fontSize": 11,
                               "fontWeight": "600"
                             }
@@ -5866,7 +5898,7 @@
                               "name": "evOl",
                               "fill": "$text-primary",
                               "content": "Overall",
-                              "fontFamily": "Source Sans 3",
+                              "fontFamily": "$font-ui",
                               "fontSize": 12,
                               "fontWeight": "600"
                             },
@@ -5876,7 +5908,7 @@
                               "name": "evOv",
                               "fill": "$color-success",
                               "content": "0.85",
-                              "fontFamily": "JetBrains Mono",
+                              "fontFamily": "$font-mono",
                               "fontSize": 14,
                               "fontWeight": "700"
                             }
@@ -5897,7 +5929,7 @@
           "x": 0,
           "y": 0,
           "name": "NavSidebar",
-          "width": 56,
+          "width": 220,
           "height": 900,
           "fill": "$surface-root",
           "effect": {
@@ -5914,94 +5946,151 @@
           "gap": 16,
           "padding": [
             20,
-            8
+            12
           ],
           "alignItems": "center",
           "children": [
             {
-              "type": "text",
-              "id": "MIZjW",
-              "name": "ciLogo",
-              "fill": "$brand-accent",
-              "content": "CI",
-              "fontFamily": "$font-ui",
-              "fontSize": 16,
-              "fontWeight": "700",
-              "letterSpacing": -0.5
-            },
-            {
               "type": "frame",
-              "id": "I3LNg",
-              "name": "NavIcons",
+              "id": "n9tU2",
+              "name": "logoRow",
               "width": "fill_container",
-              "layout": "vertical",
-              "gap": 4,
+              "gap": 8,
+              "padding": [
+                0,
+                8
+              ],
+              "justifyContent": "space_between",
               "alignItems": "center",
               "children": [
                 {
+                  "type": "text",
+                  "id": "Z6yEuc",
+                  "name": "logo",
+                  "fill": "$brand-accent",
+                  "content": "CyberInk",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 18,
+                  "fontWeight": "700",
+                  "letterSpacing": -0.5
+                },
+                {
+                  "type": "icon_font",
+                  "id": "T2m8h",
+                  "name": "collapseBtn",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "panel-left-close",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XTvWt",
+              "name": "NavLinks",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
                   "type": "frame",
-                  "id": "e8mv9",
-                  "name": "niDash",
-                  "width": 40,
-                  "height": 40,
+                  "id": "D6wucB",
+                  "name": "navDash",
+                  "width": "fill_container",
                   "cornerRadius": "$radius-standard",
-                  "justifyContent": "center",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
                   "alignItems": "center",
                   "children": [
                     {
                       "type": "icon_font",
-                      "id": "Y24dy",
-                      "name": "niDashI",
-                      "width": 20,
-                      "height": 20,
+                      "id": "lRRB7",
+                      "width": 16,
+                      "height": 16,
                       "iconFontName": "layout-dashboard",
                       "iconFontFamily": "lucide",
                       "fill": "$text-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hg4Bi",
+                      "fill": "$text-secondary",
+                      "content": "Dashboard",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "500"
                     }
                   ]
                 },
                 {
                   "type": "frame",
-                  "id": "J7kVwK",
-                  "name": "niWork",
-                  "width": 40,
-                  "height": 40,
+                  "id": "tInNV",
+                  "name": "navWork",
+                  "width": "fill_container",
                   "fill": "$brand-accent-dim",
                   "cornerRadius": "$radius-standard",
-                  "justifyContent": "center",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
                   "alignItems": "center",
                   "children": [
                     {
                       "type": "icon_font",
-                      "id": "qkF2w",
-                      "name": "niWorkI",
-                      "width": 20,
-                      "height": 20,
+                      "id": "ZdjCu",
+                      "width": 16,
+                      "height": 16,
                       "iconFontName": "pen-line",
                       "iconFontFamily": "lucide",
                       "fill": "$text-accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Dr12G",
+                      "fill": "$text-accent",
+                      "content": "Workspace",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "600"
                     }
                   ]
                 },
                 {
                   "type": "frame",
-                  "id": "OX2zW",
-                  "name": "niStyle",
-                  "width": 40,
-                  "height": 40,
+                  "id": "L7tQQ",
+                  "name": "navStyles",
+                  "width": "fill_container",
                   "cornerRadius": "$radius-standard",
-                  "justifyContent": "center",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
                   "alignItems": "center",
                   "children": [
                     {
                       "type": "icon_font",
-                      "id": "NDkQr",
-                      "name": "niStyleI",
-                      "width": 20,
-                      "height": 20,
+                      "id": "Q3JzZd",
+                      "width": 16,
+                      "height": 16,
                       "iconFontName": "palette",
                       "iconFontFamily": "lucide",
                       "fill": "$text-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rDaU2",
+                      "fill": "$text-secondary",
+                      "content": "Styles",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "500"
                     }
                   ]
                 }
@@ -6009,52 +6098,208 @@
             },
             {
               "type": "frame",
-              "id": "RC7GN",
-              "name": "spacer",
+              "id": "k3Pzm",
+              "name": "ArticleList",
               "width": "fill_container",
-              "height": "fill_container"
-            },
-            {
-              "type": "frame",
-              "id": "c3MFTx",
-              "name": "addBtn",
-              "width": 40,
-              "height": 40,
-              "fill": "$brand-accent",
-              "cornerRadius": "$radius-standard",
-              "justifyContent": "center",
-              "alignItems": "center",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
               "children": [
                 {
-                  "type": "icon_font",
-                  "id": "vNuKI",
-                  "name": "addIcon",
-                  "width": 20,
-                  "height": 20,
-                  "iconFontName": "plus",
-                  "iconFontFamily": "lucide",
-                  "fill": "$text-on-accent"
+                  "type": "text",
+                  "id": "WReH5",
+                  "fill": "$text-muted",
+                  "content": "ARTICLES",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 11,
+                  "fontWeight": "600",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "Eyol6",
+                  "name": "articles",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "XTVcg",
+                      "name": "artItem-selected",
+                      "width": "fill_container",
+                      "fill": "$brand-accent-dim",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "EfX2W",
+                          "fill": "$text-accent",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "AI Regulation Trends",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Vcp11",
+                          "name": "sub1",
+                          "fill": "#006b85",
+                          "content": "3 versions · active: v2-a",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "c6AaW",
+                      "name": "artItem",
+                      "width": "fill_container",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "JDpWh",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Startup Ecosystem Report",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "RvBEt",
+                          "name": "sub2",
+                          "fill": "#4a4a5e",
+                          "content": "5 versions · active: v3",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "dtohP",
+                      "name": "artItem",
+                      "width": "fill_container",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "TbeRk",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Climate Policy Analysis",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "J4hAiJ",
+                          "name": "sub3",
+                          "fill": "#4a4a5e",
+                          "content": "1 version",
+                          "fontFamily": "Source Sans 3",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
             {
               "type": "frame",
-              "id": "x8jbA",
-              "name": "themeBtn",
-              "width": 40,
-              "height": 40,
-              "justifyContent": "center",
-              "alignItems": "center",
+              "id": "GocZt",
+              "name": "bottomSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
               "children": [
                 {
-                  "type": "icon_font",
-                  "id": "Umw48",
-                  "name": "themeIcon",
-                  "width": 18,
-                  "height": 18,
-                  "iconFontName": "moon",
-                  "iconFontFamily": "lucide",
-                  "fill": "$text-muted"
+                  "id": "hS5Ib",
+                  "type": "ref",
+                  "ref": "vIidR",
+                  "width": "fill_container",
+                  "name": "newBtn",
+                  "descendants": {
+                    "qFPom": {
+                      "content": "New Article"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "Y3v9R",
+                  "name": "themeRow",
+                  "width": "fill_container",
+                  "padding": 8,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ThIm6",
+                      "fill": "$text-muted",
+                      "content": "Dark mode",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "OHJnH",
+                      "name": "themeToggle",
+                      "width": 36,
+                      "height": 20,
+                      "fill": "$brand-accent",
+                      "cornerRadius": 10,
+                      "padding": 2,
+                      "justifyContent": "end",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "m4RSYn",
+                          "fill": "#ffffff",
+                          "width": 16,
+                          "height": 16
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
