@@ -1,0 +1,13 @@
+{
+  "models": {
+    "writing": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5"
+    },
+    "analysis": {
+      "provider": "openai",
+      "model": "gpt-4o-mini"
+    }
+  },
+  "language": "zh"
+}

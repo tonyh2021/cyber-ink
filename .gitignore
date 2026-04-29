@@ -33,10 +33,11 @@ Thumbs.db
 *.tsbuildinfo
 next-env.d.ts
 
-# user data
-/data/articles/
-/data/styles/*/feedback/
+# runtime data
+/data/
 
+# cursor
 .cursor/
 
+# claude code
 .claude/
