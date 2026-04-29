@@ -135,7 +135,7 @@ All DESIGN.md tokens as CSS custom properties, plus Tailwind v4 theme extension:
 [data-theme="dark"] {
   --brand-accent: #00d4ff;
   --brand-accent-hover: #00b8e0;
-  --brand-accent-dim: rgba(0,212,255,0.15);
+  --brand-accent-dim: rgba(0, 212, 255, 0.15);
   --surface-root: #0d0d14;
   --surface-panel: #1e1e2e;
   --surface-card: #262638;
@@ -153,7 +153,7 @@ All DESIGN.md tokens as CSS custom properties, plus Tailwind v4 theme extension:
 [data-theme="light"] {
   --brand-accent: #0088a8;
   --brand-accent-hover: #006d88;
-  --brand-accent-dim: rgba(0,136,168,0.08);
+  --brand-accent-dim: rgba(0, 136, 168, 0.08);
   --surface-root: #f5f5f8;
   --surface-panel: #ededf2;
   --surface-card: #ffffff;
@@ -176,8 +176,11 @@ Tailwind utility classes then work naturally: `bg-surface-root`, `text-brand-acc
 Self-hosted via `next/font/google` in root layout:
 
 ```ts
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 ```
 
 ### Theme Switching
@@ -208,55 +211,58 @@ All paths resolved relative to `DATA_DIR`. No absolute path injection.
 
 ```ts
 interface ArticleMeta {
-  title: string
-  slug: string
-  language: string
-  status: 'draft' | 'final'
-  styleRef: string | null
-  styleVersion: string
-  createdAt: string
-  updatedAt: string
+  title: string;
+  slug: string;
+  language: string;
+  status: "draft" | "final";
+  styleRef: string | null;
+  styleVersion: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface ArticleTree {
-  rootNode: string | null
-  bestNode: string | null
-  latestNode: string | null
-  nodes: Record<string, TreeNode>
+  rootNode: string | null;
+  bestNode: string | null;
+  latestNode: string | null;
+  nodes: Record<string, TreeNode>;
 }
 
 interface TreeNode {
-  parent: string | null
-  depth: number
-  children: string[]
+  parent: string | null;
+  depth: number;
+  children: string[];
 }
 
 interface ArticleDetail {
-  meta: ArticleMeta
-  tree: ArticleTree
-  nodes: Record<string, { frontmatter: Record<string, unknown>; content: string }>
-  evaluations: Record<string, EvaluationScores>
+  meta: ArticleMeta;
+  tree: ArticleTree;
+  nodes: Record<
+    string,
+    { frontmatter: Record<string, unknown>; content: string }
+  >;
+  evaluations: Record<string, EvaluationScores>;
 }
 
 interface EvaluationScores {
-  clarity: number
-  style_match: number
-  information_density: number
-  reader_engagement: number
-  hallucination_risk: number
-  overall_score: number
+  clarity: number;
+  style_match: number;
+  information_density: number;
+  reader_engagement: number;
+  hallucination_risk: number;
+  overall_score: number;
 }
 
 interface AppConfig {
   models: {
-    writing: { provider: string; model: string }
-    analysis: { provider: string; model: string }
-  }
-  language: string
+    writing: { provider: string; model: string };
+    analysis: { provider: string; model: string };
+  };
+  language: string;
 }
 
 interface GenerateInput {
-  instruction: string
+  instruction: string;
 }
 ```
 
@@ -299,6 +305,7 @@ User message:
 ```
 
 **Design decisions:**
+
 - Profile and style go in system prompt (stable context, cacheable)
 - Source material and instruction go in user message (varies per generation)
 - Language is an output rule, not part of the instruction
@@ -380,17 +387,20 @@ Single-page, no shell chrome. Dark theme by default.
 ### Components
 
 **`instruction-input.tsx`** — Client component
+
 - Textarea with placeholder: "Enter your writing instruction..."
 - Auto-resize height
 - Inter font (UI input, not AI content)
 - Disabled during generation
 
 **`generate-button.tsx`** — Client component
+
 - Primary button (brand-accent background)
 - Shows "Generate" idle → "Generating..." with loading state during stream
 - Disabled when instruction is empty or generation in progress
 
 **`output-stream.tsx`** — Client component
+
 - Renders streaming Markdown via `react-markdown`
 - JetBrains Mono font (AI-generated content boundary)
 - `surface-canvas` background
@@ -445,7 +455,6 @@ Workspace (Client Component)
 name: default
 description: Default channel profile
 ---
-
 You are a professional content writer. You produce clear, well-structured articles that inform and engage readers. Your writing is concise, evidence-based, and accessible to a general audience.
 ```
 
@@ -476,6 +485,7 @@ Clear, direct, professional. Avoid jargon unless the audience expects it.
 ### `data/articles/seed-article/`
 
 **`meta.md`:**
+
 ```yaml
 ---
 title: "Seed Article"
@@ -490,6 +500,7 @@ updatedAt: "2026-04-28T00:00:00Z"
 ```
 
 **`tree.json`:**
+
 ```json
 {
   "rootNode": null,
@@ -500,12 +511,12 @@ updatedAt: "2026-04-28T00:00:00Z"
 ```
 
 **`source.md`:**
+
 ```yaml
 ---
 type: dehydrated
 extractedAt: "2026-04-28T00:00:00Z"
 ---
-
 ## Core Ideas
 - AI-assisted writing tools are shifting from replacement to augmentation
 - The most effective tools preserve the writer's voice while enhancing output quality
@@ -526,24 +537,24 @@ extractedAt: "2026-04-28T00:00:00Z"
 
 ## 10. Key Design Decisions
 
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Tailwind v4 | CSS-first `@theme` config | No tailwind.config.ts; tokens defined in globals.css |
-| shadcn/ui | Wraps Radix, rethemed with token system | Pre-built primitives, less boilerplate than raw Radix |
-| Prompt Builder is pure function | No LLM calls, deterministic | Testable, predictable, easy to debug prompt issues |
-| Profile + style in system prompt | Source + instruction in user message | Stable context vs. varying context separation |
-| `useCompletion` for streaming | Vercel AI SDK client hook | Handles streaming protocol, loading states, error handling |
-| `styleRef: null` on creation | Not "default" | No style system yet; null signals "no style selected" |
-| Seed article hardcoded | Single preset workspace | Phase 1 proves generation, not article management |
-| No app shell | Workspace page only | Chrome deferred to later phase; generation is the priority |
-| Language in config.json | Global default, not per-article | Matches user's intent for config.json as settings persistence |
-| 409 on re-generate | Block if rootNode exists | Phase 2+ handles branching/regeneration; Phase 1 is one-shot |
+| Decision                         | Choice                                  | Rationale                                                                                    |
+| -------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Tailwind v4                      | CSS-first `@theme` config               | No tailwind.config.ts; tokens defined in globals.css                                         |
+| shadcn/ui                        | Wraps Radix, rethemed with token system | Pre-built primitives, less boilerplate than raw Radix                                        |
+| Prompt Builder is pure function  | No LLM calls, deterministic             | Testable, predictable, easy to debug prompt issues                                           |
+| Profile + style in system prompt | Source + instruction in user message    | Stable context vs. varying context separation                                                |
+| `useCompletion` for streaming    | Vercel AI SDK client hook               | Handles streaming protocol, loading states, error handling                                   |
+| `styleRef: null` on creation     | Not "default"                           | No style system yet; null signals "no style selected"                                        |
+| Seed article hardcoded           | Single preset workspace                 | Phase 1 proves generation, not article management                                            |
+| No app shell                     | Workspace page only                     | Shell + dashboard in `phase-ui-shell-dashboard` (after Phase 3); Phase 1 is generation-first |
+| Language in config.json          | Global default, not per-article         | Matches user's intent for config.json as settings persistence                                |
+| 409 on re-generate               | Block if rootNode exists                | Phase 2+ handles branching/regeneration; Phase 1 is one-shot                                 |
 
 ## 11. What This Phase Does NOT Build
 
-- No dashboard or article list page
+- No dashboard or article list page (`phase-ui-shell-dashboard`, after Phase 3)
 - No article CRUD UI (create/delete)
-- No app shell (top nav, sidebar)
+- No app shell (top nav, sidebar) (`phase-ui-shell-dashboard`, after Phase 3)
 - No dehydration engine (source.md is pre-filled)
 - No evaluation or scoring
 - No branching or optimize

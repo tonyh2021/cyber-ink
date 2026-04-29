@@ -18,7 +18,7 @@ Initialize the Next.js project and install all dependencies.
    - `next-themes` (theme switching)
    - `react-markdown` (rendering)
 4. Configure `tsconfig.json` path aliases (`@/` → `src/`)
-5. Configure `.env` with placeholder keys: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `TAVILY_API_KEY`
+5. Configure `.env` with placeholder keys: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`
 6. Add `.env` to `.gitignore`
 
 ### Acceptance

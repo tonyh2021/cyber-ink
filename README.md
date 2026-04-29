@@ -59,16 +59,15 @@ Style evolves over time
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js (App Router) |
-| AI SDK | Vercel AI SDK |
-| Writing Model | Claude (configurable) |
-| Analysis / Evaluation | GPT-4o-mini (configurable) |
-| Markdown Parsing | gray-matter |
-| Diff Rendering | react-diff-viewer-continued |
-| Search | tavily-sdk |
-| Config | `.env` (API keys) + `/data/config.json` (models) |
+| Layer                 | Technology                                       |
+| --------------------- | ------------------------------------------------ |
+| Framework             | Next.js (App Router)                             |
+| AI SDK                | Vercel AI SDK                                    |
+| Writing Model         | Claude (configurable)                            |
+| Analysis / Evaluation | GPT-4o-mini (configurable)                       |
+| Markdown Parsing      | gray-matter                                      |
+| Diff Rendering        | react-diff-viewer-continued                      |
+| Config                | `.env` (API keys) + `/data/config.json` (models) |
 
 ## Project Structure
 
@@ -130,19 +129,18 @@ DELETE /api/feedback/[id]               # Delete feedback
 
 ```
 POST   /api/material/dehydrate          # Extract semantic kernel
-POST   /api/material/search             # Tavily search
 ```
 
 ## Evaluation Dimensions
 
-| Metric | Description |
-|--------|------------|
-| clarity | Writing clarity and readability |
-| style_match | Alignment with active style fingerprint |
-| information_density | How well source material is utilized |
-| reader_engagement | Hook and flow quality |
-| hallucination_risk | Deviation from source facts (lower = better) |
-| overall_score | Weighted composite score |
+| Metric              | Description                                  |
+| ------------------- | -------------------------------------------- |
+| clarity             | Writing clarity and readability              |
+| style_match         | Alignment with active style fingerprint      |
+| information_density | How well source material is utilized         |
+| reader_engagement   | Hook and flow quality                        |
+| hallucination_risk  | Deviation from source facts (lower = better) |
+| overall_score       | Weighted composite score                     |
 
 All scores are `0–1` floats. Evaluation is **advisory only** — the highest-scoring node is highlighted in UI, but promotion is always the user's choice.
 
@@ -154,7 +152,7 @@ pnpm install
 
 # Configure environment
 cp .env.example .env
-# Add your API keys: ANTHROPIC_API_KEY, OPENAI_API_KEY, TAVILY_API_KEY
+# Add your API keys: ANTHROPIC_API_KEY, OPENAI_API_KEY
 
 # Start development server
 pnpm dev

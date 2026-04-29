@@ -71,14 +71,14 @@ v1              # Root (depth 1)
 
 ## API Routes
 
-| Group | Key Endpoints |
-|-------|--------------|
-| Article | `POST /api/articles`, `DELETE /api/articles/[slug]`, `GET /api/articles/[slug]` (aggregated: tree+nodes+evals+meta), `POST .../generate`, `POST .../branch`, `POST .../optimize`, `POST .../promote` |
-| Evaluation | `POST /api/evaluate/node`, `GET /api/evaluate/[slug]/[node]` |
-| Style | `GET /api/styles`, `GET /api/styles/active`, `POST /api/styles/regenerate`, `POST /api/styles/set-active` |
-| Feedback | `POST /api/feedback`, `GET /api/feedback`, `DELETE /api/feedback/[id]` |
-| Material | `POST /api/material/dehydrate` |
-| Profile | `GET /api/profiles/default` |
+| Group      | Key Endpoints                                                                                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Article    | `POST /api/articles`, `DELETE /api/articles/[slug]`, `GET /api/articles/[slug]` (aggregated: tree+nodes+evals+meta), `POST .../generate`, `POST .../branch`, `POST .../optimize`, `POST .../promote` |
+| Evaluation | `POST /api/evaluate/node`, `GET /api/evaluate/[slug]/[node]`                                                                                                                                         |
+| Style      | `GET /api/styles`, `GET /api/styles/active`, `POST /api/styles/regenerate`, `POST /api/styles/set-active`                                                                                            |
+| Feedback   | `POST /api/feedback`, `GET /api/feedback`, `DELETE /api/feedback/[id]`                                                                                                                               |
+| Material   | `POST /api/material/dehydrate`                                                                                                                                                                       |
+| Profile    | `GET /api/profiles/default`                                                                                                                                                                          |
 
 ## Key Concepts
 

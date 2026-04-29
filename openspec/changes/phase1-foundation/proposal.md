@@ -15,7 +15,7 @@ Generation is the core value of CyberInk. Rather than building CRUD and navigati
 - Next.js App Router, TypeScript, Tailwind CSS v4
 - shadcn/ui for UI primitives (wraps Radix, rethemed with token system)
 - Vercel AI SDK (`ai`, `@ai-sdk/anthropic`, `@ai-sdk/openai`)
-- `.env` for API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY, TAVILY_API_KEY)
+- `.env` for API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY)
 
 ### Data Layer
 
@@ -101,9 +101,9 @@ GET    /api/profiles/default             # Read profile
 
 ## Non-goals
 
-- No dashboard or article list page
+- No dashboard or article list page (`phase-ui-shell-dashboard`, after Phase 3)
 - No article CRUD UI (create/delete dialogs)
-- No app shell (top nav, sidebar, navigation)
+- No app shell (top nav, sidebar, navigation) (`phase-ui-shell-dashboard`, after Phase 3)
 - No dehydration (source.md is pre-filled)
 - No evaluation, branching, or optimize
 - No style system beyond seed file

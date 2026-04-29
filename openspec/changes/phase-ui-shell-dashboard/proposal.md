@@ -1,4 +1,6 @@
-# UI Phase — App Shell & Dashboard
+# phase-ui-shell-dashboard — App Shell & Dashboard
+
+**OpenSpec change id:** `phase-ui-shell-dashboard` (canonical name for shell + dashboard work; supersedes any informal “Phase 2.5” wording elsewhere.)
 
 ## Summary
 
@@ -7,6 +9,8 @@ Implement product-level navigation shell and dashboard surfaces after the core w
 ## Depends on
 
 - Phase 3 (branching, evaluation, promotion — full writing loop complete)
+
+**Ordering:** Phase 2 defers standalone dashboard and app shell polish here; this change ships **after Phase 3** so the shell wraps a complete generate → branch → evaluate → promote loop.
 
 ## Scope
 

@@ -13,28 +13,30 @@ Implement material ingestion (text paste), article CRUD, and the full workspace 
 ### Material Input
 
 Single input source:
+
 - **Text paste** — user pastes raw material directly
 
 ### Article CRUD
 
 - **Create** — title + language → initializes workspace directory (meta.md, tree.json, /nodes/, /evaluation/)
 - **Delete** — removes entire article directory
-- **List** — article summaries for dashboard/sidebar
+- **List** — article summaries for the workspace sidebar (same APIs later power the dashboard in `phase-ui-shell-dashboard`)
 - **Get** — aggregated: tree + nodes + evals + meta
 
 ### Full Workspace Page
 
 Expands Phase 1's minimal workspace into the complete article workspace:
+
 - Material input panel (text paste)
 - Instruction input + generate (reuses Phase 1 generation pipeline)
 - Node display with tree context
 - Article metadata display
 
-### Dashboard Page
+### App shell & dashboard (deferred)
 
 - No standalone dashboard route in this phase.
 - Article list is provided by the workspace sidebar only.
-- Dashboard-style overview is deferred to Phase 2.5.
+- Dedicated **app shell** (top nav, responsive sidebar) and **dashboard route** ship in **`phase-ui-shell-dashboard`**, which **depends on Phase 3** (after the full writing loop exists).
 
 ### UX Contract
 
@@ -58,5 +60,5 @@ GET  /api/profiles/default              # Read profile (exists from Phase 1)
 - No branching or optimize yet (Phase 3)
 - No auto-evaluation after generation yet (Phase 3)
 - No style management (Phase 4) — uses seed style from Phase 1
-- No standalone app shell polish (top nav architecture, responsive collapse refinements)
-- No dedicated dashboard page or dashboard routing decisions (moved to Phase 2.5)
+- No standalone app shell polish (top nav, responsive sidebar) — `phase-ui-shell-dashboard` (after Phase 3)
+- No dedicated dashboard page or dashboard routing — `phase-ui-shell-dashboard` (after Phase 3)
