@@ -426,6 +426,7 @@ export function Workspace({
                   value={instruction}
                   onChange={setInstruction}
                   disabled={isLoading}
+                  loading={isLoading}
                   canGenerate={canGenerate}
                   onGenerate={handleGenerate}
                 />

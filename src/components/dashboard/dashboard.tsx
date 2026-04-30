@@ -73,7 +73,7 @@ export function Dashboard({ articles }: DashboardProps) {
               return (
                 <div
                   key={stat.label}
-                  className="w-[140px] flex flex-col gap-2 rounded-card border border-border-default bg-surface-card p-4 px-5 shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+                  className="w-[140px] flex flex-col gap-2 rounded-card border border-border-default bg-surface-card p-4 px-5 shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.12)] hover:scale-[1.02] transition-[shadow,transform]"
                 >
                   <div className="flex items-center gap-1.5">
                     <Icon size={14} className="text-text-muted" />

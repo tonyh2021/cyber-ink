@@ -47,7 +47,7 @@ export function ArticleCard({
     <>
       <div
         onClick={() => router.push(`/workspace/${slug}`)}
-        className="group relative cursor-pointer rounded-card border border-border-default bg-surface-card shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:border-brand-accent transition-colors overflow-hidden"
+        className="group relative cursor-pointer rounded-card border border-border-default bg-surface-card shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.12)] hover:scale-[1.02] transition-[shadow,transform] overflow-hidden"
       >
         <div className="h-[88px] bg-surface-canvas p-4 overflow-hidden">
           {preview ? (

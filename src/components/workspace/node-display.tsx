@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { FilePen, MessageSquareText } from "lucide-react";
 import { OutputStream } from "./output-stream";
 
@@ -27,6 +28,14 @@ export function NodeDisplay({
   canPolish,
   onPolish,
 }: NodeDisplayProps) {
+  const canvasRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isLoading && canvasRef.current) {
+      canvasRef.current.scrollTop = canvasRef.current.scrollHeight;
+    }
+  }, [isLoading, content]);
+
   return (
     <div className="workspace-panel-right relative z-10 flex flex-col flex-1 min-h-0">
       {/* Version tab strip */}
@@ -89,7 +98,7 @@ export function NodeDisplay({
 
       {/* Canvas */}
       {content || isLoading ? (
-        <div className="flex-1 overflow-y-auto bg-surface-canvas py-8 px-10">
+        <div ref={canvasRef} className="flex-1 overflow-y-auto bg-surface-canvas py-8 px-10">
           <OutputStream content={content} isLoading={isLoading} />
         </div>
       ) : (

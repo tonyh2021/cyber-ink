@@ -122,7 +122,7 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
                   : `flex items-center gap-2.5 rounded-standard px-3 py-2 text-sm transition-colors ${
                       item.active
                         ? "bg-brand-accent-dim text-brand-accent font-semibold"
-                        : "text-text-secondary font-medium hover:bg-surface-elevated"
+                        : "text-text-secondary font-medium hover:bg-brand-accent-dim"
                     }`
               }
             >
@@ -165,7 +165,7 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
                   className={`group relative flex items-start rounded-standard px-3 py-2 transition-colors ${
                     isSelected
                       ? "bg-brand-accent-dim"
-                      : "hover:bg-surface-elevated"
+                      : "hover:bg-brand-accent-dim"
                   }`}
                 >
                   <button
@@ -251,7 +251,7 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setDeleteSlug(null)}
-                className="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-standard hover:bg-surface-elevated transition-colors"
+                className="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-standard hover:bg-brand-accent-dim transition-colors"
               >
                 Cancel
               </button>

@@ -1,13 +1,14 @@
 "use client";
 
 import { useCallback, useRef, useEffect } from "react";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Loader2 } from "lucide-react";
 
 interface InstructionInputProps {
   value: string;
   onChange: (value: string) => void;
   disabled?: boolean;
   canGenerate?: boolean;
+  loading?: boolean;
   onGenerate?: () => void;
 }
 
@@ -16,6 +17,7 @@ export function InstructionInput({
   onChange,
   disabled,
   canGenerate,
+  loading,
   onGenerate,
 }: InstructionInputProps) {
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -59,7 +61,7 @@ export function InstructionInput({
             title="Generate new version"
             className="flex items-center justify-center w-8 h-8 rounded-standard bg-brand-accent text-text-on-accent disabled:opacity-40 hover:bg-brand-accent-hover transition-colors"
           >
-            <Sparkles size={16} />
+            {loading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
           </button>
         </div>
       </div>
