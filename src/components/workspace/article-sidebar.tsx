@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -14,13 +14,6 @@ import {
 import { useTheme } from "next-themes";
 import { useSidebar } from "./sidebar-context";
 
-interface ArticleSummary {
-  slug: string;
-  title: string;
-  versionCount: number;
-  activeNode: string | null;
-}
-
 interface ArticleSidebarProps {
   currentSlug?: string;
 }
@@ -29,29 +22,13 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const { resolvedTheme, setTheme } = useTheme();
-  const { collapsed, setCollapsed } = useSidebar();
-  const [articles, setArticles] = useState<ArticleSummary[]>([]);
+  const { collapsed, setCollapsed, articles, refreshArticles } = useSidebar();
   const [isCreating, setIsCreating] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const fetchArticles = useCallback(async () => {
-    try {
-      const res = await fetch("/api/articles");
-      if (res.ok) {
-        setArticles(await res.json());
-      }
-    } catch {
-      // silent
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchArticles();
-  }, [fetchArticles]);
 
   async function handleCreate() {
     if (isCreating) return;
@@ -64,7 +41,7 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
       });
       if (res.ok) {
         const { slug } = await res.json();
-        await fetchArticles();
+        await refreshArticles();
         router.push(`/workspace/${slug}`);
       }
     } finally {
@@ -219,28 +196,26 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
           </button>
         )}
 
-        {mounted && (
-          collapsed ? (
+        {collapsed ? (
+          <button
+            onClick={() => mounted && setTheme(isDark ? "light" : "dark")}
+            className="text-text-muted hover:text-text-secondary h-4"
+            title={mounted ? (isDark ? "Light mode" : "Dark mode") : "Theme"}
+          >
+            {mounted && (isDark ? <Sun size={16} /> : <Moon size={16} />)}
+          </button>
+        ) : (
+          <div className="flex items-center justify-between px-2 h-5">
+            <span className="text-xs text-text-muted">
+              {mounted ? (isDark ? "Dark mode" : "Light mode") : " "}
+            </span>
             <button
-              onClick={() => setTheme(isDark ? "light" : "dark")}
+              onClick={() => mounted && setTheme(isDark ? "light" : "dark")}
               className="text-text-muted hover:text-text-secondary"
-              title={isDark ? "Light mode" : "Dark mode"}
             >
-              {isDark ? <Sun size={16} /> : <Moon size={16} />}
+              {mounted && (isDark ? <Moon size={16} /> : <Sun size={16} />)}
             </button>
-          ) : (
-            <div className="flex items-center justify-between px-2">
-              <span className="text-xs text-text-muted">
-                {isDark ? "Dark mode" : "Light mode"}
-              </span>
-              <button
-                onClick={() => setTheme(isDark ? "light" : "dark")}
-                className="text-text-muted hover:text-text-secondary"
-              >
-                {isDark ? <Moon size={16} /> : <Sun size={16} />}
-              </button>
-            </div>
-          )
+          </div>
         )}
       </div>
     </aside>
