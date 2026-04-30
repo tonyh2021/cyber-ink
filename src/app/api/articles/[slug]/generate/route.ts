@@ -9,6 +9,7 @@ import {
   writeMarkdown,
   writeJson,
   exists,
+  listFiles,
 } from "@/lib/data";
 import { buildPrompt } from "@/lib/prompt-builder";
 import { GenerateInputSchema } from "@/types";
@@ -71,20 +72,40 @@ export async function POST(
   const config = await getConfig();
   const styleName = meta.styleRef ?? "default";
   const { content: profileContent } = await readMarkdown("profiles/default.md");
-  const { content: styleContent } = await readMarkdown(
-    `styles/${styleName}.md`
-  );
+
+  let references: string[] = [];
+  try {
+    const refFiles = await listFiles(`styles/${styleName}`, ".md");
+    for (const f of refFiles.sort()) {
+      const { content } = await readMarkdown(`styles/${styleName}/${f}`);
+      references.push(content);
+    }
+  } catch {
+    // no reference directory
+  }
+
+  let commonInstruction = "";
+  try {
+    const { content } = await readMarkdown("instruction/instruction.md");
+    commonInstruction = content;
+  } catch {
+    // no instruction file
+  }
+
   const { content: sourceContent } = await readMarkdown(
     `articles/${slug}/source.md`
   );
 
   const { systemPrompt, userMessage } = buildPrompt({
     profile: profileContent,
-    style: styleContent,
+    references,
+    commonInstruction,
     source: sourceContent,
     instruction,
     language: config.language,
   });
+
+  console.log(`[generate] ${slug} | style: ${styleName} | system prompt:\n${systemPrompt}`);
 
   const model = getModel(
     config.models.writing.provider,

@@ -1,18 +1,30 @@
-import { readMarkdown, listFiles } from "@/lib/data";
+import { readMarkdown, listDirs, listFiles } from "@/lib/data";
 import { StylesPage } from "@/components/styles/styles-page";
 
-interface StyleData {
-  filename: string;
+export interface ReferenceArticle {
   name: string;
-  version: string;
+  filename: string;
+  content: string;
+}
+
+export interface ReferenceGroup {
+  name: string;
+  references: ReferenceArticle[];
+}
+
+export interface ProfileData {
+  name: string;
   description: string;
   content: string;
 }
 
-interface ProfileData {
-  name: string;
-  description: string;
-  content: string;
+async function getInstruction(): Promise<string> {
+  try {
+    const { content } = await readMarkdown("instruction/instruction.md");
+    return content;
+  } catch {
+    return "";
+  }
 }
 
 async function getProfile(): Promise<ProfileData> {
@@ -24,25 +36,25 @@ async function getProfile(): Promise<ProfileData> {
   };
 }
 
-async function getStyles(): Promise<StyleData[]> {
-  let files: string[] = [];
+async function getStyles(): Promise<ReferenceGroup[]> {
+  let dirs: string[] = [];
   try {
-    files = await listFiles("styles", ".md");
+    dirs = await listDirs("styles");
   } catch {
     return [];
   }
 
   const styles = await Promise.all(
-    files.map(async (file) => {
+    dirs.map(async (dir) => {
       try {
-        const { frontmatter, content } = await readMarkdown(`styles/${file}`);
-        return {
-          filename: file.replace(".md", ""),
-          name: (frontmatter.name as string) || file.replace(".md", ""),
-          version: (frontmatter.version as string) || "",
-          description: (frontmatter.description as string) || "",
-          content,
-        };
+        const files = await listFiles(`styles/${dir}`, ".md");
+        const references = await Promise.all(
+          files.sort().map(async (f) => {
+            const { content } = await readMarkdown(`styles/${dir}/${f}`);
+            return { name: dir, filename: f, content };
+          })
+        );
+        return { name: dir, references };
       } catch {
         return null;
       }
@@ -53,6 +65,10 @@ async function getStyles(): Promise<StyleData[]> {
 }
 
 export default async function StylesRoute() {
-  const [profile, styles] = await Promise.all([getProfile(), getStyles()]);
-  return <StylesPage profile={profile} styles={styles} />;
+  const [instruction, profile, references] = await Promise.all([
+    getInstruction(),
+    getProfile(),
+    getStyles(),
+  ]);
+  return <StylesPage instruction={instruction} profile={profile} references={references} />;
 }
