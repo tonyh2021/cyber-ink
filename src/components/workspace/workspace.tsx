@@ -67,7 +67,7 @@ export function Workspace({
   );
   const [nodeContent, setNodeContent] =
     useState<Record<string, string>>(initialContent);
-  const wasLoading = useRef(false);
+  const [pendingNode, setPendingNode] = useState<string | null>(null);
   const pendingNodeRef = useRef<string | null>(null);
 
   // Polish mode state
@@ -106,6 +106,7 @@ export function Workspace({
       const node = pendingNodeRef.current;
       if (!node) return;
       pendingNodeRef.current = null;
+      setPendingNode(null);
 
       setNodeContent((prev) => ({ ...prev, [node]: completion }));
       refreshTitle();
@@ -143,6 +144,7 @@ export function Workspace({
     );
     const nextNode = `v${currentMaxVersion + 1}`;
     pendingNodeRef.current = nextNode;
+    setPendingNode(nextNode);
 
     let removedNode: string | null = null;
     const newNodeInfo: NodeInfo = { node: nextNode, instruction };
@@ -288,7 +290,7 @@ export function Workspace({
       setPolishLoading(false);
       setPolishStreamText("");
     }
-  }, [polishInstruction, polishLoading, slug]);
+  }, [polishInstruction, polishLoading, slug, refreshTitle]);
 
   const handlePolishApply = useCallback(
     async (pick: PolishApplyChoice) => {
@@ -366,7 +368,7 @@ export function Workspace({
   };
 
   const displayContent =
-    isLoading && activeNode === pendingNodeRef.current
+    isLoading && activeNode === pendingNode
       ? completion
       : activeNode
         ? nodeContent[activeNode] || ""
