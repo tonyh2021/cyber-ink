@@ -55,7 +55,7 @@ export function PolishToolbar({
         <button
           type="button"
           onClick={() => setConfirmDiscard(true)}
-          className="text-[13px] font-medium text-text-secondary hover:text-color-danger hover:bg-[var(--color-danger-bg)] px-3 py-1.5 rounded-standard transition-colors"
+          className="text-[13px] font-medium text-text-secondary hover:text-color-danger hover:bg-(--color-danger-bg) px-3 py-1.5 rounded-standard transition-colors"
         >
           Discard
         </button>
@@ -70,7 +70,7 @@ export function PolishToolbar({
 
       {confirmDiscard && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-surface-card rounded-modal p-6 shadow-[var(--shadow-modal)] w-80 flex flex-col gap-4">
+          <div className="bg-surface-card rounded-modal p-6 shadow-(--shadow-modal) w-80 flex flex-col gap-4">
             <h3 className="text-base font-semibold text-text-primary">
               Discard polish session?
             </h3>

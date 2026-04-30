@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -24,10 +24,11 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
   const { resolvedTheme, setTheme } = useTheme();
   const { collapsed, setCollapsed, articles, refreshArticles } = useSidebar();
   const [mounted, setMounted] = useState(false);
+  const [, startTransition] = useTransition();
   const [deleteSlug, setDeleteSlug] = useState<string | null>(null);
 
   useEffect(() => {
-    setMounted(true);
+    startTransition(() => setMounted(true));
   }, []);
 
   async function handleDelete(slug: string) {
@@ -240,7 +241,7 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
       {/* Delete confirmation dialog */}
       {deleteSlug && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-surface-card rounded-modal p-6 shadow-[var(--shadow-modal)] w-80 flex flex-col gap-4">
+          <div className="bg-surface-card rounded-modal p-6 shadow-(--shadow-modal) w-80 flex flex-col gap-4">
             <h3 className="text-base font-semibold text-text-primary">
               Delete article?
             </h3>
