@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CyberInk — A file-system-based AI writing decision engine with version exploration, auto-evaluation, and style self-learning feedback loop. Users ingest material, generate sequential drafts, optimize variants, evaluate quality, and select an active version. Style fingerprints evolve through user feedback.
+CyberInk — A file-system-based AI writing decision engine with version exploration, auto-evaluation, and style self-learning feedback loop. Users provide source material, generate sequential drafts, optimize variants, evaluate quality, and select an active version. Style fingerprints evolve through user feedback.
 
-Core principles: Control-first · Material-driven · Markdown-native · Evaluation-looped · Version-structured · Self-improving
+Core principles: Control-first · Source-driven · Markdown-native · Evaluation-looped · Version-structured · Self-improving
 
 ## Tech Stack
 
@@ -29,12 +29,12 @@ pnpm lint            # Lint check
 ## Architecture — Three Layers
 
 1. **Ingestion Layer** — Text paste input
-2. **Intelligence Layer** — Dehydration Engine → Prompt Builder → Generation Engine → Evaluation Engine → Feedback Collector
+2. **Intelligence Layer** — Prompt Builder → Generation Engine → Evaluation Engine → Feedback Collector
 3. **Persistence Layer** — Markdown-native filesystem, tree.json, config.json, Git-compatible
 
 ### Core Flow
 
-Material → dehydrate → `source.md` → Prompt Builder (profile + style + source + instruction) → generate `v1.md` → auto-evaluate → user generates more versions / optimizes → evaluate → user sets activeNode
+Source (paste) → `source.md` → Prompt Builder (profile + style + source + instruction) → generate `v1.md` → auto-evaluate → user generates more versions / optimizes → evaluate → user sets activeNode
 
 ### Version Model
 
@@ -63,7 +63,7 @@ v3              # generate 3
     /feedback/[slug]-[node]-para.md    # Paragraph-level feedback (single file, multiple paragraphs)
     /references/ref-001.md, ...        # Pre-stored reference articles for style regeneration
   /articles/[slug]/
-    source.md                          # Dehydrated semantic kernel
+    source.md                          # Raw material (user-pasted text)
     meta.md                            # Article metadata (YAML frontmatter)
     tree.json                          # Version structure + activeNode
     /nodes/v1.md, v2.md, v2-a.md, ... # Generated content nodes
@@ -78,13 +78,11 @@ v3              # generate 3
 | Evaluation | `POST /api/evaluate/node`, `GET /api/evaluate/[slug]/[node]`                                                                                                                                         |
 | Style      | `GET /api/styles`, `GET /api/styles/active`, `POST /api/styles/regenerate`, `POST /api/styles/set-active`                                                                                            |
 | Feedback   | `POST /api/feedback`, `GET /api/feedback`, `DELETE /api/feedback/[id]`                                                                                                                               |
-| Material   | `POST /api/material/dehydrate`                                                                                                                                                                       |
 | Profile    | `GET /api/profiles/default`                                                                                                                                                                          |
 
 ## Key Concepts
 
-- **Dehydration**: Extracts semantic kernel (core_ideas, arguments, facts, quotes, entities, quality_flags) from raw material — not a summary, but "semantic fuel" for writing.
-- **Prompt Builder**: Deterministic system prompt assembled from profile + active style + dehydrated source + user instruction + language + output format.
+- **Prompt Builder**: Deterministic system prompt assembled from profile + active style + source material + user instruction + language + output format.
 - **Evaluation**: Auto-scored after every generation (clarity, style_match, information_density, reader_engagement, hallucination_risk, overall_score). Scores are advisory only — user selects activeNode at their discretion.
 - **Style Feedback Loop**: User marks good content → feedback stored → style regeneration uses pre-stored reference articles (`/references/`) + feedback → analysis model multi-round processing → new style version. Feedback belongs to the style system, not articles.
 

@@ -24,7 +24,7 @@ This phase must add material ingestion, article lifecycle management, and expand
 - Article list available via workspace sidebar
 
 **Non-Goals:**
-- No dehydration engine — raw material is passed directly to prompt builder
+- No dehydration engine — removed from the project. Raw material is the source; the writing model handles relevance extraction based on the instruction
 - No optimize (Phase 3)
 - No auto-evaluation after generation (Phase 3)
 - No style management (Phase 4) — uses seed style from Phase 1
@@ -68,13 +68,14 @@ This phase must add material ingestion, article lifecycle management, and expand
 
 **Why over database:** The project's core principle is Markdown-native persistence. Filesystem operations are atomic at the directory level, require no migration, and produce a Git-diffable history.
 
-### 4. Material input — single source.md, save on generate
+### 4. Source input — single source.md, save on generate
 
-**Choice:** Raw material goes into a single `source.md` without dehydration. The prompt builder receives the raw text as-is. Material is persisted when the user clicks Generate — not on every keystroke or blur.
+**Choice:** Raw material goes into a single `source.md`. The prompt builder receives the raw text as-is — there is no dehydration step. The writing model extracts what's relevant based on the user's instruction. Material is persisted when the user clicks Generate — not on every keystroke or blur.
 
 **Why:**
-- Single file: users paste all material into one textarea, appending additional material as needed. Multiple source files add UI complexity (list management, per-source editing) without proportional value at this stage.
-- Save on generate: keeps the mental model simple — "generate" is the commit point. No auto-save state indicators or stale-data conflicts. When dehydration is added later, the generate flow is the natural place for it.
+- No dehydration: modern writing models handle raw text well. The user's paste is already a curation step. An intermediate AI extraction layer would be lossy (it doesn't know the instruction context) and adds latency/cost without proportional value.
+- Single file: users paste all material into one textarea, appending additional material as needed. Multiple source files add UI complexity (list management, per-source editing) without proportional value.
+- Save on generate: keeps the mental model simple — "generate" is the commit point. No auto-save state indicators or stale-data conflicts.
 
 ### 5. Dynamic routing — `/articles/[slug]`
 
@@ -95,7 +96,7 @@ This phase must add material ingestion, article lifecycle management, and expand
 ```
 Workspace
 ├── ArticleSidebar          # Article list + create button
-├── MaterialPanel            # Text paste textarea
+├── SourcePanel              # Text paste textarea for source material
 ├── InstructionPanel         # Instruction input + generate (reuses Phase 1 components)
 ├── NodeDisplay              # Generated content + tree context
 └── MetadataPanel            # Title, language, dates
@@ -132,7 +133,7 @@ Slug auto-generated as `art-YYYYMMDD-NNN`. NNN is a sequential counter within th
 
 - **Filesystem list performance at scale**: `readdir` + parse frontmatter for every article on each list call. → Mitigation: acceptable for the expected scale (dozens of articles, not thousands). If needed later, add an index file.
 
-- **No dehydration means raw material quality varies**: Prompt builder receives unprocessed text, which may include noise, formatting artifacts, or irrelevant content. → Mitigation: user is responsible for pasting clean material. Dehydration in a future phase will address this.
+- **Raw material quality varies**: Prompt builder receives unprocessed text, which may include noise, formatting artifacts, or irrelevant content. → Mitigation: user is responsible for pasting clean material. The writing model filters for relevance based on the instruction.
 
 - **Sidebar-only article list limits discoverability**: Without a dashboard, users must use the sidebar to find articles. → Mitigation: acceptable as a temporary state. `phase-ui-shell-dashboard` adds the dashboard after Phase 3.
 
@@ -140,9 +141,9 @@ Slug auto-generated as `art-YYYYMMDD-NNN`. NNN is a sequential counter within th
 
 ## UX Contract
 
-- Material input exposes a single entry path: paste raw text into a textarea. Users append additional material to the same textarea.
-- Material is persisted when the user clicks Generate — not auto-saved.
+- Source input exposes a single entry path: paste raw text into a textarea. Users append additional source material to the same textarea.
+- Source is persisted when the user clicks Generate — not auto-saved.
 - Generation presents streaming output (built in Phase 1, integrated here).
-- Missing inputs block generate with actionable guidance (disabled button + hint text).
+- Missing inputs (source or instruction) block generate with actionable guidance (disabled button + hint text).
 - Article sidebar shows article list with title; selecting an article navigates to `/articles/[slug]`.
 - Empty state (no articles) shows a "Create your first article" prompt with a create button.
