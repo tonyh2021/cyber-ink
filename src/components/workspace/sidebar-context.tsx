@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
   useCallback,
+  useEffect,
   type ReactNode,
 } from "react";
 
@@ -43,8 +44,25 @@ export function SidebarProvider({
   initialArticles = [],
 }: SidebarProviderProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const [userToggled, setUserToggled] = useState(false);
   const [articles, setArticles] = useState<ArticleSummary[]>(initialArticles);
   const width = collapsed ? 56 : 220;
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 1024px)");
+    if (!mql.matches) setCollapsed(true);
+
+    function handleChange(e: MediaQueryListEvent) {
+      if (!userToggled) setCollapsed(!e.matches);
+    }
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
+  }, [userToggled]);
+
+  const handleSetCollapsed = useCallback((v: boolean) => {
+    setUserToggled(true);
+    setCollapsed(v);
+  }, []);
 
   const refreshArticles = useCallback(async () => {
     try {
@@ -59,7 +77,7 @@ export function SidebarProvider({
 
   return (
     <SidebarContext.Provider
-      value={{ collapsed, setCollapsed, width, articles, refreshArticles }}
+      value={{ collapsed, setCollapsed: handleSetCollapsed, width, articles, refreshArticles }}
     >
       {children}
     </SidebarContext.Provider>

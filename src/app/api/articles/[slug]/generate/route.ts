@@ -12,7 +12,7 @@ import {
 } from "@/lib/data";
 import { buildPrompt } from "@/lib/prompt-builder";
 import { GenerateInputSchema } from "@/types";
-import type { ArticleTree } from "@/types";
+import type { ArticleMeta, ArticleTree } from "@/types";
 
 function getModel(provider: string, model: string) {
   if (provider === "anthropic") {
@@ -64,13 +64,15 @@ export async function POST(
     await writeMarkdown(`articles/${slug}/source.md`, {}, source);
   }
 
+  const meta = await readJson<ArticleMeta>(`articles/${slug}/meta.json`);
   const tree = await readJson<ArticleTree>(`articles/${slug}/tree.json`);
   const nodeName = nextNodeName(tree);
 
   const config = await getConfig();
+  const styleName = meta.styleRef ?? "default";
   const { content: profileContent } = await readMarkdown("profiles/default.md");
   const { content: styleContent } = await readMarkdown(
-    "styles/default/active.md"
+    `styles/${styleName}.md`
   );
   const { content: sourceContent } = await readMarkdown(
     `articles/${slug}/source.md`

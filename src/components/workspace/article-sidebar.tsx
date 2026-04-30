@@ -140,8 +140,8 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
       {/* Spacer between nav and articles */}
       <div className="h-6 shrink-0" />
 
-      {/* Articles section — hidden when collapsed */}
-      {!collapsed && (
+      {/* Articles section — only in workspace, hidden when collapsed */}
+      {!collapsed && pathname.startsWith("/workspace") && (
         <div className="flex flex-col gap-2 flex-1 min-h-0">
           <span className="text-[11px] font-semibold text-text-muted tracking-wider uppercase px-3">
             Articles
@@ -204,8 +204,8 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
         </div>
       )}
 
-      {/* Spacer when collapsed (replaces articles) */}
-      {collapsed && <div className="flex-1" />}
+      {/* Spacer when articles section is hidden */}
+      {(collapsed || !pathname.startsWith("/workspace")) && <div className="flex-1" />}
 
       {/* Bottom section */}
       <div className={`flex flex-col shrink-0 ${collapsed ? "items-center gap-3" : "gap-3"}`}>

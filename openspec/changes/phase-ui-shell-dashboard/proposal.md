@@ -1,28 +1,27 @@
 ## Why
 
-After Phase 3, the full writing loop exists but the app lacks product-level navigation. There is no app shell, no dashboard for article discovery, and sidebar behavior is minimal. Users need a proper navigation structure and overview surface to manage multiple articles across the complete workflow.
+The app has a working workspace with collapsible sidebar (from Phase 2), but the dashboard route is a placeholder and the sidebar has no responsive behavior. Users need a proper article overview surface and the sidebar should adapt to screen size.
 
 ## What Changes
 
-- Implement app shell: top navigation (56px) with logo, primary navigation, and theme toggle; sidebar with responsive collapse
-- Add dedicated dashboard route with article overview cards/list and create/delete entry points
-- Establish stable shell composition for workspace and dashboard routes
-- Ensure workspace-first writing flow from Phase 2 remains intact after shell integration
+- Implement dashboard page: stat cards (Total / In Progress / Promoted), article card grid with canvas preview, empty state
+- Add simple responsive sidebar: expanded ≥1024px, collapsed <1024px
+- Share sidebar across dashboard and workspace routes via root layout
+- Workspace sidebar article list is retained as quick-switch; dashboard is the richer overview surface
 
 ## Capabilities
 
 ### New Capabilities
 
-- `app-shell`: Product-level navigation shell with top nav (logo, navigation, theme toggle), responsive sidebar, and stable composition wrapping workspace and dashboard routes
-- `dashboard`: Article discovery and management surface with overview cards/list, create/delete entry points, and clear navigation to workspace
+- `dashboard`: Article discovery and management surface with stat cards, article card grid (canvas preview, title, version info, date), create/delete entry points, and click-through to workspace
 
 ### Modified Capabilities
 
-_(none)_
+- `app-shell`: Add responsive sidebar behavior (≥1024px expanded, <1024px collapsed). Sidebar shared across all routes via root layout.
 
 ## Impact
 
-- **Code**: New layout components (shell, top nav, sidebar), dashboard page route, responsive behavior
-- **APIs**: No new backend APIs — reuses existing article CRUD endpoints (`POST/GET/DELETE /api/articles`, `GET /api/articles/[slug]`)
+- **Code**: Dashboard page components, responsive sidebar hook, root layout refactor to share sidebar
+- **APIs**: No new backend APIs — reuses existing article CRUD endpoints
 - **Dependencies**: No new dependencies
-- **Risk**: Low — purely presentational layer over existing APIs; no changes to writing pipeline or data model
+- **Risk**: Low — purely presentational layer over existing APIs; root layout refactor may affect workspace hydration
