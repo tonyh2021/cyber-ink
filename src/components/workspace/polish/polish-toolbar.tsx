@@ -7,6 +7,7 @@ interface PolishToolbarProps {
   onDiffModeChange: (mode: DiffMode) => void;
   hasPrevious: boolean;
   onApply: () => void;
+  onDiscard: () => void;
 }
 
 export function PolishToolbar({
@@ -14,6 +15,7 @@ export function PolishToolbar({
   onDiffModeChange,
   hasPrevious,
   onApply,
+  onDiscard,
 }: PolishToolbarProps) {
   const segmentClass = (active: boolean) =>
     `px-3.5 py-1.5 text-[13px] font-sans transition-colors ${
@@ -23,7 +25,7 @@ export function PolishToolbar({
     }`;
 
   return (
-    <div className="flex items-center justify-center px-6 py-2.5 bg-surface-card border-b border-border-default">
+    <div className="relative flex items-center justify-center px-6 py-2.5 bg-surface-card border-b border-border-default">
       <div className="flex items-center rounded-standard border border-border-default overflow-hidden">
         <button
           type="button"
@@ -49,13 +51,22 @@ export function PolishToolbar({
         </button>
       </div>
 
-      <button
-        type="button"
-        onClick={onApply}
-        className="absolute right-6 text-[13px] font-semibold text-brand-accent hover:text-brand-accent-hover transition-colors"
-      >
-        Apply
-      </button>
+      <div className="absolute right-6 flex items-center gap-3">
+        <button
+          type="button"
+          onClick={onDiscard}
+          className="text-[13px] font-medium text-text-secondary hover:text-color-danger hover:bg-[var(--color-danger-bg)] px-3 py-1.5 rounded-standard transition-colors"
+        >
+          Discard
+        </button>
+        <button
+          type="button"
+          onClick={onApply}
+          className="text-[13px] font-semibold text-brand-accent hover:text-brand-accent-hover hover:bg-brand-accent-dim px-3 py-1.5 rounded-standard transition-colors"
+        >
+          Apply
+        </button>
+      </div>
     </div>
   );
 }

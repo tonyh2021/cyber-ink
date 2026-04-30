@@ -363,6 +363,7 @@ export function Workspace({
                   onDiffModeChange={setPolishDiffMode}
                   hasPrevious={polishPrevious !== null}
                   onApply={() => setPolishShowApply(true)}
+                  onDiscard={handlePolishDiscard}
                 />
 
                 {polishDiffMode ? (
@@ -387,15 +388,6 @@ export function Workspace({
                   </div>
                 )}
               </div>
-
-              {/* Discard button (floating) */}
-              <button
-                type="button"
-                onClick={handlePolishDiscard}
-                className="fixed bottom-6 right-6 z-40 px-4 py-2 text-[13px] font-medium rounded-standard bg-surface-card text-text-secondary border border-border-default shadow-md hover:text-color-danger hover:border-color-danger transition-colors"
-              >
-                Discard
-              </button>
 
               {/* Apply modal */}
               {polishShowApply && (

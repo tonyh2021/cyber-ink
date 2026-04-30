@@ -49,7 +49,7 @@ export function PolishApplyModal({
         {/* Header */}
         <div className="px-7 pt-6 pb-4 border-b border-border-default">
           <h2 className="text-lg font-bold text-text-primary font-sans">
-            Commit Polish
+            Apply Polish
           </h2>
           <p className="text-[14px] text-text-secondary mt-1.5">
             Choose which version to keep for {node}
@@ -59,17 +59,19 @@ export function PolishApplyModal({
         {/* Body */}
         <div className="flex-1 overflow-y-auto px-7 py-5 flex flex-col gap-3">
           {options.map((opt) => {
-            if (opt.disabled) return null;
-            const selected = pick === opt.value;
+            const selected = !opt.disabled && pick === opt.value;
             return (
               <button
                 key={opt.value}
                 type="button"
-                onClick={() => setPick(opt.value)}
-                className={`w-full text-left rounded-standard p-4 flex gap-3 transition-all ${
-                  selected
-                    ? "bg-brand-accent-dim border-2 border-brand-accent"
-                    : "bg-surface-root border border-border-default hover:border-text-muted"
+                disabled={opt.disabled}
+                onClick={() => !opt.disabled && setPick(opt.value)}
+                className={`w-full text-left rounded-standard p-4 flex gap-3 transition-all border ${
+                  opt.disabled
+                    ? "opacity-40 cursor-not-allowed bg-surface-root border-border-default"
+                    : selected
+                      ? "bg-brand-accent-dim border-brand-accent"
+                      : "bg-surface-root border-border-default hover:border-text-muted"
                 }`}
               >
                 <div className="shrink-0 mt-0.5">
