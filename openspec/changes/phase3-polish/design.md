@@ -19,7 +19,7 @@ Current state:
 - AI only modifies paragraphs the user's instruction targets; untouched text stays verbatim
 - Users can compare current polish against previous round or original at any time
 - Full conversation history is preserved for display; AI context is windowed to 3 rounds
-- On commit, user chooses from three versions (original / previous / current) to overwrite the v-node
+- On apply, user chooses from three versions (original / previous / current) to overwrite the v-node
 - Polish session survives page refresh via server-persisted ephemeral state
 
 **Non-Goals:**
@@ -32,7 +32,7 @@ Current state:
 
 ### 1. Polish is transient ephemeral state, not version history
 
-**Choice:** Polish iterations live in `.polish/` during the session and are fully cleaned up on commit or discard. No polish artifacts persist in the version tree.
+**Choice:** Polish iterations live in `.polish/` during the session and are fully cleaned up on apply or discard. No polish artifacts persist in the version tree.
 
 ```
 /data/articles/{slug}/
@@ -41,7 +41,7 @@ Current state:
     original.md       v2 content snapshot at session start
     previous.md       last round's AI output (null on first round)
     current.md        latest AI output
-    history.json      full conversation [{role, content}, ...]
+    history.json      full conversation [{role, content, summary?}, ...]
 ```
 
 **Why:** Polish is a refinement tool, not a versioning tool. The version strip stays clean (v1, v2, v3). Users who want to preserve a pre-polish state can generate a new version first.
@@ -54,7 +54,7 @@ Round N       →  current.md → previous.md (rotate)
                   AI output → current.md
                   append to history.json
 Page refresh  →  detect .polish/ → restore session
-Commit        →  user picks original/previous/current
+Apply         →  user picks original/previous/current
                   → overwrite v2.md → delete .polish/
 Discard       →  delete .polish/ → no changes
 ```
@@ -127,8 +127,9 @@ GET /api/articles/[slug]/polish/status
 POST /api/articles/[slug]/polish/round
   body: { instruction: string }
   → 200: streaming response (summary + delimiter + full article)
-  Stream format: summary line(s) → "---" delimiter → full article text
-  Frontend splits on delimiter: summary → conversation thread, article → canvas
+  Stream format: ---\nsummary\n---\narticle (summary wrapped between two --- delimiters)
+  Frontend splits on second ---: content before → summary (conversation thread), content after → article (canvas)
+  Fallback: if no delimiter found, treat entire output as article, leave summary empty
   Rotates current→previous, stores article as current.md
   Appends { role, content, summary } to history.json after stream completes
 
@@ -171,7 +172,7 @@ wrapped between --- delimiters on their own lines. Then output the complete arti
 
 **History storage:** `history.json` entries gain a `summary` field alongside `role` and `content`. The summary is extracted from the stream; the article text goes into `content`.
 
-### 7. Diff view: two toggle modes (renumbered from 6)
+### 7. Diff view: two toggle modes
 
 **Choice:** When in polish mode, the content area can switch between:
 
@@ -184,17 +185,9 @@ Uses `react-diff-viewer-continued` (already in dependencies). Default view is th
 
 ### 8. One session per article
 
-**Choice:** Only one polish session can be active per article at a time. Starting a new session while one exists returns 409. User must commit or discard first.
+**Choice:** Only one polish session can be active per article at a time. Starting a new session while one exists returns 409. User must apply or discard first.
 
 **Why:** Multiple concurrent sessions on different nodes would require conflict resolution if both touch overlapping content. Single-session keeps the model simple and matches the typical workflow (focus on one version at a time).
-
-## Risks / Trade-offs
-
-- **AI compliance with surgical edits:** LLMs may subtly rephrase "unchanged" paragraphs despite instructions. → Mitigation: hardcoded prompt rules + diff view lets users verify. Users can discard if AI rewrites too aggressively.
-
-- **Lost polish work on browser crash:** Server state survives refresh, but if the user never commits and the `.polish/` directory is orphaned, it stays on disk. → Mitigation: on polish start, check for stale sessions; UI shows "resume or discard" on re-entry.
-
-- **3-round window loses early context:** If the user made 8 rounds, rounds 1-5 are invisible to the AI. → Mitigation: original is always anchored, so the AI always knows the baseline. The window covers recent trajectory. For most editing sessions 3 rounds of context is sufficient.
 
 ### 9. Polish entry point
 
@@ -232,6 +225,14 @@ Uses `react-diff-viewer-continued` (already in dependencies). Default view is th
 
 **Design reference:** `design/cyber-ink.pen` node `nouLT` (polishInputBox) as the structural template.
 
+## Risks / Trade-offs
+
+- **AI compliance with surgical edits:** LLMs may subtly rephrase "unchanged" paragraphs despite instructions. → Mitigation: hardcoded prompt rules + diff view lets users verify. Users can discard if AI rewrites too aggressively.
+
+- **Lost polish work on browser crash:** Server state survives refresh, but if the user never applies and the `.polish/` directory is orphaned, it stays on disk. → Mitigation: on polish start, check for stale sessions; UI shows "resume or discard" on re-entry.
+
+- **3-round window loses early context:** If the user made 8 rounds, rounds 1-5 are invisible to the AI. → Mitigation: original is always anchored, so the AI always knows the baseline. The window covers recent trajectory. For most editing sessions 3 rounds of context is sufficient.
+
 ## UX Contract
 
 - Polish mode is a distinct UI state with a two-panel layout:
@@ -241,6 +242,6 @@ Uses `react-diff-viewer-continued` (already in dependencies). Default view is th
 - Selected AI message has accent-tinted background + left accent border to indicate active preview
 - Diff toggle switches the canvas between rendered article view and side-by-side comparison (Original↔Current or Previous↔Current)
 - Apply opens a modal with three radio options (Original / Previous Round / Current) with text preview for each
-- Discard requires confirmation ("Discard all polish changes?")
+- Discard takes effect immediately with no confirmation
 - If `.polish/` exists on page load, UI enters polish mode automatically with session restored
-- Design reference: `design/cyber-ink.pen` frames "Workspace — Polish Mode", "Workspace — Polish Diff", "Workspace — Polish Commit"
+- Design reference: `design/cyber-ink.pen` frames "Workspace — Polish Mode", "Workspace — Polish Diff", "Workspace — Polish Apply"

@@ -1,6 +1,6 @@
 "use client";
 
-import { FilePen } from "lucide-react";
+import { FilePen, MessageSquareText } from "lucide-react";
 import { OutputStream } from "./output-stream";
 
 interface NodeInfo {
@@ -14,6 +14,8 @@ interface NodeDisplayProps {
   onSelectNode: (node: string) => void;
   content: string;
   isLoading?: boolean;
+  canPolish?: boolean;
+  onPolish?: () => void;
 }
 
 export function NodeDisplay({
@@ -22,39 +24,54 @@ export function NodeDisplay({
   onSelectNode,
   content,
   isLoading,
+  canPolish,
+  onPolish,
 }: NodeDisplayProps) {
   return (
-    <div className="flex flex-col flex-1 min-h-0">
+    <div className="workspace-panel-right relative z-10 flex flex-col flex-1 min-h-0">
       {/* Version tab strip */}
       <div className="flex items-center border-b border-border-default bg-surface-card py-2.5 px-6">
-        {nodes.length > 0 ? (
-          nodes.map((n) => (
-            <button
-              key={n.node}
-              onClick={() => onSelectNode(n.node)}
-              className="relative flex flex-col items-center"
-            >
-              <span
-                className={`px-4 pt-2.5 pb-2 text-sm font-mono tracking-[0.5px] ${
-                  n.node === activeNode
-                    ? "text-brand-accent font-semibold"
-                    : "text-text-muted hover:text-text-secondary"
-                }`}
+        <div className="flex items-center flex-1">
+          {nodes.length > 0 ? (
+            nodes.map((n) => (
+              <button
+                key={n.node}
+                onClick={() => onSelectNode(n.node)}
+                className="relative flex flex-col items-center"
               >
-                {n.node}
+                <span
+                  className={`px-4 pt-2.5 pb-2 text-sm font-mono tracking-[0.5px] ${
+                    n.node === activeNode
+                      ? "text-brand-accent font-semibold"
+                      : "text-text-muted hover:text-text-secondary"
+                  }`}
+                >
+                  {n.node}
+                </span>
+                {n.node === activeNode && (
+                  <div className="h-[3px] w-full rounded-[1px] bg-brand-accent" />
+                )}
+              </button>
+            ))
+          ) : (
+            <div className="relative flex flex-col items-center">
+              <span className="px-4 pt-2.5 pb-2 text-sm font-mono tracking-[0.5px] text-brand-accent font-semibold">
+                v1
               </span>
-              {n.node === activeNode && (
-                <div className="h-[3px] w-full rounded-[1px] bg-brand-accent" />
-              )}
-            </button>
-          ))
-        ) : (
-          <div className="relative flex flex-col items-center">
-            <span className="px-4 pt-2.5 pb-2 text-sm font-mono tracking-[0.5px] text-brand-accent font-semibold">
-              v1
-            </span>
-            <div className="h-[3px] w-full rounded-[1px] bg-brand-accent" />
-          </div>
+              <div className="h-[3px] w-full rounded-[1px] bg-brand-accent" />
+            </div>
+          )}
+        </div>
+
+        {canPolish && onPolish && (
+          <button
+            type="button"
+            onClick={onPolish}
+            title="Polish active version"
+            className="ml-4 inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground shadow-[0_4px_10px_rgba(0,0,0,0.18)] hover:bg-primary/90 transition-colors"
+          >
+            <MessageSquareText size={15} />
+          </button>
         )}
       </div>
 

@@ -62,7 +62,7 @@ async function getArticles() {
       } catch {
         return null;
       }
-    })
+    }),
   );
 
   return summaries

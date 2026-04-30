@@ -27,9 +27,9 @@ interface SidebarContextValue {
 }
 
 const SidebarContext = createContext<SidebarContextValue>({
-  collapsed: false,
+  collapsed: true,
   setCollapsed: () => {},
-  width: 220,
+  width: 56,
   articles: [],
   refreshArticles: async () => {},
 });
@@ -43,7 +43,7 @@ export function SidebarProvider({
   children,
   initialArticles = [],
 }: SidebarProviderProps) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [userToggled, setUserToggled] = useState(false);
   const [articles, setArticles] = useState<ArticleSummary[]>(initialArticles);
   const width = collapsed ? 56 : 220;

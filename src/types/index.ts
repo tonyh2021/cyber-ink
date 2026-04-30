@@ -87,3 +87,26 @@ export interface NodeFrontmatter {
   instruction: string;
   parentNode?: string;
 }
+
+export interface PolishTarget {
+  node: string;
+}
+
+export interface PolishHistoryEntry {
+  role: "user" | "assistant";
+  content: string;
+  summary?: string;
+}
+
+export type PolishStatus =
+  | {
+      active: true;
+      node: string;
+      original: string;
+      previous: string | null;
+      current: string | null;
+      history: PolishHistoryEntry[];
+    }
+  | { active: false };
+
+export type PolishApplyChoice = "original" | "previous" | "current";

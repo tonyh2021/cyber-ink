@@ -229,6 +229,31 @@
   50% { opacity: 0; }
 }
 
+/* Workspace layered panel projection: left -> middle -> right */
+.workspace-panel-left {
+  box-shadow: 18px 0 26px -10px rgba(0, 0, 0, 0.22);
+}
+
+.workspace-panel-middle {
+  box-shadow: 16px 0 24px -8px rgba(0, 0, 0, 0.20);
+}
+
+.workspace-panel-right {
+  box-shadow: 8px 0 16px -8px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .workspace-panel-left {
+  box-shadow: 18px 0 24px -12px rgba(8, 24, 40, 0.10);
+}
+
+[data-theme="light"] .workspace-panel-middle {
+  box-shadow: 16px 0 24px -10px rgba(8, 24, 40, 0.12);
+}
+
+[data-theme="light"] .workspace-panel-right {
+  box-shadow: 8px 0 14px -10px rgba(8, 24, 40, 0.06);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

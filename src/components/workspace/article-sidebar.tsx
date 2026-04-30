@@ -70,14 +70,29 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
   const isDark = resolvedTheme === "dark";
 
   const navItems = [
-    { name: "Dashboard", icon: LayoutDashboard, href: "/", active: pathname === "/" },
-    { name: "Workspace", icon: PenLine, href: "/workspace", active: pathname.startsWith("/workspace") },
-    { name: "Styles", icon: Palette, href: "/styles", active: pathname === "/styles" },
+    {
+      name: "Dashboard",
+      icon: LayoutDashboard,
+      href: "/",
+      active: pathname === "/",
+    },
+    {
+      name: "Workspace",
+      icon: PenLine,
+      href: "/workspace",
+      active: pathname.startsWith("/workspace"),
+    },
+    {
+      name: "Styles",
+      icon: Palette,
+      href: "/styles",
+      active: pathname === "/styles",
+    },
   ];
 
   return (
     <aside
-      className={`fixed left-0 top-0 h-full bg-surface-root flex flex-col z-40 shadow-[0_3px_16px_rgba(0,0,0,0.08)] transition-[width,padding] duration-300 ease-in-out overflow-hidden ${
+      className={`workspace-panel-left fixed left-0 top-0 h-full bg-surface-root flex flex-col z-40 transition-[width,padding] duration-300 ease-in-out overflow-hidden ${
         collapsed ? "w-14 items-center py-5 px-0" : "w-[220px] py-5 px-3"
       }`}
     >
@@ -108,7 +123,9 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
       <div className="h-6 shrink-0" />
 
       {/* Nav links */}
-      <nav className={`flex flex-col shrink-0 ${collapsed ? "items-center gap-2" : "gap-0.5"}`}>
+      <nav
+        className={`flex flex-col shrink-0 ${collapsed ? "items-center gap-2" : "gap-0.5"}`}
+      >
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -131,7 +148,9 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
               }
             >
               <Icon size={16} className="shrink-0" />
-              {!collapsed && <span className="whitespace-nowrap">{item.name}</span>}
+              {!collapsed && (
+                <span className="whitespace-nowrap">{item.name}</span>
+              )}
             </button>
           );
         })}
@@ -148,7 +167,9 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
           </span>
           <div className="flex flex-col gap-1 overflow-y-auto flex-1">
             {articles.length === 0 && (
-              <span className="text-[13px] text-text-muted px-3">No articles yet</span>
+              <span className="text-[13px] text-text-muted px-3">
+                No articles yet
+              </span>
             )}
             {articles.map((article) => {
               const isSelected = article.slug === currentSlug;
@@ -163,7 +184,9 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
                 <div
                   key={article.slug}
                   className={`group relative flex items-start rounded-standard px-3 py-2 transition-colors ${
-                    isSelected ? "bg-brand-accent-dim" : "hover:bg-surface-elevated"
+                    isSelected
+                      ? "bg-brand-accent-dim"
+                      : "hover:bg-surface-elevated"
                   }`}
                 >
                   <button
@@ -205,10 +228,14 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
       )}
 
       {/* Spacer when articles section is hidden */}
-      {(collapsed || !pathname.startsWith("/workspace")) && <div className="flex-1" />}
+      {(collapsed || !pathname.startsWith("/workspace")) && (
+        <div className="flex-1" />
+      )}
 
       {/* Bottom section */}
-      <div className={`flex flex-col shrink-0 ${collapsed ? "items-center gap-3" : "gap-3"}`}>
+      <div
+        className={`flex flex-col shrink-0 ${collapsed ? "items-center gap-3" : "gap-3"}`}
+      >
         {collapsed ? (
           <button
             onClick={handleCreate}

@@ -1,10 +1,10 @@
 # Phase 3 — Polish Mode: Tasks
 
-- [ ] Task 1: Types & data helpers — Polish types, filesystem helpers for `.polish/` lifecycle
-- [ ] Task 2: Polish prompt builder — Two-layer prompt assembly (hardcoded + configurable) with sliding window
-- [ ] Task 3: Polish API — start, round, commit, discard, status endpoints
-- [ ] Task 4: Polish UI — conversation view, instruction input, diff toggle, commit/discard dialog
-- [ ] Task 5: Default polish-prompt.md — Ship a sensible default config file
+- [x] Task 1: Types & data helpers — Polish types, filesystem helpers for `.polish/` lifecycle
+- [x] Task 2: Polish prompt builder — Two-layer prompt assembly (hardcoded + configurable) with sliding window
+- [x] Task 3: Polish API — start, round, apply, discard, status endpoints
+- [ ] Task 4: Polish UI — conversation view, instruction input, diff toggle, apply/discard
+- [x] Task 5: Default polish-prompt.md — Ship a sensible default config file
 - [ ] Task 6: Cleanup old branching plan — Remove or archive phase3-branching-evaluation
 
 ## Task Details
@@ -15,20 +15,20 @@ Add polish-related types and filesystem operations.
 
 **Types** (`src/types/index.ts`):
 - `PolishTarget` — `{ node: string }`
-- `PolishHistoryEntry` — `{ role: "user" | "assistant", content: string }`
+- `PolishHistoryEntry` — `{ role: "user" | "assistant", content: string, summary?: string }`
 - `PolishStatus` — `{ active: true, node: string, original: string, previous: string | null, current: string | null, history: PolishHistoryEntry[] }` | `{ active: false }`
-- `PolishCommitChoice` — `"original" | "previous" | "current"`
+- `PolishApplyChoice` — `"original" | "previous" | "current"`
 
 **Data helpers** (`src/lib/data.ts` or new `src/lib/polish-data.ts`):
 - `initPolishSession(slug, node)` — create `.polish/` dir, snapshot node content to `original.md`, write `target.json`, init empty `history.json`
 - `getPolishStatus(slug)` — read `.polish/` state or return `{ active: false }`
 - `rotatePolishRound(slug, newContent)` — move `current.md` → `previous.md`, write new `current.md`
 - `appendPolishHistory(slug, entries)` — append to `history.json`
-- `commitPolish(slug, pick)` — read chosen file, overwrite target node `.md`, delete `.polish/`
+- `applyPolish(slug, pick)` — read chosen file, overwrite target node `.md`, delete `.polish/`
 - `discardPolish(slug)` — delete `.polish/`
 - `getPolishHistory(slug)` — read `history.json`, return full array
 
-**Acceptance:** All helpers work with filesystem. `initPolishSession` refuses if `.polish/` already exists. `commitPolish` correctly overwrites the target node's `.md` file preserving its frontmatter (update `generatedAt` or add `polishedAt`).
+**Acceptance:** All helpers work with filesystem. `initPolishSession` refuses if `.polish/` already exists. `applyPolish` correctly overwrites the target node's `.md` file preserving its frontmatter (update `generatedAt` or add `polishedAt`).
 
 ### Task 2: Polish prompt builder
 
@@ -53,6 +53,7 @@ New function `buildPolishPrompt` (in `src/lib/prompt-builder.ts` or new file):
 - All untouched paragraphs must be preserved exactly as-is, character for character.
 - Do not add any commentary, explanation, or notes before or after the article.
 - Maintain the original markdown formatting and structure.
+- Before the article, output a brief one-sentence summary of what you changed, wrapped between --- delimiters on their own lines. Then output the complete article.
 
 [User-configurable polish-prompt.md — appended after]
 {polishPromptConfig}
@@ -86,19 +87,19 @@ Five endpoints under `/api/articles/[slug]/polish/`:
 - Validate active session exists
 - Build prompt via `buildPolishPrompt` (read original, history, polish-prompt.md)
 - Stream response (same pattern as generate — support mock provider)
-- `onFinish`: rotate files (`rotatePolishRound`), append user instruction + AI output to history
+- `onFinish`: parse stream output — split on second `---` to extract summary and article. Rotate files (`rotatePolishRound` with article text). Append user instruction entry + assistant entry (with `content` = article, `summary` = extracted summary) to history
 
-**`POST .../polish/commit`**
+**`POST .../polish/apply`**
 - Body: `{ pick: "original" | "previous" | "current" }`
 - Validate active session, validate pick (if "previous" but previous is null → 400)
-- Call `commitPolish` — overwrite node, clean up `.polish/`
-- Return `{ committed: true, node }`
+- Call `applyPolish` — overwrite node, clean up `.polish/`
+- Return `{ applied: true, node }`
 
 **`POST .../polish/discard`**
 - Call `discardPolish`
 - Return `{ discarded: true }`
 
-**Acceptance:** Full lifecycle works: start → round (×N) → commit. Start returns 409 on duplicate. Commit with "previous" on round 1 (no previous) returns 400. Discard cleans up without modifying node. Mock provider streams correctly.
+**Acceptance:** Full lifecycle works: start → round (×N) → apply. Start returns 409 on duplicate. Apply with "previous" on round 1 (no previous) returns 400. Discard cleans up without modifying node. Mock provider streams correctly.
 
 ### Task 4: Polish UI
 
@@ -113,12 +114,12 @@ Transform the workspace right panel when polish mode is active.
 2. **Conversation view** — scrollable history of all rounds (instruction + AI response summary/preview). Not full article per round — condensed (e.g., show instruction + "Round N applied" or first line of change)
 3. **Polish instruction input** — text input + submit button at bottom (similar to current instruction input)
 4. **Content area** — when diff is off: shows current polish result (or original if no rounds yet). When diff is on: side-by-side diff via `react-diff-viewer-continued`
-5. **Commit dialog** — modal with three radio options (Original / Previous / Current), each with a short preview. Apply button overwrites and exits polish mode. Previous option disabled if no previous exists (round 1).
-6. **Discard confirmation** — simple confirm dialog
-
+5. **Apply dialog** — modal with three radio options (Original / Previous / Current), each with a short preview. Apply button overwrites and exits polish mode. Previous option disabled if no previous exists (round 1).
 **Entry point:** InstructionBar polish icon button (message-square-text). Enabled when activeNode exists and no polish session active. Clicking starts a session on the current activeNode and transitions to polish mode UI.
 
-**Acceptance:** Full round-trip works in UI. Diff toggle switches correctly between two comparison modes. Commit with each of the three options works. Page refresh restores polish state. Streaming output displays during a round.
+**Generate input refactor (Decision 10):** Replace the existing generate instruction area (label + input + button) with a unified input box: single frame with placeholder text and an embedded `sparkles` icon button in the bottom-right corner. Remove the "Instruction" label. Matches the polishInputBox pattern (`nouLT` in .pen file).
+
+**Acceptance:** Full round-trip works in UI. Diff toggle switches correctly between two comparison modes. Apply with each of the three options works. Page refresh restores polish state. Streaming output displays during a round.
 
 ### Task 5: Default polish-prompt.md
 

@@ -1930,7 +1930,7 @@
               "id": "EjXMB",
               "name": "cardGrid",
               "width": "fill_container",
-              "gap": 12,
+              "gap": 32,
               "children": [
                 {
                   "id": "iUAdK",
@@ -4655,7 +4655,7 @@
                   "id": "fRlrf",
                   "name": "CardGrid",
                   "width": "fill_container",
-                  "gap": 16,
+                  "gap": 32,
                   "children": [
                     {
                       "id": "pY53w",
@@ -4844,7 +4844,7 @@
                   "id": "M3ph1C",
                   "name": "CardGrid2",
                   "width": "fill_container",
-                  "gap": 16,
+                  "gap": 32,
                   "children": [
                     {
                       "id": "XOpfS",
@@ -5313,10 +5313,18 @@
                   "fill": "$surface-card",
                   "stroke": {
                     "align": "inside",
-                    "thickness": {
-                      "right": 1
+                    "thickness": 0,
+                    "fill": "#00000000"
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#00000025",
+                    "offset": {
+                      "x": 12,
+                      "y": 0
                     },
-                    "fill": "$border-default"
+                    "blur": 12
                   },
                   "layout": "vertical",
                   "gap": 16,
@@ -6826,7 +6834,7 @@
                   "id": "D5u6sW",
                   "name": "CardGrid",
                   "width": "fill_container",
-                  "gap": 16,
+                  "gap": 32,
                   "children": [
                     {
                       "type": "frame",
@@ -7141,7 +7149,7 @@
                   "id": "N4B35g",
                   "name": "CardGrid2",
                   "width": "fill_container",
-                  "gap": 16,
+                  "gap": 32,
                   "children": [
                     {
                       "type": "frame",
@@ -7542,10 +7550,10 @@
             "shadowType": "outer",
             "color": "#00000014",
             "offset": {
-              "x": 0,
-              "y": 3
+              "x": 4,
+              "y": 0
             },
-            "blur": 16
+            "blur": 12
           },
           "layout": "vertical",
           "gap": 24,
@@ -7821,10 +7829,10 @@
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
-            "color": "#00000014",
+            "color": "#00000033",
             "offset": {
-              "x": 0,
-              "y": 3
+              "x": 6,
+              "y": 0
             },
             "blur": 16
           },
@@ -8146,7 +8154,7 @@
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#00000014",
+                    "color": "#00000025",
                     "offset": {
                       "x": 4,
                       "y": 0
@@ -8505,6 +8513,16 @@
                   "fill": "$surface-card",
                   "stroke": {
                     "thickness": 0
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#00000025",
+                    "offset": {
+                      "x": 12,
+                      "y": 0
+                    },
+                    "blur": 12
                   },
                   "layout": "vertical",
                   "children": [
@@ -9534,11 +9552,17 @@
                   "height": "fill_container",
                   "fill": "$surface-card",
                   "stroke": {
-                    "align": "inside",
-                    "thickness": {
-                      "right": 1
+                    "thickness": 0
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#00000025",
+                    "offset": {
+                      "x": 12,
+                      "y": 0
                     },
-                    "fill": "$border-default"
+                    "blur": 12
                   },
                   "layout": "vertical",
                   "children": [
@@ -9549,10 +9573,18 @@
                       "width": "fill_container",
                       "stroke": {
                         "align": "inside",
-                        "thickness": {
-                          "bottom": 1
+                        "thickness": 0,
+                        "fill": "#00000000"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000014",
+                        "offset": {
+                          "x": 0,
+                          "y": 4
                         },
-                        "fill": "$border-default"
+                        "blur": 12
                       },
                       "layout": "vertical",
                       "gap": 4,
@@ -9576,7 +9608,7 @@
                               "id": "ysggI",
                               "width": 16,
                               "height": 16,
-                              "iconFontName": "sparkles",
+                              "iconFontName": "hammer",
                               "iconFontFamily": "lucide",
                               "fill": "$brand-accent"
                             },
@@ -10918,7 +10950,7 @@
       "id": "nNzil",
       "x": 3120,
       "y": 9864,
-      "name": "Workspace — Polish Commit",
+      "name": "Workspace — Polish Apply",
       "theme": {
         "mode": "light"
       },
@@ -10954,6 +10986,16 @@
                   "stroke": {
                     "thickness": 0
                   },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#00000025",
+                    "offset": {
+                      "x": 12,
+                      "y": 0
+                    },
+                    "blur": 12
+                  },
                   "layout": "vertical",
                   "children": [
                     {
@@ -10963,10 +11005,18 @@
                       "width": "fill_container",
                       "stroke": {
                         "align": "inside",
-                        "thickness": {
-                          "bottom": 1
+                        "thickness": 0,
+                        "fill": "#00000000"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000014",
+                        "offset": {
+                          "x": 0,
+                          "y": 4
                         },
-                        "fill": "$border-default"
+                        "blur": 12
                       },
                       "layout": "vertical",
                       "gap": 4,
@@ -10990,7 +11040,7 @@
                               "id": "F4Grc",
                               "width": 16,
                               "height": 16,
-                              "iconFontName": "sparkles",
+                              "iconFontName": "hammer",
                               "iconFontFamily": "lucide",
                               "fill": "$brand-accent"
                             },
@@ -11287,10 +11337,18 @@
                       "fill": "$surface-card",
                       "stroke": {
                         "align": "inside",
-                        "thickness": {
-                          "top": 1
+                        "thickness": 0,
+                        "fill": "#00000000"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000014",
+                        "offset": {
+                          "x": 0,
+                          "y": -4
                         },
-                        "fill": "$border-default"
+                        "blur": 12
                       },
                       "layout": "vertical",
                       "padding": [
