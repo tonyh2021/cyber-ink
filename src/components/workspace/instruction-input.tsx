@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useRef, useEffect } from "react";
-import { Textarea } from "@/components/ui/textarea";
 
 interface InstructionInputProps {
   value: string;
@@ -28,14 +27,14 @@ export function InstructionInput({
   }, [value, autoResize]);
 
   return (
-    <Textarea
+    <textarea
       ref={ref}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      placeholder="Enter your writing instruction..."
+      placeholder="e.g. Write a sharp analytical piece..."
       disabled={disabled}
-      className="min-h-[120px] resize-none bg-surface-panel text-text-primary placeholder:text-text-muted border-border-default focus:border-brand-accent focus:ring-brand-accent-dim rounded-standard font-sans text-sm leading-relaxed"
-      rows={4}
+      rows={2}
+      className="resize-none rounded-standard border border-border-subtle bg-surface-root p-3 text-sm leading-relaxed text-text-primary placeholder:text-text-muted focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent-dim disabled:opacity-50"
     />
   );
 }

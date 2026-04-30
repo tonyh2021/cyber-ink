@@ -66,7 +66,7 @@ v3              # generate 3
     source.md                          # Raw material (user-pasted text)
     meta.md                            # Article metadata (YAML frontmatter)
     tree.json                          # Version structure + activeNode
-    /nodes/v1.md, v2.md, v2-a.md, ... # Generated content nodes
+    /nodes/v1.md, v2.md, v2-a.md, ... # Generated content nodes (frontmatter: node, generatedAt, instruction; optimize nodes add parentNode)
     /evaluation/v1.json, v2.json, ... # Evaluation scores per node
 ```
 

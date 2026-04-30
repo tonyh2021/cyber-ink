@@ -1,16 +1,31 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import {
+  Source_Sans_3,
+  Noto_Sans_SC,
+  JetBrains_Mono,
+  Noto_Sans_Mono,
+} from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
-const inter = Inter({
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-source-sans",
+});
+
+const notoSansSC = Noto_Sans_SC({
+  subsets: ["latin"],
+  variable: "--font-noto-sans-sc",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
+});
+
+const notoSansMono = Noto_Sans_Mono({
+  subsets: ["latin"],
+  variable: "--font-noto-mono",
 });
 
 export const metadata: Metadata = {
@@ -26,11 +41,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${sourceSans.variable} ${notoSansSC.variable} ${jetbrainsMono.variable} ${notoSansMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute="data-theme" defaultTheme="dark">
+        <ThemeProvider attribute="data-theme" defaultTheme="light">
           {children}
         </ThemeProvider>
       </body>

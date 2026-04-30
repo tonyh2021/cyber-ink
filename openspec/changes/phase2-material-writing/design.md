@@ -10,7 +10,7 @@ Current state after Phase 1:
 - Workspace page with instruction input + streaming output
 - `/data/` directory with config.json, profiles, styles, and one seed article
 
-This phase must add material ingestion, article lifecycle management, and expand the workspace — without introducing the app shell or dashboard, which are deferred to `phase-ui-shell-dashboard` (after Phase 3).
+This phase must add source input, article lifecycle management, and expand the workspace — without introducing the app shell or dashboard, which are deferred to `phase-ui-shell-dashboard` (after Phase 3).
 
 **Depends on:** Phase 1 (generation pipeline, prompt builder, filesystem helpers, types, design system)
 
@@ -49,7 +49,7 @@ This phase must add material ingestion, article lifecycle management, and expand
   source.md          # Raw material (text paste, no dehydration yet)
   meta.json          # Article metadata (title, language, dates)
   tree.json          # Version structure + activeNode
-  /nodes/            # Generated content nodes (v1.md written by generate)
+  /nodes/            # Generated content nodes (v1.md — frontmatter: node, generatedAt, instruction)
   /evaluation/       # Evaluation scores (empty until Phase 3)
 ```
 
@@ -76,6 +76,31 @@ This phase must add material ingestion, article lifecycle management, and expand
 - No dehydration: modern writing models handle raw text well. The user's paste is already a curation step. An intermediate AI extraction layer would be lossy (it doesn't know the instruction context) and adds latency/cost without proportional value.
 - Single file: users paste all material into one textarea, appending additional material as needed. Multiple source files add UI complexity (list management, per-source editing) without proportional value.
 - Save on generate: keeps the mental model simple — "generate" is the commit point. No auto-save state indicators or stale-data conflicts.
+
+### 4a. Instruction stored per-node in frontmatter
+
+**Choice:** The instruction that produced a node is persisted in its YAML frontmatter alongside `node` and `generatedAt`. This applies to both generate and optimize operations — each node records the instruction that created *it*, not the instruction of its parent.
+
+Generate node:
+```yaml
+---
+node: v1
+generatedAt: '2026-04-29T03:08:39.497Z'
+instruction: '从产品经理视角写一篇产品评测'
+---
+```
+
+Optimize node:
+```yaml
+---
+node: v1-a
+parentNode: v1
+generatedAt: '2026-04-29T04:12:05.123Z'
+instruction: '缩短篇幅，去掉冗余段落，保留核心论点'
+---
+```
+
+**Why:** Each generate/optimize call uses a different instruction with different intent. A generate instruction describes what to write from source; an optimize instruction describes how to improve an existing node. Without storing it per-node, the user loses the "why does this version look like this" context. Keeping instruction in frontmatter enables traceability (compare what was asked vs. what was produced), future "regenerate/re-optimize with same instruction" features, and Git-diffable history of intent alongside content.
 
 ### 5. Dynamic routing — `/articles/[slug]`
 
@@ -143,7 +168,7 @@ Slug auto-generated as `art-YYYYMMDD-NNN`. NNN is a sequential counter within th
 
 - Source input exposes a single entry path: paste raw text into a textarea. Users append additional source material to the same textarea.
 - Source is persisted when the user clicks Generate — not auto-saved.
-- Generation presents streaming output (built in Phase 1, integrated here).
+- Generation presents streaming output (built in Phase 1, integrated here). The instruction used for each generation is stored in the node's frontmatter for traceability.
 - Missing inputs (source or instruction) block generate with actionable guidance (disabled button + hint text).
 - Article sidebar shows article list with title; selecting an article navigates to `/articles/[slug]`.
 - Empty state (no articles) shows a "Create your first article" prompt with a create button.

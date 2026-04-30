@@ -5379,7 +5379,7 @@
                           "id": "gE125",
                           "name": "matLabel",
                           "fill": "$text-secondary",
-                          "content": "Material",
+                          "content": "Source",
                           "fontFamily": "$font-ui",
                           "fontSize": 13,
                           "fontWeight": "600"
@@ -8198,7 +8198,7 @@
                           "id": "WR5cf",
                           "name": "matLabel",
                           "fill": "$text-secondary",
-                          "content": "Material",
+                          "content": "Source",
                           "fontFamily": "$font-ui",
                           "fontSize": 13,
                           "fontWeight": "600"

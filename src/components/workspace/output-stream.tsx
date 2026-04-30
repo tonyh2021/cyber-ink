@@ -145,16 +145,14 @@ export function OutputStream({ content, isLoading }: OutputStreamProps) {
   const streaming = isLoading || isBuffering;
 
   return (
-    <div className="bg-surface-canvas border border-border-default rounded-card p-8 md:px-10">
-      <div
-        className="output-stream font-mono text-sm leading-[1.8] text-text-primary prose prose-invert max-w-none prose-headings:font-mono prose-headings:text-text-primary prose-p:text-text-primary prose-strong:text-text-primary prose-li:text-text-primary"
-        data-streaming={streaming || undefined}
-      >
-        {frozen && <FrozenMarkdown content={frozen} />}
-        {tail && (
-          <ReactMarkdown components={markdownComponents}>{tail}</ReactMarkdown>
-        )}
-      </div>
+    <div
+      className="output-stream font-mono text-sm leading-[1.8] text-text-primary prose prose-invert max-w-none prose-headings:font-mono prose-headings:text-text-primary prose-p:text-text-primary prose-strong:text-text-primary prose-li:text-text-primary"
+      data-streaming={streaming || undefined}
+    >
+      {frozen && <FrozenMarkdown content={frozen} />}
+      {tail && (
+        <ReactMarkdown components={markdownComponents}>{tail}</ReactMarkdown>
+      )}
     </div>
   );
 }

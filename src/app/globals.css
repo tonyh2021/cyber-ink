@@ -42,8 +42,8 @@
   --color-diff-remove-text: var(--diff-remove-text);
 
   /* Fonts */
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains);
+  --font-sans: var(--font-source-sans), var(--font-noto-sans-sc), sans-serif;
+  --font-mono: var(--font-jetbrains), var(--font-noto-mono), monospace;
 
   /* Radius */
   --radius-sharp: 4px;

@@ -3,10 +3,21 @@ import { streamText } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { getConfig } from "@/lib/config";
-import { readMarkdown, readJson, writeMarkdown, writeJson, exists } from "@/lib/data";
+import {
+  readMarkdown,
+  readJson,
+  writeMarkdown,
+  writeJson,
+  exists,
+} from "@/lib/data";
 import { buildPrompt } from "@/lib/prompt-builder";
-import { GenerateInputSchema } from "@/types";
 import type { ArticleTree } from "@/types";
+import { z } from "zod/v4";
+
+const GenerateBodySchema = z.object({
+  instruction: z.string().min(1),
+  source: z.string().optional(),
+});
 
 function getModel(provider: string, model: string) {
   if (provider === "anthropic") {
@@ -18,13 +29,21 @@ function getModel(provider: string, model: string) {
   throw new Error(`Unknown provider: ${provider}`);
 }
 
+function nextNodeName(tree: ArticleTree): string {
+  const existing = Object.keys(tree.nodes)
+    .filter((n) => /^v\d+$/.test(n))
+    .map((n) => parseInt(n.slice(1), 10));
+  const max = existing.length > 0 ? Math.max(...existing) : 0;
+  return `v${max + 1}`;
+}
+
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
 
-  const articleExists = await exists(`articles/${slug}/source.md`);
+  const articleExists = await exists(`articles/${slug}/meta.json`);
   if (!articleExists) {
     return NextResponse.json({ error: "Article not found" }, { status: 404 });
   }
@@ -36,7 +55,7 @@ export async function POST(
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const parsed = GenerateInputSchema.safeParse(body);
+  const parsed = GenerateBodySchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
       { error: "Missing or invalid instruction" },
@@ -44,23 +63,23 @@ export async function POST(
     );
   }
 
-  const { instruction } = parsed.data;
+  const { instruction, source } = parsed.data;
+
+  if (source !== undefined) {
+    await writeMarkdown(`articles/${slug}/source.md`, {}, source);
+  }
 
   const tree = await readJson<ArticleTree>(`articles/${slug}/tree.json`);
-  if (tree.rootNode) {
-    return NextResponse.json(
-      { error: "Article already has a root node. Generation is one-shot in Phase 1." },
-      { status: 409 }
-    );
-  }
+  const nodeName = nextNodeName(tree);
 
   const config = await getConfig();
   const { content: profileContent } = await readMarkdown("profiles/default.md");
-
-  const stylePath = "styles/default/active.md";
-  const { content: styleContent } = await readMarkdown(stylePath);
-
-  const { content: sourceContent } = await readMarkdown(`articles/${slug}/source.md`);
+  const { content: styleContent } = await readMarkdown(
+    "styles/default/active.md"
+  );
+  const { content: sourceContent } = await readMarkdown(
+    `articles/${slug}/source.md`
+  );
 
   const { systemPrompt, userMessage } = buildPrompt({
     profile: profileContent,
@@ -80,18 +99,26 @@ export async function POST(
     system: systemPrompt,
     messages: [{ role: "user", content: userMessage }],
     async onFinish({ text, usage }) {
-      console.log(`[generate] ${slug} | tokens: ${usage.inputTokens} input + ${usage.outputTokens} output = ${(usage.inputTokens ?? 0) + (usage.outputTokens ?? 0)} total`);
-      await writeMarkdown(`articles/${slug}/nodes/v1.md`, {
-        node: "v1",
-        generatedAt: new Date().toISOString(),
-      }, text);
+      console.log(
+        `[generate] ${slug}/${nodeName} | tokens: ${usage.inputTokens} in + ${usage.outputTokens} out`
+      );
+      await writeMarkdown(
+        `articles/${slug}/nodes/${nodeName}.md`,
+        {
+          node: nodeName,
+          generatedAt: new Date().toISOString(),
+          instruction,
+        },
+        text
+      );
 
       const updatedTree: ArticleTree = {
-        rootNode: "v1",
-        bestNode: null,
-        latestNode: "v1",
+        rootNode: tree.rootNode || nodeName,
+        bestNode: tree.bestNode,
+        latestNode: nodeName,
         nodes: {
-          v1: { parent: null, depth: 1, children: [] },
+          ...tree.nodes,
+          [nodeName]: { parent: null, depth: 1, children: [] },
         },
       };
       await writeJson(`articles/${slug}/tree.json`, updatedTree);
