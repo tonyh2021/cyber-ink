@@ -196,6 +196,42 @@ Uses `react-diff-viewer-continued` (already in dependencies). Default view is th
 
 - **3-round window loses early context:** If the user made 8 rounds, rounds 1-5 are invisible to the AI. → Mitigation: original is always anchored, so the AI always knows the baseline. The window covers recent trajectory. For most editing sessions 3 rounds of context is sufficient.
 
+### 9. Polish entry point
+
+**Choice:** The InstructionBar in the normal workspace view contains a polish icon button (message-square-text). Clicking it starts a polish session on the current activeNode.
+
+**Preconditions:**
+- An activeNode exists (at least one version has been generated)
+- No polish session is already active for this article
+
+**Behavior:**
+- Click → calls `POST /api/articles/[slug]/polish/start` with `{ node: activeNode }`
+- On success → UI transitions from normal workspace to polish mode (left panel becomes conversation dialog, right panel gains diff toggle toolbar)
+- If session already exists (409) → UI enters polish mode with the existing session restored
+
+**Button state:**
+- Enabled: activeNode exists and no active polish session
+- Disabled: no versions yet, or polish session already active (in which case the UI is already in polish mode)
+
+**Design reference:** `design/cyber-ink.pen` frame "Workspace Page" → InstructionBar → polishBtn
+
+### 10. Unified instruction input: embedded action button
+
+**Choice:** The generate instruction area merges the text input and the Generate button into a single compact input box — matching the polishInputBox pattern used in polish mode.
+
+**Before:** Three separate elements stacked vertically — "Instruction" label, text input box, and a right-aligned "Generate" text button below.
+
+**After:** A single input box with placeholder text and a `sparkles` icon button positioned absolute in the bottom-right corner. The "Instruction" label is removed (placeholder text provides sufficient affordance).
+
+| Input | Icon | Semantic |
+|---|---|---|
+| Polish input | `arrow-up` | Send refinement instruction |
+| Generate input | `sparkles` | Generate new version from scratch |
+
+**Why:** Both inputs serve the same interaction pattern (type instruction → trigger AI action). Unifying the visual structure reduces cognitive overhead and keeps the workspace compact. The distinct icons (`sparkles` vs `arrow-up`) differentiate the two actions clearly.
+
+**Design reference:** `design/cyber-ink.pen` node `nouLT` (polishInputBox) as the structural template.
+
 ## UX Contract
 
 - Polish mode is a distinct UI state with a two-panel layout:

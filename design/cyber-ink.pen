@@ -5322,7 +5322,7 @@
                   "gap": 16,
                   "padding": [
                     24,
-                    20
+                    16
                   ],
                   "children": [
                     {
@@ -5426,20 +5426,11 @@
                       "gap": 8,
                       "children": [
                         {
-                          "type": "text",
-                          "id": "zkl74",
-                          "name": "instrLabel",
-                          "fill": "$text-secondary",
-                          "content": "Instruction",
-                          "fontFamily": "$font-ui",
-                          "fontSize": 13,
-                          "fontWeight": "600"
-                        },
-                        {
                           "type": "frame",
                           "id": "h4w72A",
                           "name": "instructionBox",
                           "width": "fill_container",
+                          "height": 80,
                           "fill": "$surface-root",
                           "cornerRadius": "$radius-standard",
                           "stroke": {
@@ -5447,41 +5438,49 @@
                             "thickness": 1,
                             "fill": "$border-default"
                           },
-                          "padding": 12,
+                          "layout": "none",
                           "children": [
                             {
                               "type": "text",
                               "id": "fOKcq",
+                              "layoutPosition": "absolute",
+                              "x": 12,
+                              "y": 10,
                               "name": "instrText",
                               "fill": "$text-muted",
                               "textGrowth": "fixed-width",
-                              "width": "fill_container",
+                              "width": 340,
                               "content": "e.g. Write a sharp analytical piece focusing on regulatory competition...",
-                              "lineHeight": 1.6,
+                              "lineHeight": 1.5,
                               "fontFamily": "$font-ui",
-                              "fontSize": 14,
+                              "fontSize": 13,
                               "fontWeight": "normal"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "PL16I",
-                          "name": "instrActions",
-                          "width": "fill_container",
-                          "gap": 8,
-                          "justifyContent": "end",
-                          "children": [
+                            },
                             {
-                              "id": "kXr0N",
-                              "type": "ref",
-                              "ref": "vIidR",
+                              "type": "frame",
+                              "id": "yqJxC",
+                              "layoutPosition": "absolute",
+                              "x": 368,
+                              "y": 40,
                               "name": "generateBtn",
-                              "descendants": {
-                                "qFPom": {
-                                  "content": "Generate"
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$brand-accent",
+                              "cornerRadius": "$radius-standard",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "L00oWR",
+                                  "name": "icon",
+                                  "width": 16,
+                                  "height": 16,
+                                  "iconFontName": "sparkles",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$text-on-accent"
                                 }
-                              }
+                              ]
                             }
                           ]
                         }
@@ -8141,16 +8140,24 @@
                   "fill": "$surface-card",
                   "stroke": {
                     "align": "inside",
-                    "thickness": {
-                      "right": 1
+                    "thickness": 0,
+                    "fill": "#00000000"
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#00000014",
+                    "offset": {
+                      "x": 4,
+                      "y": 0
                     },
-                    "fill": "$border-default"
+                    "blur": 12
                   },
                   "layout": "vertical",
                   "gap": 16,
                   "padding": [
                     24,
-                    20
+                    16
                   ],
                   "children": [
                     {
@@ -8254,20 +8261,11 @@
                       "gap": 8,
                       "children": [
                         {
-                          "type": "text",
-                          "id": "uVlyr",
-                          "name": "instrLabel",
-                          "fill": "$text-secondary",
-                          "content": "Instruction",
-                          "fontFamily": "$font-ui",
-                          "fontSize": 13,
-                          "fontWeight": "600"
-                        },
-                        {
                           "type": "frame",
                           "id": "KmhvO",
                           "name": "instrBox",
                           "width": "fill_container",
+                          "height": 80,
                           "fill": "$surface-root",
                           "cornerRadius": "$radius-standard",
                           "stroke": {
@@ -8275,43 +8273,49 @@
                             "thickness": 1,
                             "fill": "$border-default"
                           },
-                          "padding": 12,
+                          "layout": "none",
                           "children": [
                             {
                               "type": "text",
                               "id": "XLvit",
+                              "layoutPosition": "absolute",
+                              "x": 12,
+                              "y": 10,
                               "name": "instrPh",
                               "fill": "$text-muted",
                               "textGrowth": "fixed-width",
-                              "width": "fill_container",
+                              "width": 340,
                               "content": "e.g. Write a sharp analytical piece...",
-                              "lineHeight": 1.6,
+                              "lineHeight": 1.5,
                               "fontFamily": "$font-ui",
-                              "fontSize": 14,
+                              "fontSize": 13,
                               "fontWeight": "normal"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "FGpVT",
-                          "name": "actions",
-                          "width": "fill_container",
-                          "height": 40,
-                          "gap": 8,
-                          "justifyContent": "end",
-                          "children": [
+                            },
                             {
-                              "id": "PQiIF",
-                              "type": "ref",
-                              "ref": "vIidR",
-                              "enabled": true,
-                              "name": "genBtn",
-                              "descendants": {
-                                "qFPom": {
-                                  "content": "Generate"
+                              "type": "frame",
+                              "id": "skb0r",
+                              "layoutPosition": "absolute",
+                              "x": 368,
+                              "y": 40,
+                              "name": "generateBtn",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$brand-accent",
+                              "cornerRadius": "$radius-standard",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "XO95G",
+                                  "name": "ico",
+                                  "width": 16,
+                                  "height": 16,
+                                  "iconFontName": "sparkles",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$text-on-accent"
                                 }
-                              }
+                              ]
                             }
                           ]
                         }
@@ -8511,10 +8515,18 @@
                       "width": "fill_container",
                       "stroke": {
                         "align": "inside",
-                        "thickness": {
-                          "bottom": 1
+                        "thickness": 0,
+                        "fill": "#00000000"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000014",
+                        "offset": {
+                          "x": 0,
+                          "y": 4
                         },
-                        "fill": "$border-default"
+                        "blur": 12
                       },
                       "layout": "vertical",
                       "gap": 4,
@@ -8538,7 +8550,7 @@
                               "id": "ini9q",
                               "width": 16,
                               "height": 16,
-                              "iconFontName": "sparkles",
+                              "iconFontName": "hammer",
                               "iconFontFamily": "lucide",
                               "fill": "$brand-accent"
                             },
@@ -8835,10 +8847,18 @@
                       "fill": "$surface-card",
                       "stroke": {
                         "align": "inside",
-                        "thickness": {
-                          "top": 1
+                        "thickness": 0,
+                        "fill": "#00000000"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000014",
+                        "offset": {
+                          "x": 0,
+                          "y": -4
                         },
-                        "fill": "$border-default"
+                        "blur": 12
                       },
                       "layout": "vertical",
                       "padding": [
@@ -8978,7 +8998,7 @@
                                       "type": "text",
                                       "id": "JRPJ2",
                                       "fill": "$text-on-accent",
-                                      "content": "Content",
+                                      "content": "Current",
                                       "fontFamily": "$font-ui",
                                       "fontSize": 12,
                                       "fontWeight": "600"
@@ -9846,10 +9866,18 @@
                       "fill": "$surface-card",
                       "stroke": {
                         "align": "inside",
-                        "thickness": {
-                          "top": 1
+                        "thickness": 0,
+                        "fill": "#00000000"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000014",
+                        "offset": {
+                          "x": 0,
+                          "y": -4
                         },
-                        "fill": "$border-default"
+                        "blur": 12
                       },
                       "layout": "vertical",
                       "padding": [
@@ -9989,7 +10017,7 @@
                                       "type": "text",
                                       "id": "cOS6Y",
                                       "fill": "$text-secondary",
-                                      "content": "Content",
+                                      "content": "Current",
                                       "fontFamily": "$font-ui",
                                       "fontSize": 12,
                                       "fontWeight": "500"
@@ -11402,7 +11430,7 @@
                                       "type": "text",
                                       "id": "rpp3T",
                                       "fill": "$text-on-accent",
-                                      "content": "Content",
+                                      "content": "Current",
                                       "fontFamily": "$font-ui",
                                       "fontSize": 12,
                                       "fontWeight": "600"

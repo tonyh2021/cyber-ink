@@ -116,7 +116,7 @@ Transform the workspace right panel when polish mode is active.
 5. **Commit dialog** — modal with three radio options (Original / Previous / Current), each with a short preview. Apply button overwrites and exits polish mode. Previous option disabled if no previous exists (round 1).
 6. **Discard confirmation** — simple confirm dialog
 
-**Entry point:** TBD (polish entrance UX to be designed separately)
+**Entry point:** InstructionBar polish icon button (message-square-text). Enabled when activeNode exists and no polish session active. Clicking starts a session on the current activeNode and transitions to polish mode UI.
 
 **Acceptance:** Full round-trip works in UI. Diff toggle switches correctly between two comparison modes. Commit with each of the three options works. Page refresh restores polish state. Streaming output displays during a round.
 
