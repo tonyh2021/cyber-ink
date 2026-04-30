@@ -8460,6 +8460,4000 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "yIiil",
+      "x": 0,
+      "y": 9864,
+      "name": "Workspace — Polish Mode",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 1440,
+      "height": 900,
+      "fill": "$surface-root",
+      "children": [
+        {
+          "type": "frame",
+          "id": "NmpvA",
+          "layoutPosition": "absolute",
+          "x": 220,
+          "y": 0,
+          "name": "MainBody",
+          "width": 1220,
+          "height": 900,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "LrWQ9",
+              "name": "WorkspaceContent",
+              "width": "fill_container",
+              "height": "fill_container",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "vz4II",
+                  "name": "PolishDialog",
+                  "width": 440,
+                  "height": "fill_container",
+                  "fill": "$surface-card",
+                  "stroke": {
+                    "thickness": 0
+                  },
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "YmZUQ",
+                      "name": "dialogHeader",
+                      "width": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "bottom": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        20,
+                        20,
+                        16,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "G86oXl",
+                          "name": "headerTop",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "ini9q",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "sparkles",
+                              "iconFontFamily": "lucide",
+                              "fill": "$brand-accent"
+                            },
+                            {
+                              "type": "text",
+                              "id": "A5yrH",
+                              "fill": "$text-primary",
+                              "content": "Polish",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 15,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "vsY8s",
+                              "fill": "$text-muted",
+                              "content": "·",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "i5hE6",
+                              "fill": "$brand-accent",
+                              "content": "v2",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 14,
+                              "fontWeight": "700",
+                              "letterSpacing": 0.5
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "WgxQg",
+                          "fill": "$text-secondary",
+                          "content": "AI Regulation Trends",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "I5SDiA",
+                      "name": "ConversationThread",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        8,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "JemDb",
+                          "name": "msg-user-1",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "YxuIH",
+                              "fill": "$text-muted",
+                              "content": "You",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
+                            },
+                            {
+                              "type": "frame",
+                              "id": "E2RBFk",
+                              "name": "userBubble1",
+                              "width": "fill_container",
+                              "fill": "$surface-root",
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "rcx6w",
+                                  "fill": "$text-primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Make paragraph 3 more concise and direct, removing redundant qualifiers that weaken the argument",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "kjh1z",
+                          "name": "msg-ai-1",
+                          "width": "fill_container",
+                          "fill": "$surface-panel",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "eFLDV",
+                              "name": "aiLabel1",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "YdBlM",
+                                  "width": 12,
+                                  "height": 12,
+                                  "iconFontName": "sparkles",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$brand-accent"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "F7pZtO",
+                                  "fill": "$text-accent",
+                                  "content": "Assistant",
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 11,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 0.5
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "V2yEWU",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Done — shortened paragraph 3, removed two qualifiers. The core argument is preserved but reads tighter now.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "e9GTC",
+                          "name": "msg-user-2",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "o4BELU",
+                              "fill": "$text-muted",
+                              "content": "You",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
+                            },
+                            {
+                              "type": "frame",
+                              "id": "e4XBx",
+                              "name": "userBubble2",
+                              "width": "fill_container",
+                              "fill": "$surface-root",
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "CXJpd",
+                                  "fill": "$text-primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Sharpen the opening sentence for more impact — make the reader feel the urgency of the regulatory divergence",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "VCGTE",
+                          "name": "msg-ai-2",
+                          "width": "fill_container",
+                          "fill": "$brand-accent-dim",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "left": 3
+                            },
+                            "fill": "$brand-accent"
+                          },
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "BWL5e",
+                              "name": "aiLabel2",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "qyVm4",
+                                  "width": 12,
+                                  "height": 12,
+                                  "iconFontName": "sparkles",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$brand-accent"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "B93gYW",
+                                  "fill": "$text-accent",
+                                  "content": "Assistant",
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 11,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 0.5
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "W3n7m",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Rewrote the opening — now leads with \"decisive phase\" and \"incompatible paths\" to convey urgency. The rest of paragraph 1 is untouched.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "eJ9BQ",
+                      "name": "PolishInputArea",
+                      "width": "fill_container",
+                      "fill": "$surface-card",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "top": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nouLT",
+                          "name": "polishInputBox",
+                          "width": "fill_container",
+                          "height": 80,
+                          "fill": "$surface-root",
+                          "cornerRadius": "$radius-standard",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$border-default"
+                          },
+                          "layout": "none",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "p4D28s",
+                              "x": 12,
+                              "y": 10,
+                              "fill": "$text-muted",
+                              "textGrowth": "fixed-width",
+                              "width": 340,
+                              "content": "Rewrite the conclusion to end with a forward-looking statement...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "cDs7e",
+                              "layoutPosition": "absolute",
+                              "x": 368,
+                              "y": 40,
+                              "name": "sendBtn",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$brand-accent",
+                              "cornerRadius": "$radius-standard",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "nVEs8",
+                                  "width": 16,
+                                  "height": 16,
+                                  "iconFontName": "arrow-up",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$text-on-accent"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "uhsGO",
+                  "name": "RightPanel",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "E4wvlj",
+                      "name": "NodeStrip",
+                      "width": "fill_container",
+                      "fill": "$surface-root",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "left": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "KYAv9",
+                          "name": "PolishToolbar",
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "bottom": 1
+                            },
+                            "fill": "$border-default"
+                          },
+                          "padding": [
+                            10,
+                            24
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "a2V9d",
+                              "name": "DiffToggle",
+                              "clip": true,
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "c7wEE2",
+                                  "name": "segContent",
+                                  "fill": "$brand-accent",
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "JRPJ2",
+                                      "fill": "$text-on-accent",
+                                      "content": "Content",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "g7D5nc",
+                                  "name": "segPrev",
+                                  "fill": "$surface-card",
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "uDVdM",
+                                      "fill": "$text-secondary",
+                                      "content": "vs Previous",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "bc5SH",
+                                  "name": "segOrig",
+                                  "fill": "$surface-card",
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": {
+                                      "left": 1
+                                    },
+                                    "fill": "$border-default"
+                                  },
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "kAQkM",
+                                      "fill": "$text-secondary",
+                                      "content": "vs Original",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "bZP2o",
+                              "type": "ref",
+                              "ref": "W5VIh",
+                              "layoutPosition": "absolute",
+                              "x": 700,
+                              "y": 7,
+                              "name": "applyA",
+                              "stroke": {
+                                "thickness": 0
+                              },
+                              "padding": [
+                                6,
+                                14
+                              ],
+                              "descendants": {
+                                "XdDbO": {
+                                  "content": "Apply",
+                                  "fill": "$brand-accent",
+                                  "fontWeight": "600"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "cF1Zh",
+                      "name": "WritingCanvas",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "$surface-canvas",
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        32,
+                        40
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "CsCpa",
+                          "name": "canvasText",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "The global race to regulate artificial intelligence has entered a decisive phase, with the world's three largest economic blocs charting fundamentally incompatible paths — a divergence that will shape the technology's trajectory for decades.\n\nDistinct frameworks have crystallized in the past eighteen months. The European Union's AI Act, adopted in March 2024, establishes the world's first comprehensive risk-based classification system. High-risk applications — from biometric identification in critical infrastructure management — face mandatory conformity assessments, while general-purpose AI models must meet transparency obligations that scale with their systemic influence.\n\nThe United States has chosen a lighter touch. Executive Order 14110, signed in October 2023, relies on safety testing mandates and voluntary commitments from frontier AI developers rather than the EU's prescriptive categorization. The approach reflects a preference for industry self-governance, tempered by federal oversight only at the frontier of capability.\n\nChina's regulatory architecture, meanwhile, has evolved through a series of targeted regulations — on algorithmic recommendations (2023), deep synthesis (2023), and generative AI services (2023). Rather than a single omnibus law, Beijing has constructed a layered system that prioritizes content governance and social stability alongside innovation promotion.",
+                          "lineHeight": 1.8,
+                          "fontFamily": "$font-mono",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Vdn8C",
+          "layoutPosition": "absolute",
+          "x": 0,
+          "y": 0,
+          "name": "NavSidebar",
+          "width": 220,
+          "height": 900,
+          "fill": "$surface-root",
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 3
+            },
+            "blur": 16
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            20,
+            12
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "X2xWRf",
+              "name": "logoRow",
+              "width": "fill_container",
+              "gap": 8,
+              "padding": [
+                0,
+                8
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "tguIR",
+                  "name": "logo",
+                  "fill": "$brand-accent",
+                  "content": "CyberInk",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 18,
+                  "fontWeight": "700",
+                  "letterSpacing": -0.5
+                },
+                {
+                  "type": "icon_font",
+                  "id": "u32Ay9",
+                  "name": "collapseBtn",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "panel-left-close",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gaXI9",
+              "name": "NavLinks",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ney5x",
+                  "name": "navDash",
+                  "width": "fill_container",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "RGhli",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "layout-dashboard",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "g77kpi",
+                      "fill": "$text-secondary",
+                      "content": "Dashboard",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "MkNPN",
+                  "name": "navWork",
+                  "width": "fill_container",
+                  "fill": "$brand-accent-dim",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "hgohq",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "pen-line",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tq0uj",
+                      "fill": "$text-accent",
+                      "content": "Workspace",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "mw7EC",
+                  "name": "navStyles",
+                  "width": "fill_container",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "NtsH9",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "palette",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "eGUbI",
+                      "fill": "$text-secondary",
+                      "content": "Styles",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bk3rA",
+              "name": "ArticleList",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "G58ptN",
+                  "fill": "$text-muted",
+                  "content": "ARTICLES",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 11,
+                  "fontWeight": "600",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "X8xKEK",
+                  "name": "articles",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "ce8rC",
+                      "name": "artItem-selected",
+                      "width": "fill_container",
+                      "fill": "$brand-accent-dim",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "FQY40",
+                          "fill": "$text-accent",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "AI Regulation Trends",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "pq4FP",
+                          "name": "sub1",
+                          "fill": "$text-accent",
+                          "content": "3 versions · active: v2-a",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "M5Nfs",
+                      "name": "artItem",
+                      "width": "fill_container",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "E33tZc",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Startup Ecosystem Report",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "bBLk1",
+                          "name": "sub2",
+                          "fill": "$text-secondary",
+                          "content": "5 versions · active: v3",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "d5O1L",
+                      "name": "artItem",
+                      "width": "fill_container",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "KpTM0",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Climate Policy Analysis",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "EHDoG",
+                          "name": "sub3",
+                          "fill": "$text-secondary",
+                          "content": "1 version",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "L9IFwV",
+              "name": "bottomSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "id": "zUVLo",
+                  "type": "ref",
+                  "ref": "vIidR",
+                  "width": "fill_container",
+                  "name": "newBtn",
+                  "descendants": {
+                    "qFPom": {
+                      "content": "New Article"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "QwWnl",
+                  "name": "themeRow",
+                  "width": "fill_container",
+                  "padding": 8,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dlLLr",
+                      "fill": "$text-muted",
+                      "content": "Dark mode",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "icon_font",
+                      "id": "bpeDV",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "moon",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "y1Ztc",
+      "x": 1560,
+      "y": 9864,
+      "name": "Workspace — Polish Diff",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 1440,
+      "height": 900,
+      "fill": "$surface-root",
+      "children": [
+        {
+          "type": "frame",
+          "id": "r6u3Bx",
+          "layoutPosition": "absolute",
+          "x": 220,
+          "y": 0,
+          "name": "MainBody",
+          "width": 1220,
+          "height": 900,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "NC7Ne",
+              "name": "WorkspaceContent",
+              "width": "fill_container",
+              "height": "fill_container",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "P1sc79",
+                  "name": "PolishDialog",
+                  "width": 440,
+                  "height": "fill_container",
+                  "fill": "$surface-card",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": {
+                      "right": 1
+                    },
+                    "fill": "$border-default"
+                  },
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "I14Es",
+                      "name": "dialogHeader",
+                      "width": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "bottom": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        20,
+                        20,
+                        16,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "d0nCRg",
+                          "name": "headerTop",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "ysggI",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "sparkles",
+                              "iconFontFamily": "lucide",
+                              "fill": "$brand-accent"
+                            },
+                            {
+                              "type": "text",
+                              "id": "O8wmSn",
+                              "fill": "$text-primary",
+                              "content": "Polish",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 15,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "yMdjp",
+                              "fill": "$text-muted",
+                              "content": "·",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "x6XKk",
+                              "fill": "$brand-accent",
+                              "content": "v2",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 14,
+                              "fontWeight": "700",
+                              "letterSpacing": 0.5
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "UxFjq",
+                          "fill": "$text-secondary",
+                          "content": "AI Regulation Trends",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "h25sF6",
+                      "name": "ConversationThread",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        8,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "PrDML",
+                          "name": "msg-user-1",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "f8ys5",
+                              "fill": "$text-muted",
+                              "content": "You",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
+                            },
+                            {
+                              "type": "frame",
+                              "id": "x4ryzE",
+                              "name": "userBubble1",
+                              "width": "fill_container",
+                              "fill": "$surface-root",
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "UjFIJ",
+                                  "fill": "$text-primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Make paragraph 3 more concise and direct, removing redundant qualifiers that weaken the argument",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "BDLIn",
+                          "name": "msg-ai-1",
+                          "width": "fill_container",
+                          "fill": "$surface-panel",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "tzqo0",
+                              "name": "al1",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "fdl4x",
+                                  "width": 12,
+                                  "height": 12,
+                                  "iconFontName": "sparkles",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$brand-accent"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "U0cViG",
+                                  "fill": "$text-accent",
+                                  "content": "Assistant",
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 11,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 0.5
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "DoPVE",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Done — shortened paragraph 3, removed two qualifiers. The core argument is preserved but reads tighter now.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "g97K8",
+                          "name": "msg-user-2",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "BYqqA",
+                              "fill": "$text-muted",
+                              "content": "You",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
+                            },
+                            {
+                              "type": "frame",
+                              "id": "dcFbS",
+                              "name": "userBubble2",
+                              "width": "fill_container",
+                              "fill": "$surface-root",
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "kAhUO",
+                                  "fill": "$text-primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Sharpen the opening sentence for more impact — make the reader feel the urgency of the regulatory divergence",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "T8aQN",
+                          "name": "msg-ai-2",
+                          "width": "fill_container",
+                          "fill": "$surface-panel",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "iMtBJ",
+                              "name": "al2",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "ZFwJ8",
+                                  "width": 12,
+                                  "height": 12,
+                                  "iconFontName": "sparkles",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$brand-accent"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Ktbaf",
+                                  "fill": "$text-accent",
+                                  "content": "Assistant",
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 11,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 0.5
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "XiSdI",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Rewrote the opening — now leads with \"decisive phase\" and \"incompatible paths\" to convey urgency. The rest of paragraph 1 is untouched.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "YEEmL",
+                      "name": "PolishInputArea",
+                      "width": "fill_container",
+                      "fill": "$surface-card",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "top": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "keiQZ",
+                          "name": "polishInputBox",
+                          "width": "fill_container",
+                          "height": 80,
+                          "fill": "$surface-root",
+                          "cornerRadius": "$radius-standard",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$border-default"
+                          },
+                          "layout": "none",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "HJf3p",
+                              "x": 0,
+                              "y": 0,
+                              "fill": "$text-muted",
+                              "textGrowth": "fixed-width",
+                              "width": 340,
+                              "content": "Rewrite the conclusion to end with a forward-looking statement...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "N1V7f",
+                              "layoutPosition": "absolute",
+                              "x": 368,
+                              "y": 40,
+                              "name": "sendBtn",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$brand-accent",
+                              "cornerRadius": "$radius-standard",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "X3wRhn",
+                                  "width": 16,
+                                  "height": 16,
+                                  "iconFontName": "arrow-up",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$text-on-accent"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FOEoG",
+                  "name": "RightPanel",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "teXRv",
+                      "name": "NodeStrip",
+                      "width": "fill_container",
+                      "fill": "$surface-root",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "left": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "rXGMq",
+                          "name": "PolishToolbar",
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "bottom": 1
+                            },
+                            "fill": "$border-default"
+                          },
+                          "padding": [
+                            10,
+                            24
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "Klg8U",
+                              "name": "DiffToggle",
+                              "clip": true,
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ZUrEd",
+                                  "name": "segContent",
+                                  "fill": "$surface-card",
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "cOS6Y",
+                                      "fill": "$text-secondary",
+                                      "content": "Content",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "aDSZB",
+                                  "name": "segPrev",
+                                  "fill": "$surface-card",
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "kG2Tp",
+                                      "fill": "$text-secondary",
+                                      "content": "vs Previous",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "bBWdy",
+                                  "name": "segOrig",
+                                  "fill": "$brand-accent",
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": {
+                                      "left": 1
+                                    },
+                                    "fill": "$brand-accent"
+                                  },
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "k6mXJ0",
+                                      "fill": "$text-on-accent",
+                                      "content": "vs Original",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "L1VqMC",
+                              "type": "ref",
+                              "ref": "W5VIh",
+                              "layoutPosition": "absolute",
+                              "x": 700,
+                              "y": 7,
+                              "name": "newApply2",
+                              "stroke": {
+                                "thickness": 0
+                              },
+                              "padding": [
+                                6,
+                                14
+                              ],
+                              "descendants": {
+                                "XdDbO": {
+                                  "content": "Apply",
+                                  "fill": "$brand-accent",
+                                  "fontWeight": "600"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "R51Wm5",
+                      "name": "DiffCanvas",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "$surface-canvas",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "NVn6B",
+                          "name": "OriginalCol",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "XDW1k",
+                              "name": "origHeader",
+                              "width": "fill_container",
+                              "fill": "$surface-panel",
+                              "stroke": {
+                                "thickness": 0
+                              },
+                              "padding": [
+                                10,
+                                20
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "yuls7",
+                                  "fill": "$text-muted",
+                                  "content": "Original",
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 12,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 0.5
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "N2lphs",
+                              "name": "origBody",
+                              "width": "fill_container",
+                              "height": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "padding": 20,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "jyNuf",
+                                  "name": "diffLine1-removed",
+                                  "width": "fill_container",
+                                  "fill": "$diff-remove-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "JkLJ3",
+                                      "fill": "$diff-remove-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "The regulatory landscape for artificial intelligence is shifting rapidly across the",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "cj5iv",
+                                  "name": "diffLine2-removed",
+                                  "width": "fill_container",
+                                  "fill": "$diff-remove-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "E646o",
+                                      "fill": "$diff-remove-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "world's major economic blocs, revealing fundamentally different philosophies about",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "a1Z8u",
+                                  "name": "diffLine3-removed",
+                                  "width": "fill_container",
+                                  "fill": "$diff-remove-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "F8Y1YS",
+                                      "fill": "$diff-remove-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "the relationship between technological innovation and governmental oversight.",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "d7ZgKe",
+                                  "name": "spacer1",
+                                  "width": "fill_container",
+                                  "height": 8
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "FKjXm",
+                                  "fill": "$text-secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Distinct frameworks have crystallized in the past eighteen months. The European\nUnion's AI Act, adopted in March 2024, establishes the world's first comprehensive\nrisk-based classification system. High-risk applications — from biometric\nidentification in critical infrastructure management — face mandatory conformity\nassessments, while general-purpose AI models must meet transparency obligations\nthat scale with their systemic influence.",
+                                  "lineHeight": 1.7,
+                                  "fontFamily": "$font-mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "ekx6F",
+                                  "name": "spacer2",
+                                  "width": "fill_container",
+                                  "height": 8
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "h4uZD",
+                                  "name": "diffLine4-removed",
+                                  "width": "fill_container",
+                                  "fill": "$diff-remove-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "AQAuC",
+                                      "fill": "$diff-remove-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "The United States has taken a markedly different path. Executive Order 14110,",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Y8Cjy",
+                                  "name": "diffLine5-removed",
+                                  "width": "fill_container",
+                                  "fill": "$diff-remove-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "uQyT4",
+                                      "fill": "$diff-remove-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "signed in October 2023, expresses the EU's prescriptive categorization in favor",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "oi5ZB",
+                          "name": "divider",
+                          "width": 1,
+                          "height": "fill_container",
+                          "fill": "$border-default"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MPySB",
+                          "name": "CurrentCol",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "cuB6G",
+                              "name": "currHeader",
+                              "width": "fill_container",
+                              "fill": "$surface-panel",
+                              "stroke": {
+                                "thickness": 0
+                              },
+                              "padding": [
+                                10,
+                                20
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "F3MKVo",
+                                  "fill": "$brand-accent",
+                                  "content": "Current",
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 12,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 0.5
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "FMlod",
+                              "name": "currBody",
+                              "width": "fill_container",
+                              "height": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "padding": 20,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "WUiA8",
+                                  "name": "diffLine1-added",
+                                  "width": "fill_container",
+                                  "fill": "$diff-add-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "cSSiV",
+                                      "fill": "$diff-add-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "The global race to regulate artificial intelligence has entered a decisive phase,",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "s9OKU",
+                                  "name": "diffLine2-added",
+                                  "width": "fill_container",
+                                  "fill": "$diff-add-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "G6ddl",
+                                      "fill": "$diff-add-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "with the world's three largest economic blocs charting fundamentally incompatible",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Mb4Vh",
+                                  "name": "diffLine3-added",
+                                  "width": "fill_container",
+                                  "fill": "$diff-add-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "PqlNn",
+                                      "fill": "$diff-add-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "paths — a divergence that will shape the technology's trajectory for decades.",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "KmmFU",
+                                  "name": "spacer1",
+                                  "width": "fill_container",
+                                  "height": 8
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "lObWb",
+                                  "fill": "$text-secondary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Distinct frameworks have crystallized in the past eighteen months. The European\nUnion's AI Act, adopted in March 2024, establishes the world's first comprehensive\nrisk-based classification system. High-risk applications — from biometric\nidentification in critical infrastructure management — face mandatory conformity\nassessments, while general-purpose AI models must meet transparency obligations\nthat scale with their systemic influence.",
+                                  "lineHeight": 1.7,
+                                  "fontFamily": "$font-mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "YbzOx",
+                                  "name": "spacer2",
+                                  "width": "fill_container",
+                                  "height": 8
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "CA7MF",
+                                  "name": "diffLine4-added",
+                                  "width": "fill_container",
+                                  "fill": "$diff-add-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "BUvtU",
+                                      "fill": "$diff-add-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "The United States has chosen a lighter touch. Executive Order 14110, signed in",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "p5YE5",
+                                  "name": "diffLine5-added",
+                                  "width": "fill_container",
+                                  "fill": "$diff-add-bg",
+                                  "cornerRadius": 2,
+                                  "padding": [
+                                    2,
+                                    4
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "V52ho",
+                                      "fill": "$diff-add-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "October 2023, relies on safety testing mandates and voluntary commitments from",
+                                      "lineHeight": 1.7,
+                                      "fontFamily": "$font-mono",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "X2jJL",
+          "layoutPosition": "absolute",
+          "x": 0,
+          "y": 0,
+          "name": "NavSidebar",
+          "width": 220,
+          "height": 900,
+          "fill": "$surface-root",
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 3
+            },
+            "blur": 16
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            20,
+            12
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "J2Emf",
+              "name": "logoRow",
+              "width": "fill_container",
+              "gap": 8,
+              "padding": [
+                0,
+                8
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "eiJ4P",
+                  "name": "logo",
+                  "fill": "$brand-accent",
+                  "content": "CyberInk",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 18,
+                  "fontWeight": "700",
+                  "letterSpacing": -0.5
+                },
+                {
+                  "type": "icon_font",
+                  "id": "t88nTO",
+                  "name": "collapseBtn",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "panel-left-close",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xsUHG",
+              "name": "NavLinks",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "IviC6",
+                  "name": "navDash",
+                  "width": "fill_container",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "Y2gAjt",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "layout-dashboard",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "TwYIw",
+                      "fill": "$text-secondary",
+                      "content": "Dashboard",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Q9jeQ",
+                  "name": "navWork",
+                  "width": "fill_container",
+                  "fill": "$brand-accent-dim",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "t3UCH",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "pen-line",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hw6Fj",
+                      "fill": "$text-accent",
+                      "content": "Workspace",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "TAUt0",
+                  "name": "navStyles",
+                  "width": "fill_container",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "Y5NhRQ",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "palette",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "dgdcm",
+                      "fill": "$text-secondary",
+                      "content": "Styles",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "d5EpX6",
+              "name": "ArticleList",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "y09qV",
+                  "fill": "$text-muted",
+                  "content": "ARTICLES",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 11,
+                  "fontWeight": "600",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "Kgx0L",
+                  "name": "articles",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "C5BWZ2",
+                      "name": "artItem-selected",
+                      "width": "fill_container",
+                      "fill": "$brand-accent-dim",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GBuVd",
+                          "fill": "$text-accent",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "AI Regulation Trends",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "XKSZL",
+                          "name": "sub1",
+                          "fill": "$text-accent",
+                          "content": "3 versions · active: v2-a",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "lz47R",
+                      "name": "artItem",
+                      "width": "fill_container",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n01Ld",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Startup Ecosystem Report",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Sklxx",
+                          "name": "sub2",
+                          "fill": "$text-secondary",
+                          "content": "5 versions · active: v3",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "DCyux",
+                      "name": "artItem",
+                      "width": "fill_container",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "eSpoK",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Climate Policy Analysis",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "d2CXt",
+                          "name": "sub3",
+                          "fill": "$text-secondary",
+                          "content": "1 version",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aRvbx",
+              "name": "bottomSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "id": "t2G3c",
+                  "type": "ref",
+                  "ref": "vIidR",
+                  "width": "fill_container",
+                  "name": "newBtn",
+                  "descendants": {
+                    "qFPom": {
+                      "content": "New Article"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "gdJC7",
+                  "name": "themeRow",
+                  "width": "fill_container",
+                  "padding": 8,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "yOUpr",
+                      "fill": "$text-muted",
+                      "content": "Dark mode",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "icon_font",
+                      "id": "CkGKf",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "moon",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "nNzil",
+      "x": 3120,
+      "y": 9864,
+      "name": "Workspace — Polish Commit",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 1440,
+      "height": 900,
+      "fill": "$surface-root",
+      "children": [
+        {
+          "type": "frame",
+          "id": "qA5Yk",
+          "layoutPosition": "absolute",
+          "x": 220,
+          "y": 0,
+          "name": "MainBody",
+          "width": 1220,
+          "height": 900,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "uUdEg",
+              "name": "WorkspaceContent",
+              "width": "fill_container",
+              "height": "fill_container",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "B2Jwbf",
+                  "name": "PolishDialog",
+                  "width": 440,
+                  "height": "fill_container",
+                  "fill": "$surface-card",
+                  "stroke": {
+                    "thickness": 0
+                  },
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "p9VxK",
+                      "name": "dialogHeader",
+                      "width": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "bottom": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        20,
+                        20,
+                        16,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "wWEzr",
+                          "name": "headerTop",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "F4Grc",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "sparkles",
+                              "iconFontFamily": "lucide",
+                              "fill": "$brand-accent"
+                            },
+                            {
+                              "type": "text",
+                              "id": "C0w1c",
+                              "fill": "$text-primary",
+                              "content": "Polish",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 15,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "p4nlXQ",
+                              "fill": "$text-muted",
+                              "content": "·",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "oCoNU",
+                              "fill": "$brand-accent",
+                              "content": "v2",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 14,
+                              "fontWeight": "700",
+                              "letterSpacing": 0.5
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "Z2Ukg",
+                          "fill": "$text-secondary",
+                          "content": "AI Regulation Trends",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "begob",
+                      "name": "ConversationThread",
+                      "clip": true,
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "padding": [
+                        8,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "dbWmW",
+                          "name": "msg-user-1",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "RyBjU",
+                              "fill": "$text-muted",
+                              "content": "You",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
+                            },
+                            {
+                              "type": "frame",
+                              "id": "oaRaW",
+                              "name": "b1",
+                              "width": "fill_container",
+                              "fill": "$surface-root",
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "NEUIC",
+                                  "fill": "$text-primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Make paragraph 3 more concise and direct, removing redundant qualifiers that weaken the argument",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "RMOPF",
+                          "name": "msg-ai-1",
+                          "width": "fill_container",
+                          "fill": "$surface-panel",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "ASLrE",
+                              "name": "al1",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "CJRWP",
+                                  "width": 12,
+                                  "height": 12,
+                                  "iconFontName": "sparkles",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$brand-accent"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "WQADC",
+                                  "fill": "$text-accent",
+                                  "content": "Assistant",
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 11,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 0.5
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "r7eN1B",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Done — shortened paragraph 3, removed two qualifiers. The core argument is preserved but reads tighter now.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "sUy9S",
+                          "name": "msg-user-2",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "E2R5FH",
+                              "fill": "$text-muted",
+                              "content": "You",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
+                            },
+                            {
+                              "type": "frame",
+                              "id": "gUKpk",
+                              "name": "b2",
+                              "width": "fill_container",
+                              "fill": "$surface-root",
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "XVWrJ",
+                                  "fill": "$text-primary",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "Sharpen the opening sentence for more impact — make the reader feel the urgency of the regulatory divergence",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "jCN6N",
+                          "name": "msg-ai-2",
+                          "width": "fill_container",
+                          "fill": "$brand-accent-dim",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "left": 3
+                            },
+                            "fill": "$brand-accent"
+                          },
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            12,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "i4iao",
+                              "name": "al2",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "ccD5d",
+                                  "width": 12,
+                                  "height": 12,
+                                  "iconFontName": "sparkles",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$brand-accent"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "j3DwF",
+                                  "fill": "$text-accent",
+                                  "content": "Assistant",
+                                  "fontFamily": "$font-ui",
+                                  "fontSize": 11,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 0.5
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "KvZuc",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Rewrote the opening — now leads with \"decisive phase\" and \"incompatible paths\" to convey urgency. The rest of paragraph 1 is untouched.",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "mtD6M",
+                      "name": "PolishInputArea",
+                      "width": "fill_container",
+                      "fill": "$surface-card",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "top": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Sca8A",
+                          "name": "polishInputBox",
+                          "width": "fill_container",
+                          "height": 80,
+                          "fill": "$surface-root",
+                          "cornerRadius": "$radius-standard",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$border-default"
+                          },
+                          "layout": "none",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "kcso6",
+                              "x": 0,
+                              "y": 0,
+                              "fill": "$text-muted",
+                              "textGrowth": "fixed-width",
+                              "width": 340,
+                              "content": "Rewrite the conclusion to end with a forward-looking statement...",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$font-ui",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ufdaf",
+                              "layoutPosition": "absolute",
+                              "x": 368,
+                              "y": 40,
+                              "name": "sendBtn",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$brand-accent",
+                              "cornerRadius": "$radius-standard",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "V7zzg",
+                                  "width": 16,
+                                  "height": 16,
+                                  "iconFontName": "arrow-up",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$text-on-accent"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BGv4Y",
+                  "name": "RightPanel",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "L8WlF3",
+                      "name": "NodeStrip",
+                      "width": "fill_container",
+                      "fill": "$surface-root",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "left": 1
+                        },
+                        "fill": "$border-default"
+                      },
+                      "layout": "vertical",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Cco1i",
+                          "name": "PolishToolbar",
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": {
+                              "bottom": 1
+                            },
+                            "fill": "$border-default"
+                          },
+                          "padding": [
+                            10,
+                            24
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "UTusN",
+                              "name": "DiffToggle",
+                              "clip": true,
+                              "cornerRadius": "$radius-standard",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border-default"
+                              },
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "LKBWP",
+                                  "name": "sc3",
+                                  "fill": "$brand-accent",
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "rpp3T",
+                                      "fill": "$text-on-accent",
+                                      "content": "Content",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "YSYNJ",
+                                  "name": "sp3",
+                                  "fill": "$surface-card",
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "l4KTfF",
+                                      "fill": "$text-secondary",
+                                      "content": "vs Previous",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "mJILW",
+                                  "name": "so3",
+                                  "fill": "$surface-card",
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": {
+                                      "left": 1
+                                    },
+                                    "fill": "$border-default"
+                                  },
+                                  "padding": [
+                                    6,
+                                    14
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "EEBKi",
+                                      "fill": "$text-secondary",
+                                      "content": "vs Original",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": "M2EiZz",
+                              "type": "ref",
+                              "ref": "W5VIh",
+                              "layoutPosition": "absolute",
+                              "x": 700,
+                              "y": 7,
+                              "name": "applyB",
+                              "stroke": {
+                                "thickness": 0
+                              },
+                              "padding": [
+                                6,
+                                14
+                              ],
+                              "descendants": {
+                                "XdDbO": {
+                                  "content": "Apply",
+                                  "fill": "$brand-accent",
+                                  "fontWeight": "600"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xFPK9",
+                      "name": "WritingCanvas",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "$surface-canvas",
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        32,
+                        40
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Zqlz7",
+                          "name": "canvasText",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "The regulatory landscape for artificial intelligence is shifting rapidly across the world's major economic blocs, revealing fundamentally different philosophies about the relationship between technological innovation and governmental oversight.\n\nDistinct frameworks have crystallized in the past eighteen months. The European Union's AI Act, adopted in March 2024, establishes the world's first comprehensive risk-based classification system. High-risk applications — from biometric identification in critical infrastructure management — face mandatory conformity assessments, while general-purpose AI models must meet transparency obligations that scale with their systemic influence.\n\nThe United States has taken a markedly different path. Executive Order 14110, signed in October 2023, expresses the EU's prescriptive categorization in favor of safety testing mandates and voluntary commitments from frontier AI developers. The approach reflects a philosophical preference for industry self-governance, tempered by federal oversight at the frontier of capability.\n\nChina's regulatory architecture, meanwhile, has evolved through a series of targeted regulations — on algorithmic recommendations (2023), deep synthesis (2023), and generative AI services (2023). Rather than a single omnibus law, Beijing has constructed a layered system that prioritizes content governance and social stability alongside innovation promotion.",
+                          "lineHeight": 1.8,
+                          "fontFamily": "$font-mono",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "dO9kD",
+                      "x": 0,
+                      "y": 862,
+                      "name": "EvalBar",
+                      "enabled": false,
+                      "width": "fill_container(944)",
+                      "fill": "$surface-card",
+                      "stroke": {
+                        "thickness": 0
+                      },
+                      "gap": 24,
+                      "padding": [
+                        10,
+                        24
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "z92SBm",
+                          "name": "evLabel",
+                          "fill": "$text-secondary",
+                          "content": "Evaluation",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Fz9bh",
+                          "name": "evMetric1",
+                          "gap": 4,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "eRxts",
+                              "name": "ev1l",
+                              "fill": "$text-muted",
+                              "content": "Clarity",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "cgAjI",
+                              "name": "ev1v",
+                              "fill": "$color-success",
+                              "content": "0.86",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "sr1eb",
+                          "name": "evMetric2",
+                          "gap": 4,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "eGjP2",
+                              "name": "ev2l",
+                              "fill": "$text-muted",
+                              "content": "Style",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "FosuX",
+                              "name": "ev2v",
+                              "fill": "$color-success",
+                              "content": "0.81",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "m9yLho",
+                          "name": "evMetric3",
+                          "gap": 4,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ELQz7",
+                              "name": "ev3l",
+                              "fill": "$text-muted",
+                              "content": "Info Density",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "sajAT",
+                              "name": "ev3v",
+                              "fill": "$color-warning",
+                              "content": "0.79",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MsRpb",
+                          "name": "evMetric4",
+                          "gap": 4,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "VXSyX",
+                              "name": "ev4l",
+                              "fill": "$text-muted",
+                              "content": "Engagement",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "dYf9Z",
+                              "name": "ev4v",
+                              "fill": "$color-success",
+                              "content": "0.84",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "F8jro",
+                          "name": "evMetric5",
+                          "gap": 4,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "NF6QO",
+                              "name": "ev5l",
+                              "fill": "$text-muted",
+                              "content": "Hallucination",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "C2KTSi",
+                              "name": "ev5v",
+                              "fill": "$color-success",
+                              "content": "0.92",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "zwo1R",
+                          "name": "evSpacer",
+                          "width": "fill_container",
+                          "height": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "zgXrM",
+                          "name": "evOverall",
+                          "gap": 6,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "qgwGJ",
+                              "name": "evOl",
+                              "fill": "$text-primary",
+                              "content": "Overall",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 12,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "f6y2hJ",
+                              "name": "evOv",
+                              "fill": "$color-success",
+                              "content": "0.85",
+                              "fontFamily": "$font-mono",
+                              "fontSize": 14,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "hyahg",
+          "layoutPosition": "absolute",
+          "x": 0,
+          "y": 0,
+          "name": "NavSidebar",
+          "width": 220,
+          "height": 900,
+          "fill": "$surface-root",
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000014",
+            "offset": {
+              "x": 0,
+              "y": 3
+            },
+            "blur": 16
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            20,
+            12
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "rfd7A",
+              "name": "logoRow",
+              "width": "fill_container",
+              "gap": 8,
+              "padding": [
+                0,
+                8
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "R2bR48",
+                  "name": "logo",
+                  "fill": "$brand-accent",
+                  "content": "CyberInk",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 18,
+                  "fontWeight": "700",
+                  "letterSpacing": -0.5
+                },
+                {
+                  "type": "icon_font",
+                  "id": "IROJi",
+                  "name": "collapseBtn",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "panel-left-close",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "q4PYdT",
+              "name": "NavLinks",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "YH44C",
+                  "name": "navDash",
+                  "width": "fill_container",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "xeH0n",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "layout-dashboard",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "iJpvg",
+                      "fill": "$text-secondary",
+                      "content": "Dashboard",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "L4FQr",
+                  "name": "navWork",
+                  "width": "fill_container",
+                  "fill": "$brand-accent-dim",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "RHyPj",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "pen-line",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "aCCfN",
+                      "fill": "$text-accent",
+                      "content": "Workspace",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "KDWZm",
+                  "name": "navStyles",
+                  "width": "fill_container",
+                  "cornerRadius": "$radius-standard",
+                  "gap": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "lYtli",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "palette",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "iq9KE",
+                      "fill": "$text-secondary",
+                      "content": "Styles",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wbwvx",
+              "name": "ArticleList",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "rMrRB",
+                  "fill": "$text-muted",
+                  "content": "ARTICLES",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 11,
+                  "fontWeight": "600",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "mevZg",
+                  "name": "articles",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "VwHe7",
+                      "name": "artItem-selected",
+                      "width": "fill_container",
+                      "fill": "$brand-accent-dim",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "C4Emm",
+                          "fill": "$text-accent",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "AI Regulation Trends",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "F03s3A",
+                          "name": "sub1",
+                          "fill": "$text-accent",
+                          "content": "3 versions · active: v2-a",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "mlwhL",
+                      "name": "artItem",
+                      "width": "fill_container",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jc1Zn",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Startup Ecosystem Report",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "M8zHQ",
+                          "name": "sub2",
+                          "fill": "$text-secondary",
+                          "content": "5 versions · active: v3",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qd5wI",
+                      "name": "artItem",
+                      "width": "fill_container",
+                      "cornerRadius": "$radius-standard",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "VtqBr",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Climate Policy Analysis",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "F9qh6l",
+                          "name": "sub3",
+                          "fill": "$text-secondary",
+                          "content": "1 version",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "NYt51",
+              "name": "bottomSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "id": "Eka3C",
+                  "type": "ref",
+                  "ref": "vIidR",
+                  "width": "fill_container",
+                  "name": "newBtn",
+                  "descendants": {
+                    "qFPom": {
+                      "content": "New Article"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "T5BE0",
+                  "name": "themeRow",
+                  "width": "fill_container",
+                  "padding": 8,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "vMntq",
+                      "fill": "$text-muted",
+                      "content": "Dark mode",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "icon_font",
+                      "id": "H4dzE",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "moon",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-muted"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "bjd7w",
+          "layoutPosition": "absolute",
+          "x": 0,
+          "y": 0,
+          "name": "ModalOverlay",
+          "width": 1440,
+          "height": 900,
+          "fill": "#00000040",
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "q01yYX",
+              "layoutPosition": "absolute",
+              "x": 420,
+              "y": 130,
+              "name": "CommitModal",
+              "clip": true,
+              "width": 600,
+              "height": 640,
+              "fill": "$surface-card",
+              "cornerRadius": "$radius-modal",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#00000030",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 32,
+                "spread": 4
+              },
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "L9swo",
+                  "name": "modalHeader",
+                  "width": "fill_container",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": {
+                      "bottom": 1
+                    },
+                    "fill": "$border-default"
+                  },
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    24,
+                    28,
+                    16,
+                    28
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "fnXpb",
+                      "fill": "$text-primary",
+                      "content": "Commit Polish",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ztvQ7",
+                      "fill": "$text-secondary",
+                      "content": "Choose which version to keep for v2",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FAj1K",
+                  "name": "modalBody",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": [
+                    20,
+                    28
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "DCn0N",
+                      "name": "optOriginal",
+                      "width": "fill_container",
+                      "fill": "$surface-root",
+                      "cornerRadius": "$radius-standard",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-default"
+                      },
+                      "gap": 12,
+                      "padding": [
+                        14,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "OAS1n",
+                          "name": "radio1",
+                          "fill": "#00000000",
+                          "width": 18,
+                          "height": 18,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 2,
+                            "fill": "$border-subtle"
+                          }
+                        },
+                        {
+                          "type": "frame",
+                          "id": "t4a2EQ",
+                          "name": "opt1Text",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 6,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "r5X89",
+                              "fill": "$text-primary",
+                              "content": "Original",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ACS9L",
+                              "fill": "$text-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "The regulatory landscape for artificial intelligence is shifting rapidly across the world's major economic blocs, revealing fundamentally different philosophies about the relationship between technological innovation and governmental oversight...",
+                              "lineHeight": 1.6,
+                              "fontFamily": "$font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "HnLuL",
+                      "name": "optPrevious",
+                      "width": "fill_container",
+                      "fill": "$surface-root",
+                      "cornerRadius": "$radius-standard",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-default"
+                      },
+                      "gap": 12,
+                      "padding": [
+                        14,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "iHvjv",
+                          "name": "radio2",
+                          "fill": "#00000000",
+                          "width": 18,
+                          "height": 18,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 2,
+                            "fill": "$border-subtle"
+                          }
+                        },
+                        {
+                          "type": "frame",
+                          "id": "h1Pvz",
+                          "name": "opt2Text",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 6,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "y49n7",
+                              "fill": "$text-primary",
+                              "content": "Previous Round",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "sdm6K",
+                              "fill": "$text-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "The global race to regulate artificial intelligence has reached an inflection point, with the world's three largest economic blocs now pursuing fundamentally different strategies — a divergence with lasting consequences for the industry...",
+                              "lineHeight": 1.6,
+                              "fontFamily": "$font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jIauS",
+                      "name": "optCurrent",
+                      "width": "fill_container",
+                      "fill": "$brand-accent-dim",
+                      "cornerRadius": "$radius-standard",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$brand-accent"
+                      },
+                      "gap": 12,
+                      "padding": [
+                        14,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "TSF4F",
+                          "name": "radio3outer",
+                          "fill": "#00000000",
+                          "width": 18,
+                          "height": 18,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 2,
+                            "fill": "$brand-accent"
+                          }
+                        },
+                        {
+                          "type": "ellipse",
+                          "id": "LDVh0",
+                          "layoutPosition": "absolute",
+                          "x": 20,
+                          "y": 18,
+                          "name": "radio3inner",
+                          "fill": "$brand-accent",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "frame",
+                          "id": "as0FD",
+                          "name": "opt3Text",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 6,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "TSHwp",
+                              "fill": "$text-primary",
+                              "content": "Current",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "A4imP",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "The global race to regulate artificial intelligence has entered a decisive phase, with the world's three largest economic blocs charting fundamentally incompatible paths — a divergence that will shape the technology's trajectory for decades...",
+                              "lineHeight": 1.6,
+                              "fontFamily": "$font-mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "fFktJ",
+                  "name": "modalFooter",
+                  "width": "fill_container",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": {
+                      "top": 1
+                    },
+                    "fill": "$border-default"
+                  },
+                  "gap": 10,
+                  "padding": [
+                    16,
+                    28
+                  ],
+                  "justifyContent": "end",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "id": "C1hb1",
+                      "type": "ref",
+                      "ref": "W5VIh",
+                      "name": "cancelBtn",
+                      "descendants": {
+                        "XdDbO": {
+                          "content": "Cancel"
+                        }
+                      }
+                    },
+                    {
+                      "id": "S9w2n",
+                      "type": "ref",
+                      "ref": "vIidR",
+                      "name": "commitBtn",
+                      "descendants": {
+                        "qFPom": {
+                          "content": "Apply"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {

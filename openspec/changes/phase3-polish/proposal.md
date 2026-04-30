@@ -16,10 +16,10 @@ After Phase 2, the only way to improve a draft is to generate a new version from
 ### New Capabilities
 
 - `polish-session`: Enter polish mode on any v-node. Creates `.polish/` working directory with original snapshot, starts a conversational editing session. Survives page refresh; one active session per article.
-- `polish-round`: Each round sends user instruction + article to AI. AI returns full article with only instructed paragraphs changed. Server rotates current→previous, stores new output as current. Conversation history appended to history.json.
+- `polish-round`: Each round sends user instruction + article to AI. AI returns a brief change summary (one sentence) followed by the full article with only instructed paragraphs changed. The stream is split on a `---` delimiter — summary goes to the conversation thread, article goes to the canvas. Server rotates current→previous, stores new output as current. Both summary and full conversation history appended to history.json.
 - `polish-prompt`: Two-layer system prompt — hardcoded rules (output full article, only modify instructed paragraphs, preserve untouched text verbatim, maintain markdown structure) + user-configurable polish-prompt.md. Hardcoded rules always prepended, cannot be overridden.
 - `polish-diff`: Two diff comparison modes — Current ↔ Previous and Current ↔ Original. Uses existing react-diff-viewer-continued.
-- `polish-commit`: Three-way choice (original / previous / current) → selected version overwrites the target v-node's .md file. Clears `.polish/` directory.
+- `polish-apply`: Three-way choice (original / previous / current) → selected version overwrites the target v-node's .md file. Clears `.polish/` directory.
 - `polish-discard`: Abandon session, clear `.polish/`, no changes to the v-node.
 
 ### Modified Capabilities
@@ -29,8 +29,8 @@ After Phase 2, the only way to improve a draft is to generate a new version from
 
 ## Impact
 
-- **Code**: New API routes for polish session lifecycle (start, round, commit, discard, status). New UI for polish mode (conversation view, diff toggle, commit dialog). Prompt builder gains polish prompt assembly.
-- **APIs**: `POST /api/articles/[slug]/polish/start`, `POST .../polish/round`, `POST .../polish/commit`, `POST .../polish/discard`, `GET .../polish/status`
+- **Code**: New API routes for polish session lifecycle (start, round, apply, discard, status). New UI for polish mode (left-panel conversation dialog, right-panel canvas with diff toggle, apply dialog). Prompt builder gains polish prompt assembly with structured summary+article output.
+- **APIs**: `POST /api/articles/[slug]/polish/start`, `POST .../polish/round`, `POST .../polish/apply`, `POST .../polish/discard`, `GET .../polish/status`
 - **Dependencies**: No new dependencies
 - **Data**: New `.polish/` ephemeral directory per article (target.json, original.md, previous.md, current.md, history.json). New `data/instruction/polish-prompt.md` config file.
-- **Risk**: Low-medium — polish is isolated (ephemeral state, single session per article, clean commit/discard lifecycle). Main risk is AI compliance with "only change instructed paragraphs" — mitigated by hardcoded prompt rules + diff view letting users verify.
+- **Risk**: Low-medium — polish is isolated (ephemeral state, single session per article, clean apply/discard lifecycle). Main risk is AI compliance with "only change instructed paragraphs" — mitigated by hardcoded prompt rules + diff view letting users verify. Secondary risk is AI not following the summary+delimiter+article format — mitigated by fallback (treat entire output as article, leave summary empty).

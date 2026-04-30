@@ -126,13 +126,15 @@ GET /api/articles/[slug]/polish/status
 
 POST /api/articles/[slug]/polish/round
   body: { instruction: string }
-  → 200: streaming response (full article text)
-  Rotates current→previous, streams new output to current
-  Appends to history.json after stream completes
+  → 200: streaming response (summary + delimiter + full article)
+  Stream format: summary line(s) → "---" delimiter → full article text
+  Frontend splits on delimiter: summary → conversation thread, article → canvas
+  Rotates current→previous, stores article as current.md
+  Appends { role, content, summary } to history.json after stream completes
 
-POST /api/articles/[slug]/polish/commit
+POST /api/articles/[slug]/polish/apply
   body: { pick: "original" | "previous" | "current" }
-  → 200: { committed: true, node: string }
+  → 200: { applied: true, node: string }
   Overwrites target node .md, deletes .polish/
 
 POST /api/articles/[slug]/polish/discard
@@ -142,7 +144,34 @@ POST /api/articles/[slug]/polish/discard
 
 All streaming follows the same pattern as generate (text stream response via Vercel AI SDK or mock provider).
 
-### 6. Diff view: two toggle modes
+### 6. Structured output: summary + article in one call
+
+**Choice:** Each polish round returns both a change summary and the full article in a single streaming response, separated by a `---` delimiter.
+
+```
+---
+Shortened paragraph 3, removed two redundant qualifiers.
+---
+The global race to regulate artificial intelligence...
+(full article)
+```
+
+**Stream parsing:**
+- Content before the second `---` → change summary (displayed in conversation thread)
+- Content after the second `---` → full article (streamed to canvas)
+- Fallback: if no delimiter found, treat entire output as article, leave summary empty
+
+**Why single call:** Avoids a second API call for summary generation. The summary is short (one sentence), so it arrives almost instantly before the article starts streaming — the user gets immediate feedback in the conversation thread while the article renders progressively.
+
+**Prompt rule added to hardcoded layer:**
+```
+Before the article, output a brief one-sentence summary of what you changed,
+wrapped between --- delimiters on their own lines. Then output the complete article.
+```
+
+**History storage:** `history.json` entries gain a `summary` field alongside `role` and `content`. The summary is extracted from the stream; the article text goes into `content`.
+
+### 7. Diff view: two toggle modes (renumbered from 6)
 
 **Choice:** When in polish mode, the content area can switch between:
 
@@ -153,7 +182,7 @@ All streaming follows the same pattern as generate (text stream response via Ver
 
 Uses `react-diff-viewer-continued` (already in dependencies). Default view is the rendered article (not diff); diff is toggled on explicitly.
 
-### 7. One session per article
+### 8. One session per article
 
 **Choice:** Only one polish session can be active per article at a time. Starting a new session while one exists returns 409. User must commit or discard first.
 
@@ -169,8 +198,13 @@ Uses `react-diff-viewer-continued` (already in dependencies). Default view is th
 
 ## UX Contract
 
-- Polish mode is a distinct UI state — the content area transforms to show conversation history + instruction input + diff toggle
-- Version tab strip remains visible but inactive during polish (user can see which version they're polishing)
-- Commit dialog shows three options (original / previous / current) with a preview or diff for each
+- Polish mode is a distinct UI state with a two-panel layout:
+  - **Left panel (440px) → conversation dialog**: replaces the source/instruction panel. Contains header (Polish · node + article name), scrollable conversation thread (user instruction bubbles + AI response summaries), and instruction input with embedded send button
+  - **Right panel → canvas + toolbar**: toolbar with centered diff toggle (Current / vs Previous / vs Original) and ghost-style "Apply" text button. Canvas shows polished article or side-by-side diff
+- AI response blocks in the conversation thread are clickable — clicking one previews that round's output in the right canvas
+- Selected AI message has accent-tinted background + left accent border to indicate active preview
+- Diff toggle switches the canvas between rendered article view and side-by-side comparison (Original↔Current or Previous↔Current)
+- Apply opens a modal with three radio options (Original / Previous Round / Current) with text preview for each
 - Discard requires confirmation ("Discard all polish changes?")
-- If `.polish/` exists on page load, UI enters polish mode automatically with a "Resume polish session" indication
+- If `.polish/` exists on page load, UI enters polish mode automatically with session restored
+- Design reference: `design/cyber-ink.pen` frames "Workspace — Polish Mode", "Workspace — Polish Diff", "Workspace — Polish Commit"
