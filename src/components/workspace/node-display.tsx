@@ -117,7 +117,7 @@ export function NodeDisplay({
       {content || isLoading ? (
         <div
           ref={canvasRef}
-          className="flex-1 overflow-y-auto bg-surface-canvas py-8 px-10"
+          className="flex-1 overflow-y-auto bg-surface-canvas py-6 px-4 md:py-8 md:px-10"
         >
           <OutputStream content={content} isLoading={isLoading} />
         </div>

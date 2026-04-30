@@ -45,14 +45,17 @@ export function SidebarProvider({
 }: SidebarProviderProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [userToggled, setUserToggled] = useState(false);
+  const [isNarrow, setIsNarrow] = useState(false);
   const [articles, setArticles] = useState<ArticleSummary[]>(initialArticles);
-  const width = collapsed ? 56 : 220;
+  const width = collapsed ? (isNarrow ? 0 : 56) : 220;
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 768px)");
+    setIsNarrow(!mql.matches);
     if (!mql.matches) setCollapsed(true);
 
     function handleChange(e: MediaQueryListEvent) {
+      setIsNarrow(!e.matches);
       if (!userToggled) setCollapsed(!e.matches);
     }
     mql.addEventListener("change", handleChange);

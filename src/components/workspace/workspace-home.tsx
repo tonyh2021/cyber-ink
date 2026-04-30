@@ -23,7 +23,9 @@ export function WorkspaceHome({ articles }: WorkspaceHomeProps) {
         className="flex-1 flex flex-col h-full transition-[margin-left] duration-300 ease-in-out overflow-y-auto bg-surface-card"
         style={{ marginLeft: sidebarWidth }}
       >
-        <div className="bg-surface-card flex-1 p-8 px-10 flex flex-col gap-6 max-w-[1024px] mx-auto w-full">
+        <div
+          className={`bg-surface-card flex-1 p-4 md:p-8 md:px-10 flex flex-col gap-6 max-w-[1024px] mx-auto w-full ${sidebarWidth === 0 ? "pt-10" : ""}`}
+        >
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-bold text-text-primary tracking-[-0.5px]">
               Workspace
@@ -35,7 +37,11 @@ export function WorkspaceHome({ articles }: WorkspaceHomeProps) {
 
           {articles.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center gap-4">
-              <FileText size={48} className="text-text-muted" strokeWidth={1.5} />
+              <FileText
+                size={48}
+                className="text-text-muted"
+                strokeWidth={1.5}
+              />
               <span className="text-xl font-semibold text-text-primary">
                 Create your first article
               </span>

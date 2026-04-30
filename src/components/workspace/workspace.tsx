@@ -14,7 +14,11 @@ import { PolishApplyModal } from "./polish/polish-apply-modal";
 import { OutputStream } from "./output-stream";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useSidebar } from "./sidebar-context";
-import type { PolishHistoryEntry, PolishApplyChoice, PolishStatus } from "@/types";
+import type {
+  PolishHistoryEntry,
+  PolishApplyChoice,
+  PolishStatus,
+} from "@/types";
 
 interface NodeInfo {
   node: string;
@@ -73,8 +77,12 @@ export function Workspace({
   const [polishRounds, setPolishRounds] = useState<string[]>([]);
   const [polishHistory, setPolishHistory] = useState<PolishHistoryEntry[]>([]);
   const [polishInstruction, setPolishInstruction] = useState("");
-  const [polishSelectedRound, setPolishSelectedRound] = useState<number | null>(null);
-  const [polishDiffMode, setPolishDiffMode] = useState<"previous" | "original" | null>(null);
+  const [polishSelectedRound, setPolishSelectedRound] = useState<number | null>(
+    null,
+  );
+  const [polishDiffMode, setPolishDiffMode] = useState<
+    "previous" | "original" | null
+  >(null);
   const [polishShowApply, setPolishShowApply] = useState(false);
   const [polishLoading, setPolishLoading] = useState(false);
   const [polishStreamText, setPolishStreamText] = useState("");
@@ -352,7 +360,9 @@ export function Workspace({
       if (entry?.role === "assistant") return entry.content;
     }
     // Show current polish, or original if no rounds yet
-    return polishRounds.length > 0 ? polishRounds[polishRounds.length - 1] : polishOriginal;
+    return polishRounds.length > 0
+      ? polishRounds[polishRounds.length - 1]
+      : polishOriginal;
   };
 
   const displayContent =
@@ -372,7 +382,9 @@ export function Workspace({
         className="flex-1 flex flex-col h-full min-w-0 transition-[margin-left] duration-300 ease-in-out"
         style={{ marginLeft: sidebarWidth }}
       >
-        <div className="flex h-full min-w-0">
+        <div
+          className={`flex flex-col md:flex-row h-full min-w-0 overflow-y-auto md:overflow-hidden ${sidebarWidth === 0 ? "pt-6" : ""}`}
+        >
           {polishActive ? (
             <>
               {/* Polish left panel — conversation dialog */}
@@ -407,14 +419,18 @@ export function Workspace({
                           ? polishRounds[polishRounds.length - 2]
                           : polishOriginal
                     }
-                    newValue={polishRounds.length > 0 ? polishRounds[polishRounds.length - 1] : polishOriginal}
+                    newValue={
+                      polishRounds.length > 0
+                        ? polishRounds[polishRounds.length - 1]
+                        : polishOriginal
+                    }
                     leftTitle={
                       polishDiffMode === "original" ? "Original" : "Previous"
                     }
                     rightTitle="Current"
                   />
                 ) : (
-                  <div className="flex-1 overflow-y-auto bg-surface-canvas pt-4 pb-8 px-10">
+                  <div className="flex-1 overflow-y-auto bg-surface-canvas pt-4 pb-8 px-4 md:px-10">
                     <OutputStream
                       content={getPolishCanvasContent()}
                       isLoading={polishLoading}
@@ -437,8 +453,12 @@ export function Workspace({
           ) : (
             <>
               {/* Normal left panel */}
-              <div className="workspace-panel-middle relative z-20 w-[440px] shrink-0 flex flex-col gap-4 p-6 px-5 bg-surface-card">
-                <MetadataPanel title={articleTitle} slug={slug} createdAt={createdAt} />
+              <div className="workspace-panel-middle relative z-20 w-full md:w-[440px] shrink-0 flex flex-col gap-4 p-4 md:p-6 md:px-5 bg-surface-card">
+                <MetadataPanel
+                  title={articleTitle}
+                  slug={slug}
+                  createdAt={createdAt}
+                />
                 <SourcePanel
                   value={source}
                   onChange={setSource}

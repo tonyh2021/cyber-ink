@@ -55,7 +55,7 @@ export function Dashboard({ articles }: DashboardProps) {
         className="flex-1 flex flex-col h-full transition-[margin-left] duration-300 ease-in-out overflow-y-auto"
         style={{ marginLeft: sidebarWidth }}
       >
-        <div className="bg-surface-card flex-1 p-8 px-10 flex flex-col gap-8 max-w-[1024px] mx-auto w-full">
+        <div className={`bg-surface-card flex-1 p-4 md:p-8 md:px-10 flex flex-col gap-6 md:gap-8 max-w-[1024px] mx-auto w-full ${sidebarWidth === 0 ? "pt-14" : ""}`}>
           {/* Page header */}
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-bold text-text-primary tracking-[-0.5px]">
@@ -67,7 +67,7 @@ export function Dashboard({ articles }: DashboardProps) {
           </div>
 
           {/* Stats row */}
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
             {stats.map((stat, i) => {
               const Icon = stat.icon;
               return (

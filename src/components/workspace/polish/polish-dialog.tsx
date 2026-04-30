@@ -106,7 +106,7 @@ export function PolishDialog({
     : null;
 
   return (
-    <div className="relative z-20 flex flex-col h-full w-[440px] shrink-0 bg-surface-card shadow-[12px_0_12px_-4px_rgba(0,0,0,0.09)]">
+    <div className="relative z-20 flex flex-col h-full w-full md:w-[440px] shrink-0 bg-surface-card shadow-[12px_0_12px_-4px_rgba(0,0,0,0.09)]">
       {/* Header */}
       <div className="px-5 pt-5 pb-4 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
         <div className="flex items-center gap-2">
@@ -157,7 +157,10 @@ export function PolishDialog({
                 }`}
               >
                 <div className="flex items-center gap-1.5">
-                  <Hammer size={12} className="text-brand-accent -translate-y-0.5" />
+                  <Hammer
+                    size={12}
+                    className="text-brand-accent -translate-y-0.5"
+                  />
                   <span className="text-[11px] font-semibold text-text-accent tracking-[0.5px]">
                     Assistant
                   </span>
