@@ -48,7 +48,7 @@ async function getProfile(): Promise<ProfileData> {
 async function getStyles(): Promise<ReferenceGroup[]> {
   let dirs: string[] = [];
   try {
-    dirs = await listDirs("styles");
+    dirs = await listDirs("references");
   } catch {
     return [];
   }
@@ -56,10 +56,10 @@ async function getStyles(): Promise<ReferenceGroup[]> {
   const styles = await Promise.all(
     dirs.map(async (dir) => {
       try {
-        const files = await listFiles(`styles/${dir}`, ".md");
+        const files = await listFiles(`references/${dir}`, ".md");
         const references = await Promise.all(
           files.sort().map(async (f) => {
-            const { content } = await readMarkdown(`styles/${dir}/${f}`);
+            const { content } = await readMarkdown(`references/${dir}/${f}`);
             return { name: dir, filename: f, content };
           })
         );

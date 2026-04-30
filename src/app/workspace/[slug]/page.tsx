@@ -2,10 +2,23 @@ import { readJson, readMarkdown, listFiles } from "@/lib/data";
 import { exists } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { Workspace } from "@/components/workspace/workspace";
-import type { ArticleMeta, ArticleTree } from "@/types";
+import type { ArticleMeta } from "@/types";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+function compareNodeFileNames(a: string, b: string): number {
+  const aName = a.replace(".md", "");
+  const bName = b.replace(".md", "");
+  const aMatch = /^v(\d+)$/.exec(aName);
+  const bMatch = /^v(\d+)$/.exec(bName);
+
+  if (aMatch && bMatch) {
+    return parseInt(aMatch[1], 10) - parseInt(bMatch[1], 10);
+  }
+
+  return aName.localeCompare(bName);
 }
 
 export default async function ArticlePage({ params }: PageProps) {
@@ -15,7 +28,6 @@ export default async function ArticlePage({ params }: PageProps) {
   if (!articleExists) notFound();
 
   const meta = await readJson<ArticleMeta>(`articles/${slug}/meta.json`);
-  const tree = await readJson<ArticleTree>(`articles/${slug}/tree.json`);
 
   let sourceContent = "";
   try {
@@ -29,10 +41,10 @@ export default async function ArticlePage({ params }: PageProps) {
   const nodes: { node: string; instruction?: string }[] = [];
   const nodeContent: Record<string, string> = {};
 
-  for (const file of nodeFiles.sort()) {
+  for (const file of nodeFiles.sort(compareNodeFileNames)) {
     const nodeName = file.replace(".md", "");
     const { frontmatter, content } = await readMarkdown(
-      `articles/${slug}/nodes/${file}`
+      `articles/${slug}/nodes/${file}`,
     );
     nodes.push({
       node: nodeName,

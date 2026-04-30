@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCompletion } from "@ai-sdk/react";
 import { ArticleSidebar } from "./article-sidebar";
 import { MetadataPanel } from "./metadata-panel";
@@ -24,6 +24,17 @@ interface WorkspaceProps {
   initialContent?: Record<string, string>;
 }
 
+const MAX_MAIN_VERSIONS = 5;
+
+function getNodeVersion(nodeName: string): number {
+  const match = /^v(\d+)$/.exec(nodeName);
+  return match ? parseInt(match[1], 10) : 0;
+}
+
+function isMainVersionNode(nodeName: string): boolean {
+  return /^v\d+$/.test(nodeName);
+}
+
 export function Workspace({
   slug,
   title = "New Article",
@@ -37,33 +48,76 @@ export function Workspace({
   const [instruction, setInstruction] = useState("");
   const [nodes, setNodes] = useState<NodeInfo[]>(initialNodes);
   const [activeNode, setActiveNode] = useState<string | null>(
-    initialNodes.length > 0 ? initialNodes[initialNodes.length - 1].node : null
+    initialNodes.length > 0 ? initialNodes[initialNodes.length - 1].node : null,
   );
-  const [nodeContent, setNodeContent] = useState<Record<string, string>>(initialContent);
+  const [nodeContent, setNodeContent] =
+    useState<Record<string, string>>(initialContent);
+  const wasLoading = useRef(false);
 
   const { completion, isLoading, complete } = useCompletion({
     api: `/api/articles/${slug}/generate`,
     streamProtocol: "text",
     onFinish: (_prompt, completion) => {
-      const nextNode = `v${nodes.length + 1}`;
-      const newNodeInfo: NodeInfo = { node: nextNode, instruction };
-      setNodes((prev) => [...prev, newNodeInfo]);
+      let nextNode = "";
+      let removedNode: string | null = null;
+
+      setNodes((prev) => {
+        const currentMaxVersion = prev.reduce(
+          (max, item) => Math.max(max, getNodeVersion(item.node)),
+          0,
+        );
+        nextNode = `v${currentMaxVersion + 1}`;
+        const newNodeInfo: NodeInfo = { node: nextNode, instruction };
+        const nextNodes = [...prev, newNodeInfo];
+
+        const mainVersionNodes = nextNodes.filter((item) =>
+          isMainVersionNode(item.node),
+        );
+
+        if (mainVersionNodes.length > MAX_MAIN_VERSIONS) {
+          const oldestMainVersion = mainVersionNodes.reduce((oldest, item) =>
+            getNodeVersion(item.node) < getNodeVersion(oldest.node)
+              ? item
+              : oldest,
+          );
+          removedNode = oldestMainVersion.node;
+          return nextNodes.filter((item) => item.node !== removedNode);
+        }
+        return nextNodes;
+      });
+
       setActiveNode(nextNode);
-      setNodeContent((prev) => ({ ...prev, [nextNode]: completion }));
+      setNodeContent((prev) => {
+        const nextContent = { ...prev, [nextNode]: completion };
+        if (removedNode) {
+          delete nextContent[removedNode];
+        }
+        return nextContent;
+      });
     },
   });
 
   useEffect(() => {
-    setSource(initialSource);
-    setNodes(initialNodes);
-    setNodeContent(initialContent);
-    setActiveNode(
-      initialNodes.length > 0 ? initialNodes[initialNodes.length - 1].node : null
-    );
-  }, [slug]);
+    if (wasLoading.current && !isLoading && nodes.length > 0) {
+      setActiveNode(nodes[nodes.length - 1].node);
+    }
+    wasLoading.current = isLoading;
+  }, [isLoading, nodes]);
 
   const handleGenerate = async () => {
     if (!instruction.trim() || !source.trim() || isLoading) return;
+
+    const mainVersionCount = nodes.filter((item) =>
+      isMainVersionNode(item.node),
+    ).length;
+
+    if (mainVersionCount >= MAX_MAIN_VERSIONS) {
+      const confirmed = window.confirm(
+        "You already have 5 versions. Generating a new one will remove the oldest version. Continue?",
+      );
+      if (!confirmed) return;
+    }
+
     await complete(instruction, {
       body: { instruction, source },
     });
