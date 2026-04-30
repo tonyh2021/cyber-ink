@@ -83,7 +83,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute="data-theme" defaultTheme="light">
+        <ThemeProvider attribute="data-theme" defaultTheme="system">
           <SidebarProvider initialArticles={articles}>
             {children}
           </SidebarProvider>
