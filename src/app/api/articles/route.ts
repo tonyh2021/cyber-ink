@@ -6,7 +6,8 @@ import {
   listDirs,
   readJson,
 } from "@/lib/data";
-import type { ArticleMeta, ArticleTree } from "@/types";
+import { CreateArticleInputSchema } from "@/types";
+import type { ArticleMeta, ArticleTree, ArticleSummary } from "@/types";
 
 
 function generateSlug(existingSlugs: string[]): string {
@@ -24,15 +25,22 @@ function generateSlug(existingSlugs: string[]): string {
 }
 
 export async function POST(request: NextRequest) {
-  let body: { title?: string; language?: string };
+  let body: unknown;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const title = body.title?.trim() || "New Article";
-  const language = body.language?.trim() || "zh";
+  const parsed = CreateArticleInputSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Title and language are required" },
+      { status: 400 }
+    );
+  }
+
+  const { title, language } = parsed.data;
 
   await ensureDir("articles");
   const existingSlugs = await listDirs("articles");
@@ -77,7 +85,7 @@ export async function GET() {
         const meta = await readJson<ArticleMeta>(`articles/${slug}/meta.json`);
         const tree = await readJson<ArticleTree>(`articles/${slug}/tree.json`);
         const versionCount = Object.keys(tree.nodes).length;
-        return {
+        const summary: ArticleSummary = {
           slug: meta.slug,
           title: meta.title,
           language: meta.language,
@@ -86,6 +94,7 @@ export async function GET() {
           versionCount,
           activeNode: tree.latestNode,
         };
+        return summary;
       } catch {
         return null;
       }

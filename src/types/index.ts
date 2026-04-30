@@ -53,8 +53,37 @@ export interface AppConfig {
 
 export interface GenerateInput {
   instruction: string;
+  source?: string;
 }
 
 export const GenerateInputSchema = z.object({
   instruction: z.string().min(1),
+  source: z.string().optional(),
 });
+
+export interface ArticleSummary {
+  slug: string;
+  title: string;
+  language: string;
+  createdAt: string;
+  updatedAt: string;
+  versionCount: number;
+  activeNode: string | null;
+}
+
+export interface CreateArticleInput {
+  title: string;
+  language: string;
+}
+
+export const CreateArticleInputSchema = z.object({
+  title: z.string().min(1),
+  language: z.string().min(1),
+});
+
+export interface NodeFrontmatter {
+  node: string;
+  generatedAt: string;
+  instruction: string;
+  parentNode?: string;
+}

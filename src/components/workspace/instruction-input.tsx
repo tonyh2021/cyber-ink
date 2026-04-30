@@ -34,7 +34,7 @@ export function InstructionInput({
       placeholder="e.g. Write a sharp analytical piece..."
       disabled={disabled}
       rows={2}
-      className="resize-none rounded-standard border border-border-subtle bg-surface-root p-3 text-sm leading-relaxed text-text-primary placeholder:text-text-muted focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent-dim disabled:opacity-50"
+      className="resize-none rounded-standard border border-border-default bg-surface-root p-3 text-sm leading-relaxed text-text-primary placeholder:text-text-muted focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent-dim disabled:opacity-50"
     />
   );
 }

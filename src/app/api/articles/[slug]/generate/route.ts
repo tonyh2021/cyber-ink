@@ -11,13 +11,8 @@ import {
   exists,
 } from "@/lib/data";
 import { buildPrompt } from "@/lib/prompt-builder";
+import { GenerateInputSchema } from "@/types";
 import type { ArticleTree } from "@/types";
-import { z } from "zod/v4";
-
-const GenerateBodySchema = z.object({
-  instruction: z.string().min(1),
-  source: z.string().optional(),
-});
 
 function getModel(provider: string, model: string) {
   if (provider === "anthropic") {
@@ -55,7 +50,7 @@ export async function POST(
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const parsed = GenerateBodySchema.safeParse(body);
+  const parsed = GenerateInputSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
       { error: "Missing or invalid instruction" },

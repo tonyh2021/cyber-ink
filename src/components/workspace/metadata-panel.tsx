@@ -11,7 +11,7 @@ export function MetadataPanel({ title, slug, createdAt }: MetadataPanelProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <h1 className="text-lg font-bold text-text-primary tracking-tight">
+      <h1 className="text-lg font-bold text-text-primary tracking-[-0.3px]">
         {title}
       </h1>
       <span className="text-xs text-text-muted">

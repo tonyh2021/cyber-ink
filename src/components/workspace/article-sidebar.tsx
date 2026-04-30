@@ -10,6 +10,7 @@ import {
   Moon,
   Sun,
   Plus,
+  Trash2,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSidebar } from "./sidebar-context";
@@ -25,6 +26,7 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
   const { collapsed, setCollapsed, articles, refreshArticles } = useSidebar();
   const [isCreating, setIsCreating] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [deleteSlug, setDeleteSlug] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -49,6 +51,22 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
     }
   }
 
+  async function handleDelete(slug: string) {
+    const res = await fetch(`/api/articles/${slug}`, { method: "DELETE" });
+    if (res.ok) {
+      await refreshArticles();
+      if (slug === currentSlug) {
+        const remaining = articles.filter((a) => a.slug !== slug);
+        if (remaining.length > 0) {
+          router.push(`/workspace/${remaining[0].slug}`);
+        } else {
+          router.push("/workspace");
+        }
+      }
+    }
+    setDeleteSlug(null);
+  }
+
   const isDark = resolvedTheme === "dark";
 
   const navItems = [
@@ -59,7 +77,7 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
 
   return (
     <aside
-      className={`fixed left-0 top-0 h-full bg-surface-card flex flex-col z-40 shadow-[0_3px_16px_rgba(0,0,0,0.08)] transition-[width,padding] duration-300 ease-in-out overflow-hidden ${
+      className={`fixed left-0 top-0 h-full bg-surface-root flex flex-col z-40 shadow-[0_3px_16px_rgba(0,0,0,0.08)] transition-[width,padding] duration-300 ease-in-out overflow-hidden ${
         collapsed ? "w-14 items-center py-5 px-0" : "w-[220px] py-5 px-3"
       }`}
     >
@@ -142,30 +160,44 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
                     : `${article.versionCount} version${article.versionCount > 1 ? "s" : ""}`;
 
               return (
-                <button
+                <div
                   key={article.slug}
-                  onClick={() => router.push(`/workspace/${article.slug}`)}
-                  className={`flex flex-col gap-1 rounded-standard px-3 py-2 text-left transition-colors ${
+                  className={`group relative flex items-start rounded-standard px-3 py-2 transition-colors ${
                     isSelected ? "bg-brand-accent-dim" : "hover:bg-surface-elevated"
                   }`}
                 >
-                  <span
-                    className={`text-[13px] truncate w-full ${
-                      isSelected
-                        ? "font-semibold text-brand-accent"
-                        : "font-normal text-text-primary"
-                    }`}
+                  <button
+                    onClick={() => router.push(`/workspace/${article.slug}`)}
+                    className="flex flex-col gap-1 text-left flex-1 min-w-0"
                   >
-                    {article.title}
-                  </span>
-                  <span
-                    className={`text-[11px] ${
-                      isSelected ? "text-brand-accent" : "text-text-secondary"
-                    }`}
+                    <span
+                      className={`text-[13px] truncate w-full ${
+                        isSelected
+                          ? "font-semibold text-brand-accent"
+                          : "font-normal text-text-primary"
+                      }`}
+                    >
+                      {article.title}
+                    </span>
+                    <span
+                      className={`text-[11px] ${
+                        isSelected ? "text-brand-accent" : "text-text-secondary"
+                      }`}
+                    >
+                      {versionText}
+                    </span>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeleteSlug(article.slug);
+                    }}
+                    className="opacity-0 group-hover:opacity-100 shrink-0 mt-0.5 p-1 text-text-muted hover:text-danger transition-opacity"
+                    title="Delete article"
                   >
-                    {versionText}
-                  </span>
-                </button>
+                    <Trash2 size={13} />
+                  </button>
+                </div>
               );
             })}
           </div>
@@ -218,6 +250,34 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
           </div>
         )}
       </div>
+      {/* Delete confirmation dialog */}
+      {deleteSlug && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-surface-card rounded-modal p-6 shadow-[var(--shadow-modal)] w-80 flex flex-col gap-4">
+            <h3 className="text-base font-semibold text-text-primary">
+              Delete article?
+            </h3>
+            <p className="text-[13px] text-text-secondary leading-relaxed">
+              This will permanently remove this article and all its versions.
+              This action cannot be undone.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setDeleteSlug(null)}
+                className="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-standard hover:bg-surface-elevated transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDelete(deleteSlug)}
+                className="px-4 py-1.5 text-sm font-medium text-text-on-accent bg-danger rounded-standard hover:opacity-90 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </aside>
   );
 }

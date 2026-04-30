@@ -1,5 +1,6 @@
 "use client";
 
+import { FilePen } from "lucide-react";
 import { OutputStream } from "./output-stream";
 
 interface NodeInfo {
@@ -25,7 +26,7 @@ export function NodeDisplay({
   return (
     <div className="flex flex-col flex-1 min-h-0">
       {/* Version tab strip */}
-      <div className="flex items-center border-b border-border-subtle bg-surface-card px-6">
+      <div className="flex items-center border-b border-border-default bg-surface-card py-2.5 px-6">
         {nodes.length > 0 ? (
           nodes.map((n) => (
             <button
@@ -34,7 +35,7 @@ export function NodeDisplay({
               className="relative flex flex-col items-center"
             >
               <span
-                className={`px-4 pt-2.5 pb-2 text-sm font-mono ${
+                className={`px-4 pt-2.5 pb-2 text-sm font-mono tracking-[0.5px] ${
                   n.node === activeNode
                     ? "text-brand-accent font-semibold"
                     : "text-text-muted hover:text-text-secondary"
@@ -43,38 +44,40 @@ export function NodeDisplay({
                 {n.node}
               </span>
               {n.node === activeNode && (
-                <div className="h-[3px] w-full rounded-full bg-brand-accent" />
+                <div className="h-[3px] w-full rounded-[1px] bg-brand-accent" />
               )}
             </button>
           ))
         ) : (
-          <span className="px-4 py-2.5 text-sm font-mono text-text-muted">
-            v1
-          </span>
+          <div className="relative flex flex-col items-center">
+            <span className="px-4 pt-2.5 pb-2 text-sm font-mono tracking-[0.5px] text-brand-accent font-semibold">
+              v1
+            </span>
+            <div className="h-[3px] w-full rounded-[1px] bg-brand-accent" />
+          </div>
         )}
       </div>
 
+      {/* Instruction used for this node */}
+      {activeNode && nodes.find((n) => n.node === activeNode)?.instruction && (
+        <div className="px-6 py-2.5 bg-surface-panel border-b border-border-default">
+          <span className="text-[11px] font-semibold text-text-muted tracking-wider uppercase">
+            Instruction
+          </span>
+          <p className="text-[13px] text-text-secondary mt-1 leading-relaxed">
+            {nodes.find((n) => n.node === activeNode)!.instruction}
+          </p>
+        </div>
+      )}
+
       {/* Canvas */}
       {content || isLoading ? (
-        <div className="flex-1 overflow-y-auto bg-surface-canvas p-8">
+        <div className="flex-1 overflow-y-auto bg-surface-canvas py-8 px-10">
           <OutputStream content={content} isLoading={isLoading} />
         </div>
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center gap-3 bg-surface-canvas">
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-text-muted"
-          >
-            <path d="M12 20h9" />
-            <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
-          </svg>
+          <FilePen size={40} strokeWidth={1.5} className="text-text-muted" />
           <span className="text-base font-semibold text-text-secondary">
             No content yet
           </span>

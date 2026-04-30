@@ -87,7 +87,7 @@ export function Workspace({
       >
         <div className="flex h-full">
           {/* Left panel */}
-          <div className="w-[440px] shrink-0 flex flex-col gap-4 p-6 px-5 bg-surface-card border-r border-border-subtle">
+          <div className="w-[440px] shrink-0 flex flex-col gap-4 p-6 px-5 bg-surface-card border-r border-border-default">
             <MetadataPanel title={title} slug={slug} createdAt={createdAt} />
             <SourcePanel
               value={source}

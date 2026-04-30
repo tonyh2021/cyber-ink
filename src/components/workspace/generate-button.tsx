@@ -17,7 +17,7 @@ export function GenerateButton({
     <Button
       onClick={onClick}
       disabled={disabled || isLoading}
-      className="bg-brand-accent text-surface-root hover:bg-brand-accent-hover rounded-standard px-5 py-2 font-sans font-medium"
+      className="bg-brand-accent text-text-on-accent hover:bg-brand-accent-hover rounded-standard px-5 py-2 font-sans font-bold"
     >
       {isLoading ? "Generating..." : "Generate"}
     </Button>
