@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
-import { Hammer, Sparkles, ArrowUp } from "lucide-react";
+import { useRef, useEffect, useCallback, useMemo } from "react";
+import { Hammer, ArrowUp, AlertCircle } from "lucide-react";
 import type { PolishHistoryEntry } from "@/types";
 
 interface PolishDialogProps {
@@ -14,6 +14,17 @@ interface PolishDialogProps {
   onInstructionChange: (value: string) => void;
   onSend: () => void;
   isLoading: boolean;
+  streamText: string;
+}
+
+function extractStreamingSummary(text: string): string | null {
+  if (!text.startsWith("---")) return null;
+  const secondDash = text.indexOf("\n---\n", 4);
+  if (secondDash === -1) {
+    const partial = text.slice(4).trim();
+    return partial || null;
+  }
+  return text.slice(4, secondDash).trim() || null;
 }
 
 export function PolishDialog({
@@ -26,6 +37,7 @@ export function PolishDialog({
   onInstructionChange,
   onSend,
   isLoading,
+  streamText,
 }: PolishDialogProps) {
   const threadRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -34,7 +46,7 @@ export function PolishDialog({
     if (threadRef.current) {
       threadRef.current.scrollTop = threadRef.current.scrollHeight;
     }
-  }, [history]);
+  }, [history, isLoading, streamText]);
 
   const autoResize = useCallback(() => {
     const el = textareaRef.current;
@@ -54,19 +66,44 @@ export function PolishDialog({
     }
   };
 
-  const rounds: Array<{ instruction: string; summary: string; index: number }> =
-    [];
-  for (let i = 0; i < history.length; i += 2) {
-    const userEntry = history[i];
-    const assistantEntry = history[i + 1];
-    if (userEntry?.role === "user" && assistantEntry?.role === "assistant") {
-      rounds.push({
-        instruction: userEntry.content,
-        summary: assistantEntry.summary || "Changes applied.",
-        index: Math.floor(i / 2),
+  const rounds = useMemo(() => {
+    const result: Array<{
+      instruction: string;
+      summary: string | null;
+      index: number;
+      pending: boolean;
+      error: boolean;
+    }> = [];
+
+    let roundIdx = 0;
+    for (let i = 0; i < history.length; i++) {
+      const entry = history[i];
+      if (entry.role !== "user") continue;
+
+      const next = history[i + 1];
+      const hasAssistant = next?.role === "assistant";
+
+      result.push({
+        instruction: entry.content,
+        summary: hasAssistant
+          ? next.error
+            ? null
+            : next.summary || "Changes applied."
+          : null,
+        index: roundIdx,
+        pending: !hasAssistant,
+        error: hasAssistant ? !!next.error : false,
       });
+      roundIdx++;
+      if (hasAssistant) i++;
     }
-  }
+
+    return result;
+  }, [history]);
+
+  const streamingSummary = isLoading
+    ? extractStreamingSummary(streamText)
+    : null;
 
   return (
     <div className="flex flex-col h-full w-[440px] shrink-0 bg-surface-card shadow-[12px_0_12px_-4px_rgba(0,0,0,0.09)]">
@@ -103,40 +140,68 @@ export function PolishDialog({
               </div>
             </div>
 
-            {/* Assistant message */}
-            <button
-              type="button"
-              onClick={() => onSelectRound(round.index)}
-              className={`w-full text-left px-5 py-3 transition-colors ${
-                selectedRound === round.index
-                  ? "bg-brand-accent-dim border-l-[3px] border-l-brand-accent"
-                  : "hover:bg-surface-panel"
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <Sparkles size={12} className="text-brand-accent" />
-                <span className="text-[11px] font-semibold text-text-accent tracking-[0.5px]">
-                  Assistant
-                </span>
+            {/* Assistant message — completed */}
+            {!round.pending && !round.error && (
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => onSelectRound(round.index)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    onSelectRound(round.index);
+                }}
+                className={`w-full text-left px-5 py-3 transition-colors cursor-pointer select-text ${
+                  selectedRound === round.index
+                    ? "bg-brand-accent-dim border-l-[3px] border-l-brand-accent"
+                    : "hover:bg-brand-accent-dim bg-surface-panel"
+                }`}
+              >
+                <div className="flex items-center gap-1.5">
+                  <Hammer size={12} className="text-brand-accent" />
+                  <span className="text-[11px] font-semibold text-text-accent tracking-[0.5px]">
+                    Assistant
+                  </span>
+                </div>
+                <p className="text-[13px] text-text-secondary leading-relaxed mt-1">
+                  {round.summary}
+                </p>
               </div>
-              <p className="text-[13px] text-text-secondary leading-relaxed mt-1">
-                {round.summary}
-              </p>
-            </button>
+            )}
+
+            {/* Assistant message — error */}
+            {round.error && (
+              <div className="px-5 py-3">
+                <div className="flex items-center gap-1.5">
+                  <AlertCircle size={12} className="text-color-danger" />
+                  <span className="text-[11px] font-semibold text-color-danger tracking-[0.5px]">
+                    Assistant
+                  </span>
+                </div>
+                <p className="text-[13px] text-color-danger/80 mt-1">
+                  Failed to polish. Please try again.
+                </p>
+              </div>
+            )}
+
+            {/* Assistant message — streaming */}
+            {round.pending && isLoading && (
+              <div className="px-5 py-3">
+                <div className="flex items-center gap-1.5">
+                  <Hammer
+                    size={12}
+                    className="text-brand-accent animate-hammer-work"
+                  />
+                  <span className="text-[11px] font-semibold text-text-accent tracking-[0.5px]">
+                    Assistant
+                  </span>
+                </div>
+                <p className="text-[13px] text-text-muted mt-1 animate-pulse">
+                  {streamingSummary || "Polishing..."}
+                </p>
+              </div>
+            )}
           </div>
         ))}
-
-        {isLoading && (
-          <div className="px-5 py-3">
-            <div className="flex items-center gap-1.5">
-              <Sparkles size={12} className="text-brand-accent animate-pulse" />
-              <span className="text-[11px] font-semibold text-text-accent tracking-[0.5px]">
-                Assistant
-              </span>
-            </div>
-            <p className="text-[13px] text-text-muted mt-1">Polishing...</p>
-          </div>
-        )}
       </div>
 
       {/* Input area */}

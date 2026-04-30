@@ -96,6 +96,7 @@ export interface PolishHistoryEntry {
   role: "user" | "assistant";
   content: string;
   summary?: string;
+  error?: boolean;
 }
 
 export type PolishStatus =

@@ -216,6 +216,11 @@ export function Workspace({
     setPolishLoading(true);
     setPolishStreamText("");
 
+    setPolishHistory((prev) => [
+      ...prev,
+      { role: "user", content: instructionText },
+    ]);
+
     try {
       const res = await fetch(`/api/articles/${slug}/polish/round`, {
         method: "POST",
@@ -224,6 +229,10 @@ export function Workspace({
       });
 
       if (!res.ok || !res.body) {
+        setPolishHistory((prev) => [
+          ...prev,
+          { role: "assistant", content: "", error: true },
+        ]);
         setPolishLoading(false);
         return;
       }
@@ -250,7 +259,10 @@ export function Workspace({
         setPolishSelectedRound(Math.floor(status.history.length / 2) - 1);
       }
     } catch {
-      // ignore
+      setPolishHistory((prev) => [
+        ...prev,
+        { role: "assistant", content: "", error: true },
+      ]);
     } finally {
       setPolishLoading(false);
       setPolishStreamText("");
@@ -309,9 +321,13 @@ export function Workspace({
 
   // Determine what to show in the canvas during polish mode
   const getPolishCanvasContent = (): string => {
-    // When streaming, show the stream
+    // When streaming, strip the summary header and show only article content
     if (polishLoading && polishStreamText) {
-      return polishStreamText;
+      const secondDash = polishStreamText.indexOf("\n---\n", 4);
+      if (polishStreamText.startsWith("---") && secondDash !== -1) {
+        return polishStreamText.slice(secondDash + 5);
+      }
+      return "";
     }
     // When a round is selected, show that round's output
     if (polishSelectedRound !== null && polishHistory.length > 0) {
@@ -354,6 +370,7 @@ export function Workspace({
                 onInstructionChange={setPolishInstruction}
                 onSend={handlePolishRound}
                 isLoading={polishLoading}
+                streamText={polishStreamText}
               />
 
               {/* Polish right panel */}
