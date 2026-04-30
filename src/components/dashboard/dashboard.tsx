@@ -6,6 +6,7 @@ import { ArticleCard } from "./article-card";
 import { DashboardEmpty } from "./dashboard-empty";
 import { useSidebar } from "@/components/workspace/sidebar-context";
 import { ArticleSidebar } from "@/components/workspace/article-sidebar";
+import { NewArticleFab } from "@/components/shared/new-article-fab";
 
 interface ArticleCardData {
   slug: string;
@@ -35,7 +36,7 @@ export function Dashboard({ articles }: DashboardProps) {
 
   if (articles.length === 0) {
     return (
-      <div className="h-screen flex bg-surface-root">
+      <div className="h-screen flex bg-surface-card">
         <ArticleSidebar />
         <div
           className="flex-1 flex flex-col h-full transition-[margin-left] duration-300 ease-in-out"
@@ -48,13 +49,13 @@ export function Dashboard({ articles }: DashboardProps) {
   }
 
   return (
-    <div className="h-screen flex bg-surface-root">
+    <div className="h-screen flex bg-surface-card">
       <ArticleSidebar />
       <div
         className="flex-1 flex flex-col h-full transition-[margin-left] duration-300 ease-in-out overflow-y-auto"
         style={{ marginLeft: sidebarWidth }}
       >
-        <div className="bg-surface-card flex-1 p-8 px-10 flex flex-col gap-8">
+        <div className="bg-surface-card flex-1 p-8 px-10 flex flex-col gap-8 max-w-[1024px] mx-auto w-full">
           {/* Page header */}
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-bold text-text-primary tracking-[-0.5px]">
@@ -94,13 +95,14 @@ export function Dashboard({ articles }: DashboardProps) {
           </h2>
 
           {/* Card grid */}
-          <div className="grid grid-cols-3 gap-4 max-xl:grid-cols-2 max-lg:grid-cols-1">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
             {articles.map((article) => (
               <ArticleCard key={article.slug} {...article} />
             ))}
           </div>
         </div>
       </div>
+      <NewArticleFab />
     </div>
   );
 }

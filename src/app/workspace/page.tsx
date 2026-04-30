@@ -1,6 +1,16 @@
-import { redirect } from "next/navigation";
-import { listDirs, readJson } from "@/lib/data";
-import type { ArticleMeta } from "@/types";
+import { listDirs, readJson, readMarkdown } from "@/lib/data";
+import type { ArticleMeta, ArticleTree } from "@/types";
+import { WorkspaceHome } from "@/components/workspace/workspace-home";
+
+export interface WorkspaceArticle {
+  slug: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  versionCount: number;
+  activeNode: string | null;
+  preview: string;
+}
 
 export default async function WorkspacePage() {
   let slugs: string[] = [];
@@ -10,28 +20,39 @@ export default async function WorkspacePage() {
     // no articles directory yet
   }
 
-  if (slugs.length > 0) {
-    const metas = await Promise.all(
-      slugs.map(async (slug) => {
-        try {
-          return await readJson<ArticleMeta>(`articles/${slug}/meta.json`);
-        } catch {
-          return null;
-        }
-      })
-    );
-    const sorted = metas
-      .filter((m) => m !== null)
-      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  const articles: WorkspaceArticle[] = [];
+  for (const slug of slugs) {
+    try {
+      const meta = await readJson<ArticleMeta>(`articles/${slug}/meta.json`);
+      const tree = await readJson<ArticleTree>(`articles/${slug}/tree.json`);
 
-    if (sorted.length > 0) {
-      redirect(`/workspace/${sorted[0].slug}`);
+      let preview = "";
+      if (tree.latestNode) {
+        try {
+          const { content } = await readMarkdown(
+            `articles/${slug}/nodes/${tree.latestNode}.md`
+          );
+          preview = content.slice(0, 200);
+        } catch {
+          // no content
+        }
+      }
+
+      articles.push({
+        slug: meta.slug,
+        title: meta.title,
+        createdAt: meta.createdAt,
+        updatedAt: meta.updatedAt,
+        versionCount: Object.keys(tree.nodes).length,
+        activeNode: tree.latestNode,
+        preview,
+      });
+    } catch {
+      // skip
     }
   }
 
-  // No articles — show empty state as client component
-  const { WorkspaceEmpty } = await import(
-    "@/components/workspace/workspace-empty"
-  );
-  return <WorkspaceEmpty />;
+  articles.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+
+  return <WorkspaceHome articles={articles} />;
 }

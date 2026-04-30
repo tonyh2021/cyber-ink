@@ -43,13 +43,13 @@ export function SidebarProvider({
   children,
   initialArticles = [],
 }: SidebarProviderProps) {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const [userToggled, setUserToggled] = useState(false);
   const [articles, setArticles] = useState<ArticleSummary[]>(initialArticles);
   const width = collapsed ? 56 : 220;
 
   useEffect(() => {
-    const mql = window.matchMedia("(min-width: 1024px)");
+    const mql = window.matchMedia("(min-width: 768px)");
     if (!mql.matches) setCollapsed(true);
 
     function handleChange(e: MediaQueryListEvent) {

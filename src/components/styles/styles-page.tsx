@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useSidebar } from "@/components/workspace/sidebar-context";
 import { ArticleSidebar } from "@/components/workspace/article-sidebar";
+import { NewArticleFab } from "@/components/shared/new-article-fab";
 
 interface ReferenceArticle {
   name: string;
@@ -70,13 +71,13 @@ export function StylesPage({ instruction, outputRules, profile, references }: St
   const { width: sidebarWidth } = useSidebar();
 
   return (
-    <div className="h-screen flex bg-surface-root">
+    <div className="h-screen flex bg-surface-card">
       <ArticleSidebar />
       <div
         className="flex-1 flex flex-col h-full transition-[margin-left] duration-300 ease-in-out overflow-y-auto"
         style={{ marginLeft: sidebarWidth }}
       >
-        <div className="bg-surface-card flex-1 p-8 px-10 flex flex-col gap-8">
+        <div className="bg-surface-card flex-1 p-8 px-10 flex flex-col gap-8 max-w-[1024px] mx-auto w-full">
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-bold text-text-primary tracking-[-0.5px]">
               Styles
@@ -164,6 +165,7 @@ export function StylesPage({ instruction, outputRules, profile, references }: St
           )}
         </div>
       </div>
+      <NewArticleFab />
     </div>
   );
 }

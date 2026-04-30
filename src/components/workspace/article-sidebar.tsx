@@ -9,7 +9,6 @@ import {
   PanelLeftClose,
   Moon,
   Sun,
-  Plus,
   Trash2,
 } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -24,32 +23,12 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
   const pathname = usePathname();
   const { resolvedTheme, setTheme } = useTheme();
   const { collapsed, setCollapsed, articles, refreshArticles } = useSidebar();
-  const [isCreating, setIsCreating] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [deleteSlug, setDeleteSlug] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  async function handleCreate() {
-    if (isCreating) return;
-    setIsCreating(true);
-    try {
-      const res = await fetch("/api/articles", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: "New Article", language: "zh" }),
-      });
-      if (res.ok) {
-        const { slug } = await res.json();
-        await refreshArticles();
-        router.push(`/workspace/${slug}`);
-      }
-    } finally {
-      setIsCreating(false);
-    }
-  }
 
   async function handleDelete(slug: string) {
     const res = await fetch(`/api/articles/${slug}`, { method: "DELETE" });
@@ -236,25 +215,6 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
       <div
         className={`flex flex-col shrink-0 ${collapsed ? "items-center gap-3" : "gap-3"}`}
       >
-        {collapsed ? (
-          <button
-            onClick={handleCreate}
-            disabled={isCreating}
-            title="New Article"
-            className="flex items-center justify-center w-8 h-8 rounded-standard bg-brand-accent text-white hover:bg-brand-accent-hover disabled:opacity-50 transition-colors"
-          >
-            <Plus size={16} />
-          </button>
-        ) : (
-          <button
-            onClick={handleCreate}
-            disabled={isCreating}
-            className="w-full flex items-center justify-center rounded-standard bg-brand-accent py-2 px-5 text-sm font-bold text-white hover:bg-brand-accent-hover disabled:opacity-50 transition-colors"
-          >
-            {isCreating ? "Creating..." : "New Article"}
-          </button>
-        )}
-
         {collapsed ? (
           <button
             onClick={() => mounted && setTheme(isDark ? "light" : "dark")}

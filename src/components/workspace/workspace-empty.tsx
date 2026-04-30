@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FileText } from "lucide-react";
 import { ArticleSidebar } from "./article-sidebar";
 import { useSidebar } from "./sidebar-context";
 
 export function WorkspaceEmpty() {
-  const { width: sidebarWidth } = useSidebar();
+  const { width: sidebarWidth, setCollapsed } = useSidebar();
+
+  useEffect(() => {
+    setCollapsed(true);
+  }, [setCollapsed]);
   const router = useRouter();
   const [isCreating, setIsCreating] = useState(false);
 

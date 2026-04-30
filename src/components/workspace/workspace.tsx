@@ -48,7 +48,11 @@ export function Workspace({
   initialNodes = [],
   initialContent = {},
 }: WorkspaceProps) {
-  const { width: sidebarWidth } = useSidebar();
+  const { width: sidebarWidth, setCollapsed } = useSidebar();
+
+  useEffect(() => {
+    setCollapsed(true);
+  }, [setCollapsed]);
   const [source, setSource] = useState(initialSource);
   const [instruction, setInstruction] = useState("");
   const [nodes, setNodes] = useState<NodeInfo[]>(initialNodes);

@@ -3,6 +3,7 @@ import {
   ensureDir,
   writeJson,
   writeMarkdown,
+  readMarkdown,
   listDirs,
   readJson,
 } from "@/lib/data";
@@ -44,6 +45,20 @@ export async function POST(request: NextRequest) {
 
   await ensureDir("articles");
   const existingSlugs = await listDirs("articles");
+
+  // Reuse the most recent empty article instead of creating a new one
+  for (const existing of existingSlugs.sort().reverse()) {
+    try {
+      const tree = await readJson<ArticleTree>(`articles/${existing}/tree.json`);
+      if (Object.keys(tree.nodes).length > 0) continue;
+      const { content } = await readMarkdown(`articles/${existing}/source.md`);
+      if (content.trim()) continue;
+      return NextResponse.json({ slug: existing }, { status: 200 });
+    } catch {
+      continue;
+    }
+  }
+
   const slug = generateSlug(existingSlugs);
   const now = new Date().toISOString();
 
