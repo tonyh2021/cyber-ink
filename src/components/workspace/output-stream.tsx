@@ -146,7 +146,7 @@ export function OutputStream({ content, isLoading }: OutputStreamProps) {
 
   return (
     <div
-      className="output-stream font-mono text-sm leading-[1.8] text-text-primary prose prose-invert max-w-none prose-headings:font-mono prose-headings:text-text-primary prose-p:text-text-primary prose-strong:text-text-primary prose-li:text-text-primary"
+      className="output-stream font-mono text-sm leading-[1.8] text-text-primary prose prose-invert max-w-none prose-headings:font-mono prose-headings:font-bold prose-headings:text-brand-accent prose-headings:tracking-wide prose-headings:scroll-mt-4 prose-headings:mt-7 prose-headings:mb-3 prose-headings:border-b prose-headings:border-border-default prose-headings:pb-2 prose-p:text-text-primary prose-p:my-3 prose-strong:text-text-primary prose-li:text-text-primary"
       data-streaming={streaming || undefined}
     >
       {frozen && <FrozenMarkdown content={frozen} />}

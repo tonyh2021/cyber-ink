@@ -77,7 +77,13 @@ export function SidebarProvider({
 
   return (
     <SidebarContext.Provider
-      value={{ collapsed, setCollapsed: handleSetCollapsed, width, articles, refreshArticles }}
+      value={{
+        collapsed,
+        setCollapsed: handleSetCollapsed,
+        width,
+        articles,
+        refreshArticles,
+      }}
     >
       {children}
     </SidebarContext.Provider>

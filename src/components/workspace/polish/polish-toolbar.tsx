@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 type DiffMode = "previous" | "original" | null;
 
 interface PolishToolbarProps {
@@ -15,6 +17,7 @@ export function PolishToolbar({
   onApply,
   onDiscard,
 }: PolishToolbarProps) {
+  const [confirmDiscard, setConfirmDiscard] = useState(false);
   const segmentClass = (active: boolean) =>
     `px-3.5 py-1.5 text-[13px] font-sans transition-colors ${
       active
@@ -51,7 +54,7 @@ export function PolishToolbar({
       <div className="absolute right-6 flex items-center gap-3">
         <button
           type="button"
-          onClick={onDiscard}
+          onClick={() => setConfirmDiscard(true)}
           className="text-[13px] font-medium text-text-secondary hover:text-color-danger hover:bg-[var(--color-danger-bg)] px-3 py-1.5 rounded-standard transition-colors"
         >
           Discard
@@ -64,6 +67,37 @@ export function PolishToolbar({
           Apply
         </button>
       </div>
+
+      {confirmDiscard && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-surface-card rounded-modal p-6 shadow-[var(--shadow-modal)] w-80 flex flex-col gap-4">
+            <h3 className="text-base font-semibold text-text-primary">
+              Discard polish session?
+            </h3>
+            <p className="text-[13px] text-text-secondary leading-relaxed">
+              All polish rounds and changes will be lost. This action cannot be
+              undone.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setConfirmDiscard(false)}
+                className="px-4 py-1.5 text-sm font-medium text-text-secondary rounded-standard hover:bg-brand-accent-dim transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  setConfirmDiscard(false);
+                  onDiscard();
+                }}
+                className="px-4 py-1.5 text-sm font-medium text-text-on-accent bg-danger rounded-standard hover:opacity-90 transition-colors"
+              >
+                Discard
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

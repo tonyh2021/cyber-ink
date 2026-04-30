@@ -234,6 +234,35 @@
   }
 }
 
+/* Force heading scale in markdown stream */
+.output-stream h1 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 800;
+  padding: 0.25rem 0;
+}
+
+.output-stream h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 700;
+  padding: 0.2rem 0;
+}
+
+.output-stream h3 {
+  font-size: 1.125rem;
+  line-height: 1.35;
+  font-weight: 700;
+  padding: 0.15rem 0;
+}
+
+.output-stream h4 {
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 600;
+  padding: 0.125rem 0;
+}
+
 @keyframes hammer-work {
   0% {
     transform: rotate(0deg);
