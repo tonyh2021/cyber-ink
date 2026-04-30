@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { FilePen, MessageSquareText } from "lucide-react";
 import { OutputStream } from "./output-stream";
 
@@ -29,6 +29,8 @@ export function NodeDisplay({
   onPolish,
 }: NodeDisplayProps) {
   const canvasRef = useRef<HTMLDivElement>(null);
+  const instructionRef = useRef<HTMLDivElement>(null);
+  const [showPopover, setShowPopover] = useState<boolean>(false);
 
   useEffect(() => {
     if (isLoading && canvasRef.current) {
@@ -37,9 +39,9 @@ export function NodeDisplay({
   }, [isLoading, content]);
 
   return (
-    <div className="workspace-panel-right relative z-10 flex flex-col flex-1 min-h-0">
+    <div className="workspace-panel-right relative z-10 flex flex-col flex-1 min-h-0 min-w-0">
       {/* Version tab strip */}
-      <div className="flex items-center border-b border-border-default bg-surface-card py-2.5 px-6">
+      <div className="flex items-center border-b border-border-default bg-surface-card py-1 px-6">
         <div className="flex items-center flex-1">
           {nodes.length > 0 ? (
             nodes.map((n) => (
@@ -86,19 +88,37 @@ export function NodeDisplay({
 
       {/* Instruction used for this node */}
       {activeNode && nodes.find((n) => n.node === activeNode)?.instruction && (
-        <div className="px-6 py-2.5 bg-surface-panel border-b border-border-default">
-          <span className="text-[11px] font-semibold text-text-muted tracking-wider uppercase">
+        <div
+          ref={instructionRef}
+          className="relative flex items-start gap-2 px-6 py-2.5 bg-surface-panel overflow-visible"
+          onMouseEnter={() => setShowPopover(true)}
+          onMouseLeave={() => setShowPopover(false)}
+        >
+          <span className="text-[11px] font-semibold text-text-muted tracking-wider uppercase shrink-0">
             Instruction
           </span>
-          <p className="text-[13px] text-text-secondary mt-1 leading-relaxed">
+          <span className="text-[12px] text-text-muted truncate min-w-0">
             {nodes.find((n) => n.node === activeNode)!.instruction}
-          </p>
+          </span>
+          {showPopover && (
+            <div className="absolute top-0 left-0 right-0 z-50 flex items-start gap-2 px-6 py-2.5 bg-surface-panel shadow-lg">
+              <span className="text-[11px] font-semibold text-text-muted tracking-wider uppercase shrink-0">
+                Instruction
+              </span>
+              <span className="text-[12px] text-text-muted whitespace-pre-wrap">
+                {nodes.find((n) => n.node === activeNode)!.instruction}
+              </span>
+            </div>
+          )}
         </div>
       )}
 
       {/* Canvas */}
       {content || isLoading ? (
-        <div ref={canvasRef} className="flex-1 overflow-y-auto bg-surface-canvas py-8 px-10">
+        <div
+          ref={canvasRef}
+          className="flex-1 overflow-y-auto bg-surface-canvas py-8 px-10"
+        >
           <OutputStream content={content} isLoading={isLoading} />
         </div>
       ) : (

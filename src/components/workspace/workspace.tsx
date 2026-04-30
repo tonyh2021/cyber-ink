@@ -62,6 +62,7 @@ export function Workspace({
   const [nodeContent, setNodeContent] =
     useState<Record<string, string>>(initialContent);
   const wasLoading = useRef(false);
+  const pendingNodeRef = useRef<string | null>(null);
 
   // Polish mode state
   const [polishActive, setPolishActive] = useState(false);
@@ -81,51 +82,13 @@ export function Workspace({
     api: `/api/articles/${slug}/generate`,
     streamProtocol: "text",
     onFinish: (_prompt, completion) => {
-      let nextNode = "";
-      let removedNode: string | null = null;
+      const node = pendingNodeRef.current;
+      if (!node) return;
+      pendingNodeRef.current = null;
 
-      setNodes((prev) => {
-        const currentMaxVersion = prev.reduce(
-          (max, item) => Math.max(max, getNodeVersion(item.node)),
-          0,
-        );
-        nextNode = `v${currentMaxVersion + 1}`;
-        const newNodeInfo: NodeInfo = { node: nextNode, instruction };
-        const nextNodes = [...prev, newNodeInfo];
-
-        const mainVersionNodes = nextNodes.filter((item) =>
-          isMainVersionNode(item.node),
-        );
-
-        if (mainVersionNodes.length > MAX_MAIN_VERSIONS) {
-          const oldestMainVersion = mainVersionNodes.reduce((oldest, item) =>
-            getNodeVersion(item.node) < getNodeVersion(oldest.node)
-              ? item
-              : oldest,
-          );
-          removedNode = oldestMainVersion.node;
-          return nextNodes.filter((item) => item.node !== removedNode);
-        }
-        return nextNodes;
-      });
-
-      setActiveNode(nextNode);
-      setNodeContent((prev) => {
-        const nextContent = { ...prev, [nextNode]: completion };
-        if (removedNode) {
-          delete nextContent[removedNode];
-        }
-        return nextContent;
-      });
+      setNodeContent((prev) => ({ ...prev, [node]: completion }));
     },
   });
-
-  useEffect(() => {
-    if (wasLoading.current && !isLoading && nodes.length > 0) {
-      setActiveNode(nodes[nodes.length - 1].node);
-    }
-    wasLoading.current = isLoading;
-  }, [isLoading, nodes]);
 
   // Restore polish session on mount
   useEffect(() => {
@@ -164,6 +127,39 @@ export function Workspace({
         "You already have 5 versions. Generating a new one will remove the oldest version. Continue?",
       );
       if (!confirmed) return;
+    }
+
+    const currentMaxVersion = nodes.reduce(
+      (max, item) => Math.max(max, getNodeVersion(item.node)),
+      0,
+    );
+    const nextNode = `v${currentMaxVersion + 1}`;
+    pendingNodeRef.current = nextNode;
+
+    let removedNode: string | null = null;
+    const newNodeInfo: NodeInfo = { node: nextNode, instruction };
+    const nextNodes = [...nodes, newNodeInfo];
+    const mainVersionNodes = nextNodes.filter((item) =>
+      isMainVersionNode(item.node),
+    );
+
+    if (mainVersionNodes.length > MAX_MAIN_VERSIONS) {
+      const oldestMainVersion = mainVersionNodes.reduce((oldest, item) =>
+        getNodeVersion(item.node) < getNodeVersion(oldest.node) ? item : oldest,
+      );
+      removedNode = oldestMainVersion.node;
+      setNodes(nextNodes.filter((item) => item.node !== removedNode));
+    } else {
+      setNodes(nextNodes);
+    }
+
+    setActiveNode(nextNode);
+    if (removedNode) {
+      setNodeContent((prev) => {
+        const next = { ...prev };
+        delete next[removedNode];
+        return next;
+      });
     }
 
     await complete(instruction, {
@@ -327,11 +323,12 @@ export function Workspace({
     return polishCurrent || polishOriginal;
   };
 
-  const displayContent = isLoading
-    ? completion
-    : activeNode
-      ? nodeContent[activeNode] || ""
-      : "";
+  const displayContent =
+    isLoading && activeNode === pendingNodeRef.current
+      ? completion
+      : activeNode
+        ? nodeContent[activeNode] || ""
+        : "";
 
   const canGenerate = instruction.trim().length > 0 && source.trim().length > 0;
 
@@ -340,10 +337,10 @@ export function Workspace({
       <ArticleSidebar currentSlug={slug} />
 
       <div
-        className="flex-1 flex flex-col h-full transition-[margin-left] duration-300 ease-in-out"
+        className="flex-1 flex flex-col h-full min-w-0 transition-[margin-left] duration-300 ease-in-out"
         style={{ marginLeft: sidebarWidth }}
       >
-        <div className="flex h-full">
+        <div className="flex h-full min-w-0">
           {polishActive ? (
             <>
               {/* Polish left panel — conversation dialog */}
@@ -382,7 +379,7 @@ export function Workspace({
                     rightTitle="Current"
                   />
                 ) : (
-                  <div className="flex-1 overflow-y-auto bg-surface-canvas py-8 px-10">
+                  <div className="flex-1 overflow-y-auto bg-surface-canvas pt-4 pb-8 px-10">
                     <OutputStream
                       content={getPolishCanvasContent()}
                       isLoading={polishLoading}
