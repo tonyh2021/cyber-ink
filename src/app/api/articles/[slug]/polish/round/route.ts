@@ -3,7 +3,7 @@ import { streamText } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { getConfig } from "@/lib/config";
-import { readMarkdown, exists } from "@/lib/data";
+import { readMarkdown, exists, updateArticleTitle } from "@/lib/data";
 import { buildPolishPrompt } from "@/lib/prompt-builder";
 import {
   getPolishStatus,
@@ -135,6 +135,7 @@ export async function POST(
       { role: "user", content: instruction },
       { role: "assistant", content: article, summary },
     ]);
+    await updateArticleTitle(slug, article);
   }
 
   if (config.models.writing.provider === "mock") {

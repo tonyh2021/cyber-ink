@@ -12,6 +12,7 @@ import { PolishToolbar } from "./polish/polish-toolbar";
 import { PolishDiff } from "./polish/polish-diff";
 import { PolishApplyModal } from "./polish/polish-apply-modal";
 import { OutputStream } from "./output-stream";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useSidebar } from "./sidebar-context";
 import type { PolishHistoryEntry, PolishApplyChoice, PolishStatus } from "@/types";
 
@@ -49,6 +50,7 @@ export function Workspace({
   initialContent = {},
 }: WorkspaceProps) {
   const { width: sidebarWidth, setCollapsed } = useSidebar();
+  const [articleTitle, setArticleTitle] = useState(title);
 
   useEffect(() => {
     setCollapsed(true);
@@ -76,6 +78,18 @@ export function Workspace({
   const [polishShowApply, setPolishShowApply] = useState(false);
   const [polishLoading, setPolishLoading] = useState(false);
   const [polishStreamText, setPolishStreamText] = useState("");
+  const [showVersionLimit, setShowVersionLimit] = useState(false);
+
+  const refreshTitle = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/articles/${slug}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.meta?.title) setArticleTitle(data.meta.title);
+    } catch {
+      // ignore
+    }
+  }, [slug]);
 
   const { completion, isLoading, complete } = useCompletion({
     api: `/api/articles/${slug}/generate`,
@@ -86,6 +100,7 @@ export function Workspace({
       pendingNodeRef.current = null;
 
       setNodeContent((prev) => ({ ...prev, [node]: completion }));
+      refreshTitle();
     },
   });
 
@@ -113,20 +128,7 @@ export function Workspace({
     checkPolishSession();
   }, [slug]);
 
-  const handleGenerate = async () => {
-    if (!instruction.trim() || !source.trim() || isLoading) return;
-
-    const mainVersionCount = nodes.filter((item) =>
-      isMainVersionNode(item.node),
-    ).length;
-
-    if (mainVersionCount >= MAX_MAIN_VERSIONS) {
-      const confirmed = window.confirm(
-        "You already have 5 versions. Generating a new one will remove the oldest version. Continue?",
-      );
-      if (!confirmed) return;
-    }
-
+  const doGenerate = async () => {
     const currentMaxVersion = nodes.reduce(
       (max, item) => Math.max(max, getNodeVersion(item.node)),
       0,
@@ -163,6 +165,21 @@ export function Workspace({
     await complete(instruction, {
       body: { instruction, source },
     });
+  };
+
+  const handleGenerate = () => {
+    if (!instruction.trim() || !source.trim() || isLoading) return;
+
+    const mainVersionCount = nodes.filter((item) =>
+      isMainVersionNode(item.node),
+    ).length;
+
+    if (mainVersionCount >= MAX_MAIN_VERSIONS) {
+      setShowVersionLimit(true);
+      return;
+    }
+
+    doGenerate();
   };
 
   const handleStartPolish = useCallback(async () => {
@@ -253,6 +270,7 @@ export function Workspace({
         setPolishHistory(status.history);
         setPolishSelectedRound(Math.floor(status.history.length / 2) - 1);
       }
+      refreshTitle();
     } catch {
       setPolishHistory((prev) => [
         ...prev,
@@ -360,7 +378,7 @@ export function Workspace({
               {/* Polish left panel — conversation dialog */}
               <PolishDialog
                 node={polishNode || ""}
-                articleTitle={title}
+                articleTitle={articleTitle}
                 history={polishHistory}
                 selectedRound={polishSelectedRound}
                 onSelectRound={setPolishSelectedRound}
@@ -420,7 +438,7 @@ export function Workspace({
             <>
               {/* Normal left panel */}
               <div className="workspace-panel-middle relative z-20 w-[440px] shrink-0 flex flex-col gap-4 p-6 px-5 bg-surface-card">
-                <MetadataPanel title={title} slug={slug} createdAt={createdAt} />
+                <MetadataPanel title={articleTitle} slug={slug} createdAt={createdAt} />
                 <SourcePanel
                   value={source}
                   onChange={setSource}
@@ -443,13 +461,25 @@ export function Workspace({
                 onSelectNode={setActiveNode}
                 content={displayContent}
                 isLoading={isLoading}
-                canPolish={!!activeNode && !polishActive}
+                canPolish={!!activeNode && !polishActive && !isLoading}
                 onPolish={handleStartPolish}
               />
             </>
           )}
         </div>
       </div>
+
+      {showVersionLimit && (
+        <ConfirmDialog
+          title="Version limit reached"
+          message="You already have 5 versions. Generating a new one will remove the oldest version."
+          onConfirm={() => {
+            setShowVersionLimit(false);
+            doGenerate();
+          }}
+          onCancel={() => setShowVersionLimit(false)}
+        />
+      )}
     </div>
   );
 }

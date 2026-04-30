@@ -74,6 +74,26 @@ export async function listFiles(
     .map((e) => e.name);
 }
 
+export function extractTitle(content: string): string | null {
+  const match = /^#\s+(.+)$/m.exec(content);
+  return match ? match[1].trim() : null;
+}
+
+export async function updateArticleTitle(
+  slug: string,
+  content: string,
+): Promise<void> {
+  const title = extractTitle(content);
+  if (!title) return;
+  const meta = await readJson<Record<string, unknown>>(
+    `articles/${slug}/meta.json`,
+  );
+  if (meta.title === title) return;
+  meta.title = title;
+  meta.updatedAt = new Date().toISOString();
+  await writeJson(`articles/${slug}/meta.json`, meta);
+}
+
 export async function exists(relativePath: string): Promise<boolean> {
   try {
     const filePath = resolvePath(relativePath);

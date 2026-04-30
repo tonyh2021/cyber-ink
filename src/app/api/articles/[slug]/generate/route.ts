@@ -11,6 +11,7 @@ import {
   writeJson,
   exists,
   listFiles,
+  updateArticleTitle,
 } from "@/lib/data";
 import { buildPrompt } from "@/lib/prompt-builder";
 import { GenerateInputSchema } from "@/types";
@@ -318,6 +319,7 @@ export async function POST(
       },
     };
     await writeJson(`articles/${slug}/tree.json`, updatedTree);
+    await updateArticleTitle(slug, text);
   }
 
   if (config.models.writing.provider === "mock") {
