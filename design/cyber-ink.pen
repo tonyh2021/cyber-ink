@@ -5649,7 +5649,7 @@
                               "enabled": false,
                               "descendants": {
                                 "m2D8a": {
-                                  "iconFontName": "git-branch",
+                                  "iconFontName": "message-square-text",
                                   "fill": "$brand-accent"
                                 }
                               }
@@ -5658,10 +5658,11 @@
                         },
                         {
                           "type": "frame",
-                          "id": "G99zF",
-                          "name": "optRow",
+                          "id": "TyL5T",
+                          "name": "InstructionBar",
+                          "clip": true,
                           "width": "fill_container",
-                          "fill": "$surface-card",
+                          "fill": "$surface-panel",
                           "stroke": {
                             "align": "inside",
                             "thickness": {
@@ -5669,84 +5670,92 @@
                             },
                             "fill": "$border-default"
                           },
-                          "gap": 8,
+                          "gap": 12,
                           "padding": [
-                            6,
-                            24,
-                            8,
+                            10,
                             24
                           ],
                           "alignItems": "center",
                           "children": [
                             {
-                              "id": "rhc0r",
-                              "type": "ref",
-                              "ref": "a1kCa",
-                              "name": "node-v2-a",
-                              "fill": "$brand-accent-dim",
-                              "stroke": {
-                                "align": "inside",
-                                "thickness": 1,
-                                "fill": "$draft-border"
-                              },
-                              "cornerRadius": 12,
-                              "padding": [
-                                4,
-                                10
-                              ],
+                              "type": "frame",
+                              "id": "ZcKkl",
+                              "name": "instrText",
+                              "width": "fill_container",
+                              "layout": "vertical",
                               "gap": 4,
-                              "descendants": {
-                                "pwOth": {
-                                  "content": "v2-a",
-                                  "fontSize": 11,
-                                  "fill": "$text-accent",
-                                  "fontWeight": "500",
-                                  "fontFamily": "$font-mono"
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "pvTgN",
+                                  "name": "labelRow",
+                                  "width": "fill_container",
+                                  "gap": 4,
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "RaXtA",
+                                      "fill": "$text-muted",
+                                      "content": "INSTRUCTION",
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 11,
+                                      "fontWeight": "600",
+                                      "letterSpacing": 1
+                                    }
+                                  ]
                                 },
-                                "R8YTPn": {
-                                  "content": "0.82",
-                                  "enabled": false,
-                                  "fill": "$color-success",
-                                  "fontSize": 10
-                                },
-                                "c5NeE": {
-                                  "content": ""
+                                {
+                                  "type": "frame",
+                                  "id": "l0fLxz",
+                                  "name": "contentRow",
+                                  "width": "fill_container",
+                                  "gap": 6,
+                                  "padding": [
+                                    0,
+                                    0,
+                                    0,
+                                    20
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "icon_font",
+                                      "id": "uFNjx",
+                                      "layoutPosition": "absolute",
+                                      "x": 0,
+                                      "y": 3,
+                                      "name": "expandToggle",
+                                      "width": 14,
+                                      "height": 14,
+                                      "iconFontName": "chevron-down",
+                                      "iconFontFamily": "lucide",
+                                      "fill": "$text-muted"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "SYpIM",
+                                      "fill": "$text-secondary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Write an in-depth analysis of global AI regulatory frameworks, comparing approaches across major economic blocs. Focus on the EU AI Act, US Executive Order 14110, and China's layered regulatory system. Highlight the philosophical differences and practical implications for AI developers operating across jurisdictions.",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$font-ui",
+                                      "fontSize": 13,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
                                 }
-                              }
+                              ]
                             },
                             {
-                              "id": "kFhYl",
+                              "id": "aEFgt",
                               "type": "ref",
-                              "ref": "a1kCa",
-                              "name": "node-v2-b",
-                              "fill": "#00000000",
-                              "stroke": {
-                                "align": "inside",
-                                "thickness": 1,
-                                "fill": "$border-subtle"
-                              },
-                              "cornerRadius": 12,
-                              "padding": [
-                                4,
-                                10
-                              ],
-                              "gap": 4,
+                              "ref": "Saw3J",
+                              "name": "polishBtn",
                               "descendants": {
-                                "pwOth": {
-                                  "content": "v2-b",
-                                  "fontSize": 11,
-                                  "fill": "$text-secondary",
-                                  "fontWeight": "500",
-                                  "fontFamily": "$font-mono"
-                                },
-                                "R8YTPn": {
-                                  "content": "0.80",
-                                  "enabled": false,
-                                  "fill": "$color-success",
-                                  "fontSize": 10
-                                },
-                                "c5NeE": {
-                                  "content": ""
+                                "m2D8a": {
+                                  "fill": "$brand-accent",
+                                  "iconFontName": "message-square-text"
                                 }
                               }
                             }
