@@ -6,8 +6,7 @@ import type { PolishApplyChoice } from "@/types";
 interface PolishApplyModalProps {
   node: string;
   original: string;
-  previous: string | null;
-  current: string | null;
+  rounds: string[];
   onApply: (pick: PolishApplyChoice) => void;
   onCancel: () => void;
 }
@@ -15,12 +14,14 @@ interface PolishApplyModalProps {
 export function PolishApplyModal({
   node,
   original,
-  previous,
-  current,
+  rounds,
   onApply,
   onCancel,
 }: PolishApplyModalProps) {
   const [pick, setPick] = useState<PolishApplyChoice>("current");
+
+  const current = rounds.length > 0 ? rounds[rounds.length - 1] : null;
+  const previous = rounds.length >= 2 ? rounds[rounds.length - 2] : null;
 
   const options: Array<{
     value: PolishApplyChoice;

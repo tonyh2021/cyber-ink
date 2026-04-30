@@ -5,7 +5,6 @@ type DiffMode = "previous" | "original" | null;
 interface PolishToolbarProps {
   diffMode: DiffMode;
   onDiffModeChange: (mode: DiffMode) => void;
-  hasPrevious: boolean;
   onApply: () => void;
   onDiscard: () => void;
 }
@@ -13,7 +12,6 @@ interface PolishToolbarProps {
 export function PolishToolbar({
   diffMode,
   onDiffModeChange,
-  hasPrevious,
   onApply,
   onDiscard,
 }: PolishToolbarProps) {
@@ -36,9 +34,8 @@ export function PolishToolbar({
         </button>
         <button
           type="button"
-          onClick={() => hasPrevious && onDiffModeChange("previous")}
-          disabled={!hasPrevious}
-          className={`${segmentClass(diffMode === "previous")} border-l border-border-default disabled:opacity-40`}
+          onClick={() => onDiffModeChange("previous")}
+          className={`${segmentClass(diffMode === "previous")} border-l border-border-default`}
         >
           vs Previous
         </button>

@@ -68,8 +68,7 @@ export function Workspace({
   const [polishActive, setPolishActive] = useState(false);
   const [polishNode, setPolishNode] = useState<string | null>(null);
   const [polishOriginal, setPolishOriginal] = useState("");
-  const [polishPrevious, setPolishPrevious] = useState<string | null>(null);
-  const [polishCurrent, setPolishCurrent] = useState<string | null>(null);
+  const [polishRounds, setPolishRounds] = useState<string[]>([]);
   const [polishHistory, setPolishHistory] = useState<PolishHistoryEntry[]>([]);
   const [polishInstruction, setPolishInstruction] = useState("");
   const [polishSelectedRound, setPolishSelectedRound] = useState<number | null>(null);
@@ -101,8 +100,7 @@ export function Workspace({
           setPolishActive(true);
           setPolishNode(status.node);
           setPolishOriginal(status.original);
-          setPolishPrevious(status.previous);
-          setPolishCurrent(status.current);
+          setPolishRounds(status.rounds);
           setPolishHistory(status.history);
           if (status.history.length > 0) {
             setPolishSelectedRound(Math.floor(status.history.length / 2) - 1);
@@ -183,8 +181,7 @@ export function Workspace({
           setPolishActive(true);
           setPolishNode(status.node);
           setPolishOriginal(status.original);
-          setPolishPrevious(status.previous);
-          setPolishCurrent(status.current);
+          setPolishRounds(status.rounds);
           setPolishHistory(status.history);
           if (status.history.length > 0) {
             setPolishSelectedRound(Math.floor(status.history.length / 2) - 1);
@@ -198,8 +195,7 @@ export function Workspace({
       setPolishActive(true);
       setPolishNode(activeNode);
       setPolishOriginal(content);
-      setPolishPrevious(null);
-      setPolishCurrent(null);
+      setPolishRounds([]);
       setPolishHistory([]);
       setPolishSelectedRound(null);
       setPolishDiffMode(null);
@@ -253,8 +249,7 @@ export function Workspace({
       const status: PolishStatus = await statusRes.json();
       if (status.active) {
         setPolishOriginal(status.original);
-        setPolishPrevious(status.previous);
-        setPolishCurrent(status.current);
+        setPolishRounds(status.rounds);
         setPolishHistory(status.history);
         setPolishSelectedRound(Math.floor(status.history.length / 2) - 1);
       }
@@ -281,10 +276,13 @@ export function Workspace({
 
         const data: { applied: boolean; node: string } = await res.json();
         if (data.applied && polishNode) {
-          // Determine what content was picked
           let newContent = polishOriginal;
-          if (pick === "previous" && polishPrevious) newContent = polishPrevious;
-          if (pick === "current" && polishCurrent) newContent = polishCurrent;
+          if (pick === "previous" && polishRounds.length >= 2) {
+            newContent = polishRounds[polishRounds.length - 2];
+          }
+          if (pick === "current" && polishRounds.length > 0) {
+            newContent = polishRounds[polishRounds.length - 1];
+          }
 
           setNodeContent((prev) => ({
             ...prev,
@@ -303,7 +301,7 @@ export function Workspace({
         // ignore
       }
     },
-    [slug, polishNode, polishOriginal, polishPrevious, polishCurrent],
+    [slug, polishNode, polishOriginal, polishRounds],
   );
 
   const handlePolishDiscard = useCallback(async () => {
@@ -336,7 +334,7 @@ export function Workspace({
       if (entry?.role === "assistant") return entry.content;
     }
     // Show current polish, or original if no rounds yet
-    return polishCurrent || polishOriginal;
+    return polishRounds.length > 0 ? polishRounds[polishRounds.length - 1] : polishOriginal;
   };
 
   const displayContent =
@@ -378,7 +376,6 @@ export function Workspace({
                 <PolishToolbar
                   diffMode={polishDiffMode}
                   onDiffModeChange={setPolishDiffMode}
-                  hasPrevious={polishPrevious !== null}
                   onApply={() => setPolishShowApply(true)}
                   onDiscard={handlePolishDiscard}
                 />
@@ -388,9 +385,11 @@ export function Workspace({
                     oldValue={
                       polishDiffMode === "original"
                         ? polishOriginal
-                        : (polishPrevious || "")
+                        : polishRounds.length >= 2
+                          ? polishRounds[polishRounds.length - 2]
+                          : polishOriginal
                     }
-                    newValue={polishCurrent || polishOriginal}
+                    newValue={polishRounds.length > 0 ? polishRounds[polishRounds.length - 1] : polishOriginal}
                     leftTitle={
                       polishDiffMode === "original" ? "Original" : "Previous"
                     }
@@ -411,8 +410,7 @@ export function Workspace({
                 <PolishApplyModal
                   node={polishNode || ""}
                   original={polishOriginal}
-                  previous={polishPrevious}
-                  current={polishCurrent}
+                  rounds={polishRounds}
                   onApply={handlePolishApply}
                   onCancel={() => setPolishShowApply(false)}
                 />

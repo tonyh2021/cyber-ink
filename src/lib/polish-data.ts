@@ -34,9 +34,31 @@ export async function initPolishSession(
   const { content } = await readMarkdown(`articles/${slug}/nodes/${node}.md`);
 
   await ensureDir(dir);
+  await ensureDir(`${dir}/rounds`);
   await writeJson(`${dir}/target.json`, { node } satisfies PolishTarget);
   await writeRawFile(`${dir}/original.md`, content);
   await writeJson(`${dir}/history.json`, [] satisfies PolishHistoryEntry[]);
+}
+
+async function readRounds(dir: string): Promise<string[]> {
+  const roundsDir = resolveDataPath(`${dir}/rounds`);
+  let entries: string[];
+  try {
+    entries = await fs.readdir(roundsDir);
+  } catch {
+    return [];
+  }
+  const numbered = entries
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => parseInt(f, 10))
+    .filter((n) => !isNaN(n))
+    .sort((a, b) => a - b);
+
+  const rounds: string[] = [];
+  for (const n of numbered) {
+    rounds.push(await readRawFile(`${dir}/rounds/${n}.md`));
+  }
+  return rounds;
 }
 
 export async function getPolishStatus(slug: string): Promise<PolishStatus> {
@@ -47,36 +69,28 @@ export async function getPolishStatus(slug: string): Promise<PolishStatus> {
 
   const target = await readJson<PolishTarget>(`${dir}/target.json`);
   const original = await readRawFile(`${dir}/original.md`);
-  const previous = (await exists(`${dir}/previous.md`))
-    ? await readRawFile(`${dir}/previous.md`)
-    : null;
-  const current = (await exists(`${dir}/current.md`))
-    ? await readRawFile(`${dir}/current.md`)
-    : null;
+  const rounds = await readRounds(dir);
   const history = await readJson<PolishHistoryEntry[]>(`${dir}/history.json`);
 
   return {
     active: true,
     node: target.node,
     original,
-    previous,
-    current,
+    rounds,
     history,
   };
 }
 
-export async function rotatePolishRound(
+export async function savePolishRound(
   slug: string,
-  newContent: string,
-): Promise<void> {
+  content: string,
+): Promise<number> {
   const dir = polishDir(slug);
-
-  if (await exists(`${dir}/current.md`)) {
-    const currentContent = await readRawFile(`${dir}/current.md`);
-    await writeRawFile(`${dir}/previous.md`, currentContent);
-  }
-
-  await writeRawFile(`${dir}/current.md`, newContent);
+  await ensureDir(`${dir}/rounds`);
+  const rounds = await readRounds(dir);
+  const roundNumber = rounds.length + 1;
+  await writeRawFile(`${dir}/rounds/${roundNumber}.md`, content);
+  return roundNumber;
 }
 
 export async function appendPolishHistory(
@@ -102,20 +116,21 @@ export async function applyPolish(
 ): Promise<string> {
   const dir = polishDir(slug);
   const target = await readJson<PolishTarget>(`${dir}/target.json`);
+  const rounds = await readRounds(dir);
 
   let chosenContent: string;
   if (pick === "original") {
     chosenContent = await readRawFile(`${dir}/original.md`);
   } else if (pick === "previous") {
-    if (!(await exists(`${dir}/previous.md`))) {
+    if (rounds.length < 2) {
       throw new Error("No previous round exists");
     }
-    chosenContent = await readRawFile(`${dir}/previous.md`);
+    chosenContent = rounds[rounds.length - 2];
   } else {
-    if (!(await exists(`${dir}/current.md`))) {
+    if (rounds.length === 0) {
       throw new Error("No current round exists");
     }
-    chosenContent = await readRawFile(`${dir}/current.md`);
+    chosenContent = rounds[rounds.length - 1];
   }
 
   const nodePath = `articles/${slug}/nodes/${target.node}.md`;

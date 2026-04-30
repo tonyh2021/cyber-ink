@@ -35,7 +35,7 @@ export async function POST(
     );
   }
 
-  if (pick === "previous" && status.previous === null) {
+  if (pick === "previous" && status.rounds.length < 2) {
     return NextResponse.json(
       { error: "No previous round exists" },
       { status: 400 },

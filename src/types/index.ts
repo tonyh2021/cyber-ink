@@ -104,8 +104,7 @@ export type PolishStatus =
       active: true;
       node: string;
       original: string;
-      previous: string | null;
-      current: string | null;
+      rounds: string[];
       history: PolishHistoryEntry[];
     }
   | { active: false };

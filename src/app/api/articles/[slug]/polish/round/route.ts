@@ -7,7 +7,7 @@ import { readMarkdown, exists } from "@/lib/data";
 import { buildPolishPrompt } from "@/lib/prompt-builder";
 import {
   getPolishStatus,
-  rotatePolishRound,
+  savePolishRound,
   appendPolishHistory,
 } from "@/lib/polish-data";
 
@@ -130,7 +130,7 @@ export async function POST(
 
   async function persistRound(text: string): Promise<void> {
     const { summary, article } = parsePolishOutput(text);
-    await rotatePolishRound(slug, article);
+    await savePolishRound(slug, article);
     await appendPolishHistory(slug, [
       { role: "user", content: instruction },
       { role: "assistant", content: article, summary },
