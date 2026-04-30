@@ -24,6 +24,7 @@ interface ProfileData {
 
 interface StylesPageProps {
   instruction: string;
+  outputRules: string;
   profile: ProfileData;
   references: ReferenceGroup[];
 }
@@ -65,7 +66,7 @@ function ReferenceCard({ filename, content }: ReferenceArticle) {
   );
 }
 
-export function StylesPage({ instruction, profile, references }: StylesPageProps) {
+export function StylesPage({ instruction, outputRules, profile, references }: StylesPageProps) {
   const { width: sidebarWidth } = useSidebar();
 
   return (
@@ -116,6 +117,20 @@ export function StylesPage({ instruction, profile, references }: StylesPageProps
               <div className="rounded-card border border-border-default bg-surface-card p-5 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
                 <pre className="font-mono text-[12px] leading-relaxed text-text-secondary whitespace-pre-wrap">
                   {instruction}
+                </pre>
+              </div>
+            </section>
+          )}
+
+          {/* Output Rules */}
+          {outputRules && (
+            <section className="flex flex-col gap-3">
+              <h2 className="text-base font-semibold text-text-primary tracking-[-0.2px]">
+                Output Rules
+              </h2>
+              <div className="rounded-card border border-border-default bg-surface-card p-5 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                <pre className="font-mono text-[12px] leading-relaxed text-text-secondary whitespace-pre-wrap">
+                  {outputRules}
                 </pre>
               </div>
             </section>

@@ -74,11 +74,13 @@ export async function POST(
   const { content: profileContent } = await readMarkdown("profiles/default.md");
 
   let references: string[] = [];
+  let refFileNames: string[] = [];
   try {
     const refFiles = await listFiles(`styles/${styleName}`, ".md");
     for (const f of refFiles.sort()) {
       const { content } = await readMarkdown(`styles/${styleName}/${f}`);
       references.push(content);
+      refFileNames.push(f);
     }
   } catch {
     // no reference directory
@@ -92,6 +94,14 @@ export async function POST(
     // no instruction file
   }
 
+  let outputRules = "";
+  try {
+    const { content } = await readMarkdown("instruction/output-rules.md");
+    outputRules = content;
+  } catch {
+    // no output rules file
+  }
+
   const { content: sourceContent } = await readMarkdown(
     `articles/${slug}/source.md`
   );
@@ -100,12 +110,13 @@ export async function POST(
     profile: profileContent,
     references,
     commonInstruction,
+    outputRules,
     source: sourceContent,
     instruction,
     language: config.language,
   });
 
-  console.log(`[generate] ${slug} | style: ${styleName} | system prompt:\n${systemPrompt}`);
+  console.log(`[generate] ${slug} | style: ${styleName} | refs: [${refFileNames.join(", ")}]\n[instruction] ${commonInstruction}\n[outputRules] ${outputRules}`);
 
   const model = getModel(
     config.models.writing.provider,

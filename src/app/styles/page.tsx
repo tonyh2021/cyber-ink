@@ -27,6 +27,15 @@ async function getInstruction(): Promise<string> {
   }
 }
 
+async function getOutputRules(): Promise<string> {
+  try {
+    const { content } = await readMarkdown("instruction/output-rules.md");
+    return content;
+  } catch {
+    return "";
+  }
+}
+
 async function getProfile(): Promise<ProfileData> {
   const { frontmatter, content } = await readMarkdown("profiles/default.md");
   return {
@@ -65,10 +74,11 @@ async function getStyles(): Promise<ReferenceGroup[]> {
 }
 
 export default async function StylesRoute() {
-  const [instruction, profile, references] = await Promise.all([
+  const [instruction, outputRules, profile, references] = await Promise.all([
     getInstruction(),
+    getOutputRules(),
     getProfile(),
     getStyles(),
   ]);
-  return <StylesPage instruction={instruction} profile={profile} references={references} />;
+  return <StylesPage instruction={instruction} outputRules={outputRules} profile={profile} references={references} />;
 }
