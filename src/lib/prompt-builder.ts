@@ -7,7 +7,6 @@ interface PromptInput {
   outputRules: string;
   source: string;
   instruction: string;
-  language: string;
 }
 
 interface PromptOutput {
@@ -16,7 +15,7 @@ interface PromptOutput {
 }
 
 export function buildPrompt(input: PromptInput): PromptOutput {
-  const { profile, references, commonInstruction, outputRules, source, instruction, language } = input;
+  const { profile, references, commonInstruction, outputRules, source, instruction } = input;
 
   const parts = [
     "## Profile",
@@ -26,7 +25,7 @@ export function buildPrompt(input: PromptInput): PromptOutput {
 
   if (references.length > 0) {
     parts.push("## Reference Articles");
-    parts.push("Study the following articles carefully. Match their voice, rhythm, humor, structure, and rhetorical techniques in your output.");
+    parts.push("Study the following articles carefully. Extract their writing techniques — voice, rhythm, humor, structure, and rhetorical devices — and apply those techniques to your output. Do not imitate their subject matter.");
     parts.push("");
     references.forEach((ref, i) => {
       parts.push(`### Example ${i + 1}`);
@@ -41,9 +40,8 @@ export function buildPrompt(input: PromptInput): PromptOutput {
     parts.push("");
   }
 
-  parts.push("## Output Rules");
-  parts.push(`- Write in language: ${language}`);
   if (outputRules) {
+    parts.push("## Output Rules");
     parts.push(outputRules);
   }
 

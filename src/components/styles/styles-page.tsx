@@ -67,6 +67,45 @@ function ReferenceCard({ filename, content }: ReferenceArticle) {
   );
 }
 
+function CollapsibleSection({ title, content }: { title: string; content: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const preview = content.slice(0, 120).replace(/\n/g, " ").trim();
+
+  return (
+    <section className="flex flex-col gap-3">
+      <h2 className="text-base font-semibold text-text-primary tracking-[-0.2px]">
+        {title}
+      </h2>
+      <div className="rounded-card border border-border-default bg-surface-card shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="w-full flex items-center gap-2 p-4 text-left"
+        >
+          {expanded ? (
+            <ChevronDown size={14} className="text-text-muted shrink-0" />
+          ) : (
+            <ChevronRight size={14} className="text-text-muted shrink-0" />
+          )}
+          {!expanded && (
+            <span className="text-[12px] text-text-muted truncate">
+              {preview}…
+            </span>
+          )}
+        </button>
+        {expanded && (
+          <div className="px-5 pb-5 pt-0">
+            <div className="bg-surface-canvas rounded-standard p-4 max-h-[400px] overflow-y-auto">
+              <pre className="font-mono text-[12px] leading-relaxed text-text-secondary whitespace-pre-wrap">
+                {content}
+              </pre>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export function StylesPage({ instruction, outputRules, profile, references }: StylesPageProps) {
   const { width: sidebarWidth } = useSidebar();
 
@@ -111,30 +150,12 @@ export function StylesPage({ instruction, outputRules, profile, references }: St
 
           {/* Common Instruction */}
           {instruction && (
-            <section className="flex flex-col gap-3">
-              <h2 className="text-base font-semibold text-text-primary tracking-[-0.2px]">
-                Common Instruction
-              </h2>
-              <div className="rounded-card border border-border-default bg-surface-card p-5 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-                <pre className="font-mono text-[12px] leading-relaxed text-text-secondary whitespace-pre-wrap">
-                  {instruction}
-                </pre>
-              </div>
-            </section>
+            <CollapsibleSection title="Common Instruction" content={instruction} />
           )}
 
           {/* Output Rules */}
           {outputRules && (
-            <section className="flex flex-col gap-3">
-              <h2 className="text-base font-semibold text-text-primary tracking-[-0.2px]">
-                Output Rules
-              </h2>
-              <div className="rounded-card border border-border-default bg-surface-card p-5 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-                <pre className="font-mono text-[12px] leading-relaxed text-text-secondary whitespace-pre-wrap">
-                  {outputRules}
-                </pre>
-              </div>
-            </section>
+            <CollapsibleSection title="Output Rules" content={outputRules} />
           )}
 
           {/* References */}

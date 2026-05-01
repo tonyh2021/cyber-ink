@@ -283,7 +283,6 @@ export async function POST(
     outputRules,
     source: sourceContent,
     instruction,
-    language: config.language,
   });
 
   console.log(
