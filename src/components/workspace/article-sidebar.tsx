@@ -275,7 +275,7 @@ export function ArticleSidebar({ currentSlug }: ArticleSidebarProps) {
 
       {/* Mobile top bar — only when collapsed on narrow screens */}
       {collapsed && (
-        <div className="fixed top-0 left-2 right-0 z-50 md:hidden flex items-center px-3 py-2 bg-surface-card">
+        <div className="fixed top-0 left-1 right-0 z-50 md:hidden flex items-center px-3 py-2 bg-surface-card">
           <button
             onClick={() => setCollapsed(false)}
             className="text-base font-extrabold text-brand-accent"

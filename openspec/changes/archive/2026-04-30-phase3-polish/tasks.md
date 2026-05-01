@@ -3,9 +3,9 @@
 - [x] Task 1: Types & data helpers — Polish types, filesystem helpers for `.polish/` lifecycle
 - [x] Task 2: Polish prompt builder — Two-layer prompt assembly (hardcoded + configurable) with sliding window
 - [x] Task 3: Polish API — start, round, apply, discard, status endpoints
-- [ ] Task 4: Polish UI — conversation view, instruction input, diff toggle, apply/discard
+- [x] Task 4: Polish UI — conversation view, instruction input, diff toggle, apply/discard
 - [x] Task 5: Default polish-prompt.md — Ship a sensible default config file
-- [ ] Task 6: Cleanup old branching plan — Remove or archive phase3-branching-evaluation
+- [x] Task 6: Cleanup old branching plan — Remove or archive phase3-branching-evaluation
 
 ## Task Details
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { FileText } from "lucide-react";
 import { ArticleSidebar } from "./article-sidebar";
 import { ArticleCard } from "@/components/dashboard/article-card";
@@ -14,7 +13,6 @@ interface WorkspaceHomeProps {
 
 export function WorkspaceHome({ articles }: WorkspaceHomeProps) {
   const { width: sidebarWidth } = useSidebar();
-  const router = useRouter();
 
   return (
     <div className="h-screen flex bg-surface-card">

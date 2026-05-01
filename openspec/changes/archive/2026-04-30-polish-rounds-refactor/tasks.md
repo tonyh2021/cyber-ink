@@ -7,6 +7,6 @@
 - [x] Update `workspace.tsx`: derive `current`/`previous` from `rounds` array, remove `polishPrevious`/`polishCurrent` state, update diff logic
 - [x] Update `PolishToolbar`: remove `hasPrevious` prop, "vs Previous" button always enabled
 - [x] Update `PolishApplyModal`: derive choices from rounds array
-- [ ] Verify: Round 1 "vs Previous" shows diff against original
-- [ ] Verify: Round 2+ "vs Previous" shows diff against last round
-- [ ] Verify: Apply modal shows correct content for each choice
+- [x] Verify: Round 1 "vs Previous" shows diff against original
+- [x] Verify: Round 2+ "vs Previous" shows diff against last round
+- [x] Verify: Apply modal shows correct content for each choice

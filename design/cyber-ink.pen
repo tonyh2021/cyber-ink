@@ -5660,6 +5660,18 @@
                                   "fill": "$brand-accent"
                                 }
                               }
+                            },
+                            {
+                              "id": "aEFgt",
+                              "type": "ref",
+                              "ref": "Saw3J",
+                              "name": "polishBtn",
+                              "descendants": {
+                                "m2D8a": {
+                                  "fill": "$brand-accent",
+                                  "iconFontName": "message-square-text"
+                                }
+                              }
                             }
                           ]
                         },
@@ -5753,18 +5765,6 @@
                                   ]
                                 }
                               ]
-                            },
-                            {
-                              "id": "aEFgt",
-                              "type": "ref",
-                              "ref": "Saw3J",
-                              "name": "polishBtn",
-                              "descendants": {
-                                "m2D8a": {
-                                  "fill": "$brand-accent",
-                                  "iconFontName": "message-square-text"
-                                }
-                              }
                             }
                           ]
                         }
