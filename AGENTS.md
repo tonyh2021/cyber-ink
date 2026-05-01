@@ -4,7 +4,7 @@ Instructions for AI agents working on the CyberInk project.
 
 ## Context
 
-CyberInk is a Markdown-native AI writing decision engine. PRD version: v3.3. Read CLAUDE.md for full architecture, data layout, and API surface.
+CyberInk is a Markdown-native AI writing decision engine with version exploration and multi-round polish. Read CLAUDE.md for full architecture, data layout, and API surface.
 
 ## General Principles
 
@@ -16,11 +16,11 @@ CyberInk is a Markdown-native AI writing decision engine. PRD version: v3.3. Rea
 
 ## Domain Rules
 
-- **Branching is 2-level max.** Never allow depth-2 nodes to create children. Max 4 sibling branches.
-- **Evaluation is advisory only.** Never auto-promote based on scores. Promote is always user-initiated.
+- **Versions are sequential and capped at 5.** Generate creates v1, v2, v3, ... — oldest is pruned when the limit is reached.
+- **Polish is multi-round conversational editing.** User can apply any round by index or revert to original. Polish sessions are temporary and removed on apply/discard.
 - **Filesystem is the database.** All persistence uses Markdown files + JSON. No external DB.
-- **Style versions are immutable.** New style = new `vN.md` file. Never overwrite existing versions.
-- **`tree.json` is the source of truth** for node relationships, bestNode, and latestNode.
+- **`tree.json` is the source of truth** for node relationships (rootNode, bestNode, latestNode, nodes).
+- **Prompt content lives in `/data/` files.** The prompt builder (`src/lib/prompt-builder.ts`) only handles structure — never hardcode prompt text in code.
 - **Prompt Builder output must be deterministic** — same inputs produce the same system prompt.
 - **API keys live in `.env` only.** Model selection lives in `/data/config.json`. Never mix the two.
 
@@ -30,14 +30,13 @@ CyberInk is a Markdown-native AI writing decision engine. PRD version: v3.3. Rea
 - Follow Next.js App Router conventions.
 - Use Vercel AI SDK patterns for streaming generation.
 - Parse Markdown frontmatter with gray-matter.
-- Evaluation scores are 0–1 floats, stored as JSON.
 
 ## Working with the Data Layer
 
-- When creating articles: initialize `source.md`, `meta.md`, `tree.json`, and `/nodes/` + `/evaluation/` directories.
-- When generating/branching: write the node file, update `tree.json`, then trigger evaluation.
-- When promoting: copy node content to `final.md` and update `meta.md` status to "final".
-- When saving feedback: write to `/data/styles/[style-name]/feedback/` with correct naming (`[slug]-[node].md` or `[slug]-[node]-para.md`).
+- When creating articles: initialize `source.md`, `meta.json`, `tree.json`, and `/nodes/` directory.
+- When generating: write the node file, update `tree.json`, prune oldest version if over limit.
+- When polishing: session state lives in `/articles/[slug]/.polish/` — target, original, rounds, history.
+- When applying polish: write chosen round content back to the node file, remove `.polish/` directory.
 
 ## Commit Guidelines
 
@@ -48,4 +47,4 @@ CyberInk is a Markdown-native AI writing decision engine. PRD version: v3.3. Rea
 ## When Uncertain
 
 - If requirements are ambiguous, ask for clarification rather than guessing.
-- If a change affects the branching model, evaluation flow, or data schema, flag it before proceeding.
+- If a change affects the version model, polish flow, or data schema, flag it before proceeding.
