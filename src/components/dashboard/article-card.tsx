@@ -62,27 +62,28 @@ export function ArticleCard({
         </div>
 
         <div className="flex flex-col gap-2 p-5">
+          <span className="text-base font-semibold text-text-primary tracking-[-0.2px] truncate">
+            {title}
+          </span>
           <div className="flex items-center justify-between gap-2">
-            <span className="text-base font-semibold text-text-primary tracking-[-0.2px] truncate">
-              {title}
-            </span>
-            <span className="text-[11px] text-text-muted shrink-0">
-              {dateStr}
-            </span>
+            <span className="text-xs text-text-secondary">{versionText}</span>
+            <div className="group/delete relative shrink-0">
+              <span className="text-[11px] text-text-muted group-hover/delete:opacity-0 transition-opacity">
+                {dateStr}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setConfirmDelete(true);
+                }}
+                className="absolute inset-0 flex items-center justify-end opacity-0 group-hover/delete:opacity-100 p-1.5 text-text-muted hover:text-danger transition-opacity"
+                title="Delete article"
+              >
+                <Trash2 size={14} />
+              </button>
+            </div>
           </div>
-          <span className="text-xs text-text-secondary">{versionText}</span>
         </div>
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setConfirmDelete(true);
-          }}
-          className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 p-1.5 rounded-standard bg-surface-card/80 text-text-muted hover:text-danger transition-opacity"
-          title="Delete article"
-        >
-          <Trash2 size={14} />
-        </button>
       </div>
 
       {confirmDelete && (
