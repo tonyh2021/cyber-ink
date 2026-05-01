@@ -1,148 +1,89 @@
 # CyberInk
 
-A file-system-based AI writing decision engine with branching exploration, auto-evaluation, and style self-learning.
+A file-system-based AI writing decision engine with version exploration and multi-round polish.
 
-> Writing Decision Engine with Style Feedback Loop
+> Writing Decision Engine with Conversational Polish
 
 ## Core Principles
 
-Control-first · Material-driven · Markdown-native · Evaluation-looped · Tree-structured · Self-improving
+Control-first · Source-driven · Markdown-native · Version-structured
 
 ## What It Does
 
-CyberInk treats content generation as a **search problem over a finite semantic space**. You feed in raw material, the system extracts a semantic kernel, generates tree-structured drafts, evaluates quality, and lets you promote the best version — all while your style fingerprint evolves through feedback.
+CyberInk generates multiple drafts from raw material, lets you polish content through conversational editing, and apply the version you prefer. Writing style is guided by reference articles — the system extracts their techniques and applies them to your content direction.
 
-**You always have the final say.** Scores guide; you decide.
+**You always have the final say.**
 
 ## How It Works
 
 ```
-Material (paste / search)
+Source material (paste)
     ↓
-Dehydration Engine → source.md (semantic kernel)
+Prompt Builder (profile + references + instruction + output rules)
     ↓
-Prompt Builder (profile + style + source + instruction)
+Generation Engine → v1.md, v2.md, ... (max 5, oldest pruned)
     ↓
-Generation Engine → v1.md
+Polish Engine → multi-round conversational editing
     ↓
-Auto-Evaluation → scores (advisory)
-    ↓
-Branch / Optimize (2-level tree, max 4 siblings)
-    ↓
-User promotes → final.md
+User applies preferred round
 ```
 
-### Branching Model
+### Version Model
 
-```
-v1                ← Root generation
-├── v2-a          ← Branch (fork from v1)
-├── v2-b          ← Branch
-└── v2-c          ← Branch (max 4)
-```
-
-- **generate** — First generation creates `v1`
-- **branch** — Fork `v1` into `v2-x` variants (depth-2 nodes cannot branch further)
-- **optimize** — In-place rewrite on any node
-
-### Style Feedback Loop
-
-```
-User marks good content → feedback stored
-                              ↓
-External articles + feedback (few-shot examples)
-                              ↓
-GPT-4o-mini extracts style fingerprint → new vN.md
-                              ↓
-Style evolves over time
-```
+- **generate** — Creates sequential versions (v1, v2, v3, ...) from source material
+- **polish** — Multi-round in-place editing of a selected version; apply any round or discard
 
 ## Tech Stack
 
-| Layer                 | Technology                                       |
-| --------------------- | ------------------------------------------------ |
-| Framework             | Next.js (App Router)                             |
-| AI SDK                | Vercel AI SDK                                    |
-| Writing Model         | Claude (configurable)                            |
-| Analysis / Evaluation | GPT-4o-mini (configurable)                       |
-| Markdown Parsing      | gray-matter                                      |
-| Diff Rendering        | react-diff-viewer-continued                      |
-| Config                | `.env` (API keys) + `/data/config.json` (models) |
+| Layer            | Technology                                       |
+| ---------------- | ------------------------------------------------ |
+| Framework        | Next.js (App Router)                             |
+| AI SDK           | Vercel AI SDK                                    |
+| Writing Model    | Claude (configurable)                            |
+| Markdown Parsing | gray-matter                                      |
+| Diff Rendering   | react-diff-viewer-continued                      |
+| Config           | `.env` (API keys) + `/data/config.json` (models) |
 
 ## Project Structure
 
 ```
 /data/
-  config.json                            # Model configuration
+  config.json                            # Model configuration + language
   /profiles/default.md                   # Channel identity
-  /styles/[style-name]/
-    v1.md, v2.md, active.md              # Style versions
-    /feedback/                           # User-marked good content
+  /instruction/
+    instruction.md                       # Writing style instruction
+    output-rules.md                      # Output format rules
+    polish-prompt.md                     # Polish assistant system prompt
+  /references/[group-name]/
+    1.md, 2.md, ...                      # Reference articles for technique extraction
   /articles/[slug]/
-    source.md                            # Dehydrated material
-    meta.md                              # Article metadata
-    tree.json                            # Branch structure + bestNode
-    final.md                             # Promoted final version
-    /nodes/v1.md, v2-a.md, ...           # Generated content
-    /evaluation/v1.json, v2-a.json, ...  # Quality scores
+    source.md                            # Raw material (user-pasted text)
+    meta.json                            # Article metadata
+    tree.json                            # Version structure
+    /nodes/v1.md, v2.md, ...             # Generated content nodes
+    /.polish/                            # Active polish session (temporary)
 ```
 
 ## API
 
-### Writing
+### Article
 
 ```
-POST   /api/articles                    # Create article
-DELETE /api/articles/[slug]             # Delete article
-GET    /api/articles/[slug]              # Aggregated: tree + nodes + evals + meta
-POST   /api/articles/[slug]/generate    # Generate v1
-POST   /api/articles/[slug]/branch      # Fork v1 → v2-x
-POST   /api/articles/[slug]/optimize    # In-place optimize
-POST   /api/articles/[slug]/promote     # Promote → final.md
+POST   /api/articles                     # Create article
+DELETE /api/articles/[slug]              # Delete article
+GET    /api/articles/[slug]              # Aggregated: tree + nodes + meta
+POST   /api/articles/[slug]/generate     # Generate new version
 ```
 
-### Evaluation
+### Polish
 
 ```
-POST   /api/evaluate/node               # Evaluate a node
-GET    /api/evaluate/[slug]/[node]       # Get node scores
+POST   /api/articles/[slug]/polish/start     # Start polish session
+POST   /api/articles/[slug]/polish/round     # Send a polish round
+GET    /api/articles/[slug]/polish/status    # Get session status
+POST   /api/articles/[slug]/polish/apply     # Apply a round
+POST   /api/articles/[slug]/polish/discard   # Discard session
 ```
-
-### Style
-
-```
-GET    /api/styles                       # List all styles
-GET    /api/styles/active               # Get active style
-POST   /api/styles/regenerate           # Regenerate with feedback
-POST   /api/styles/set-active           # Switch active version
-```
-
-### Feedback
-
-```
-POST   /api/feedback                    # Submit feedback
-GET    /api/feedback                    # List all feedback
-DELETE /api/feedback/[id]               # Delete feedback
-```
-
-### Material
-
-```
-POST   /api/material/dehydrate          # Extract semantic kernel
-```
-
-## Evaluation Dimensions
-
-| Metric              | Description                                  |
-| ------------------- | -------------------------------------------- |
-| clarity             | Writing clarity and readability              |
-| style_match         | Alignment with active style fingerprint      |
-| information_density | How well source material is utilized         |
-| reader_engagement   | Hook and flow quality                        |
-| hallucination_risk  | Deviation from source facts (lower = better) |
-| overall_score       | Weighted composite score                     |
-
-All scores are `0–1` floats. Evaluation is **advisory only** — the highest-scoring node is highlighted in UI, but promotion is always the user's choice.
 
 ## Getting Started
 
@@ -152,7 +93,7 @@ pnpm install
 
 # Configure environment
 cp .env.example .env
-# Add your API keys: ANTHROPIC_API_KEY, OPENAI_API_KEY
+# Add your API key: ANTHROPIC_API_KEY
 
 # Start development server
 pnpm dev
