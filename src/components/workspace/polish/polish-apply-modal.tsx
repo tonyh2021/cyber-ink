@@ -7,7 +7,8 @@ interface PolishApplyModalProps {
   node: string;
   original: string;
   rounds: string[];
-  onApply: (pick: PolishApplyChoice) => void;
+  selectedRound: number | null;
+  onApply: (pick: PolishApplyChoice, roundIndex?: number) => void;
   onCancel: () => void;
 }
 
@@ -15,16 +16,22 @@ export function PolishApplyModal({
   node,
   original,
   rounds,
+  selectedRound,
   onApply,
   onCancel,
 }: PolishApplyModalProps) {
-  const [pick, setPick] = useState<PolishApplyChoice>("current");
+  const currentIndex = selectedRound ?? (rounds.length > 0 ? rounds.length - 1 : null);
+  const previousIndex = currentIndex !== null && currentIndex > 0 ? currentIndex - 1 : null;
 
-  const current = rounds.length > 0 ? rounds[rounds.length - 1] : null;
-  const previous = rounds.length >= 2 ? rounds[rounds.length - 2] : null;
+  const currentContent = currentIndex !== null ? rounds[currentIndex] : null;
+  const previousContent = previousIndex !== null ? rounds[previousIndex] : null;
+
+  type Pick = "original" | "current" | "previous";
+  const defaultPick: Pick = currentContent ? "current" : "original";
+  const [pick, setPick] = useState<Pick>(defaultPick);
 
   const options: Array<{
-    value: PolishApplyChoice;
+    value: Pick;
     label: string;
     preview: string | null;
     disabled: boolean;
@@ -32,17 +39,27 @@ export function PolishApplyModal({
     { value: "original", label: "Original", preview: original, disabled: false },
     {
       value: "previous",
-      label: "Previous Round",
-      preview: previous,
-      disabled: previous === null,
+      label: previousIndex !== null ? `Round ${previousIndex + 1}` : "Previous",
+      preview: previousContent,
+      disabled: previousContent === null,
     },
     {
       value: "current",
-      label: "Current",
-      preview: current,
-      disabled: current === null,
+      label: currentIndex !== null ? `Round ${currentIndex + 1}` : "Current",
+      preview: currentContent,
+      disabled: currentContent === null,
     },
   ];
+
+  const handleApply = () => {
+    if (pick === "original") {
+      onApply("original");
+    } else if (pick === "current" && currentIndex !== null) {
+      onApply("round", currentIndex);
+    } else if (pick === "previous" && previousIndex !== null) {
+      onApply("round", previousIndex);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25">
@@ -115,7 +132,7 @@ export function PolishApplyModal({
           </button>
           <button
             type="button"
-            onClick={() => onApply(pick)}
+            onClick={handleApply}
             className="px-5 py-2 text-[13px] font-bold rounded-standard bg-brand-accent text-text-on-accent hover:bg-brand-accent-hover transition-colors"
           >
             Apply

@@ -53,7 +53,7 @@ export function Workspace({
   initialNodes = [],
   initialContent = {},
 }: WorkspaceProps) {
-  const { width: sidebarWidth, setCollapsed } = useSidebar();
+  const { width: sidebarWidth, setCollapsed, refreshArticles } = useSidebar();
   const [articleTitle, setArticleTitle] = useState(title);
 
   useEffect(() => {
@@ -94,10 +94,11 @@ export function Workspace({
       if (!res.ok) return;
       const data = await res.json();
       if (data.meta?.title) setArticleTitle(data.meta.title);
+      await refreshArticles();
     } catch {
       // ignore
     }
-  }, [slug]);
+  }, [slug, refreshArticles]);
 
   const { completion, isLoading, complete } = useCompletion({
     api: `/api/articles/${slug}/generate`,
@@ -293,23 +294,20 @@ export function Workspace({
   }, [polishInstruction, polishLoading, slug, refreshTitle]);
 
   const handlePolishApply = useCallback(
-    async (pick: PolishApplyChoice) => {
+    async (pick: PolishApplyChoice, roundIndex?: number) => {
       try {
         const res = await fetch(`/api/articles/${slug}/polish/apply`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ pick }),
+          body: JSON.stringify({ pick, roundIndex }),
         });
         if (!res.ok) return;
 
         const data: { applied: boolean; node: string } = await res.json();
         if (data.applied && polishNode) {
           let newContent = polishOriginal;
-          if (pick === "previous" && polishRounds.length >= 2) {
-            newContent = polishRounds[polishRounds.length - 2];
-          }
-          if (pick === "current" && polishRounds.length > 0) {
-            newContent = polishRounds[polishRounds.length - 1];
+          if (pick === "round" && roundIndex != null && roundIndex < polishRounds.length) {
+            newContent = polishRounds[roundIndex];
           }
 
           setNodeContent((prev) => ({
@@ -410,6 +408,7 @@ export function Workspace({
                   onDiffModeChange={setPolishDiffMode}
                   onApply={() => setPolishShowApply(true)}
                   onDiscard={handlePolishDiscard}
+                  disabled={polishLoading}
                 />
 
                 {polishDiffMode ? (
@@ -447,6 +446,7 @@ export function Workspace({
                   node={polishNode || ""}
                   original={polishOriginal}
                   rounds={polishRounds}
+                  selectedRound={polishSelectedRound}
                   onApply={handlePolishApply}
                   onCancel={() => setPolishShowApply(false)}
                 />

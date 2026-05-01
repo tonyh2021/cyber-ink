@@ -9,6 +9,7 @@ interface PolishToolbarProps {
   onDiffModeChange: (mode: DiffMode) => void;
   onApply: () => void;
   onDiscard: () => void;
+  disabled?: boolean;
 }
 
 export function PolishToolbar({
@@ -16,6 +17,7 @@ export function PolishToolbar({
   onDiffModeChange,
   onApply,
   onDiscard,
+  disabled,
 }: PolishToolbarProps) {
   const [confirmDiscard, setConfirmDiscard] = useState(false);
   const segmentClass = (active: boolean) =>
@@ -30,6 +32,7 @@ export function PolishToolbar({
       <div className="flex items-center rounded-standard border border-border-default overflow-hidden">
         <button
           type="button"
+          disabled={disabled}
           onClick={() => onDiffModeChange(null)}
           className={segmentClass(diffMode === null)}
         >
@@ -37,6 +40,7 @@ export function PolishToolbar({
         </button>
         <button
           type="button"
+          disabled={disabled}
           onClick={() => onDiffModeChange("previous")}
           className={`${segmentClass(diffMode === "previous")} border-l border-border-default`}
         >
@@ -44,6 +48,7 @@ export function PolishToolbar({
         </button>
         <button
           type="button"
+          disabled={disabled}
           onClick={() => onDiffModeChange("original")}
           className={`${segmentClass(diffMode === "original")} border-l border-border-default`}
         >
@@ -54,15 +59,17 @@ export function PolishToolbar({
       <div className="absolute right-6 flex items-center gap-3">
         <button
           type="button"
+          disabled={disabled}
           onClick={() => setConfirmDiscard(true)}
-          className="text-[13px] font-medium text-text-secondary hover:text-color-danger hover:bg-(--color-danger-bg) px-3 py-1.5 rounded-standard transition-colors"
+          className="text-[13px] font-medium text-text-secondary hover:text-color-danger hover:bg-(--color-danger-bg) px-3 py-1.5 rounded-standard transition-colors disabled:opacity-40 disabled:pointer-events-none"
         >
           Discard
         </button>
         <button
           type="button"
+          disabled={disabled}
           onClick={onApply}
-          className="text-[13px] font-semibold text-brand-accent hover:text-brand-accent-hover hover:bg-brand-accent-dim px-3 py-1.5 rounded-standard transition-colors"
+          className="text-[13px] font-semibold text-brand-accent hover:text-brand-accent-hover hover:bg-brand-accent-dim px-3 py-1.5 rounded-standard transition-colors disabled:opacity-40 disabled:pointer-events-none"
         >
           Apply
         </button>

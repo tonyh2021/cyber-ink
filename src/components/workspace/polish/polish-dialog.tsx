@@ -145,15 +145,19 @@ export function PolishDialog({
               <div
                 role="button"
                 tabIndex={0}
-                onClick={() => onSelectRound(round.index)}
+                onClick={() => !isLoading && onSelectRound(round.index)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ")
+                  if (!isLoading && (e.key === "Enter" || e.key === " "))
                     onSelectRound(round.index);
                 }}
-                className={`w-full text-left px-5 py-3 transition-colors cursor-pointer select-text ${
+                className={`w-full text-left px-5 py-3 transition-colors select-text ${
+                  isLoading
+                    ? "cursor-default opacity-60"
+                    : "cursor-pointer"
+                } ${
                   selectedRound === round.index
                     ? "bg-brand-accent-dim border-l-[3px] border-l-brand-accent"
-                    : "hover:bg-brand-accent-dim bg-surface-panel"
+                    : isLoading ? "bg-surface-panel" : "hover:bg-brand-accent-dim bg-surface-panel"
                 }`}
               >
                 <div className="flex items-center gap-1.5">

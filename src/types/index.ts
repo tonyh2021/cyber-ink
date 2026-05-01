@@ -109,4 +109,5 @@ export type PolishStatus =
     }
   | { active: false };
 
-export type PolishApplyChoice = "original" | "previous" | "current";
+export type PolishApplyChoice = "original" | "round";
+

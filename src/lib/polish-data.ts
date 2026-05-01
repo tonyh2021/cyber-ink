@@ -113,6 +113,7 @@ export async function getPolishHistory(
 export async function applyPolish(
   slug: string,
   pick: PolishApplyChoice,
+  roundIndex?: number,
 ): Promise<string> {
   const dir = polishDir(slug);
   const target = await readJson<PolishTarget>(`${dir}/target.json`);
@@ -121,16 +122,12 @@ export async function applyPolish(
   let chosenContent: string;
   if (pick === "original") {
     chosenContent = await readRawFile(`${dir}/original.md`);
-  } else if (pick === "previous") {
-    if (rounds.length < 2) {
-      throw new Error("No previous round exists");
-    }
-    chosenContent = rounds[rounds.length - 2];
   } else {
-    if (rounds.length === 0) {
-      throw new Error("No current round exists");
+    const idx = roundIndex ?? rounds.length - 1;
+    if (idx < 0 || idx >= rounds.length) {
+      throw new Error("Invalid round index");
     }
-    chosenContent = rounds[rounds.length - 1];
+    chosenContent = rounds[idx];
   }
 
   const nodePath = `articles/${slug}/nodes/${target.node}.md`;

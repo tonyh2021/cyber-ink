@@ -267,28 +267,18 @@
   0% {
     transform: rotate(0deg);
   }
-
-  /* lift (slow) */
   20% {
     transform: rotate(-25deg);
   }
-
-  /* fast strike */
   40% {
     transform: rotate(18deg);
   }
-
-  /* impact pause */
   45% {
     transform: rotate(18deg) scale(0.96);
   }
-
-  /* rebound */
   60% {
     transform: rotate(-10deg);
   }
-
-  /* reset */
   100% {
     transform: rotate(0deg);
   }
@@ -298,6 +288,35 @@
   animation: hammer-work 0.8s cubic-bezier(0.6, -0.3, 0.7, 1.5) infinite;
   transform-origin: 15% 85%;
   will-change: transform;
+}
+
+@keyframes hammer-idle {
+  0% {
+    transform: rotate(0deg);
+  }
+  1.6% {
+    transform: rotate(-25deg);
+  }
+  3.2% {
+    transform: rotate(18deg);
+  }
+  3.6% {
+    transform: rotate(18deg) scale(0.96);
+  }
+  4.8% {
+    transform: rotate(-10deg);
+  }
+  8% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-hammer {
+  animation: hammer-idle 10s cubic-bezier(0.6, -0.3, 0.7, 1.5) infinite;
+  transform-origin: 15% 85%;
 }
 
 /* Workspace layered panel projection: left -> middle -> right */

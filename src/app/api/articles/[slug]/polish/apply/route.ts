@@ -3,7 +3,7 @@ import { exists } from "@/lib/data";
 import { getPolishStatus, applyPolish } from "@/lib/polish-data";
 import type { PolishApplyChoice } from "@/types";
 
-const VALID_PICKS = new Set<PolishApplyChoice>(["original", "previous", "current"]);
+const VALID_PICKS = new Set<PolishApplyChoice>(["original", "round"]);
 
 export async function POST(
   request: NextRequest,
@@ -15,7 +15,7 @@ export async function POST(
     return NextResponse.json({ error: "Article not found" }, { status: 404 });
   }
 
-  let body: { pick?: string };
+  let body: { pick?: string; roundIndex?: number };
   try {
     body = await request.json();
   } catch {
@@ -35,15 +35,8 @@ export async function POST(
     );
   }
 
-  if (pick === "previous" && status.rounds.length < 2) {
-    return NextResponse.json(
-      { error: "No previous round exists" },
-      { status: 400 },
-    );
-  }
-
   try {
-    const node = await applyPolish(slug, pick);
+    const node = await applyPolish(slug, pick, body.roundIndex);
     return NextResponse.json({ applied: true, node });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Apply failed";

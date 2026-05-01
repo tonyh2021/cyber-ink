@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { FilePen, MessageSquareText } from "lucide-react";
+import { FilePen, Hammer } from "lucide-react";
 import { OutputStream } from "./output-stream";
 
 interface NodeInfo {
@@ -81,7 +81,7 @@ export function NodeDisplay({
             title="Polish active version"
             className="ml-4 inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground shadow-[0_4px_10px_rgba(0,0,0,0.18)] hover:bg-primary/90 transition-colors"
           >
-            <MessageSquareText size={15} />
+            <Hammer size={15} className="animate-hammer" />
           </button>
         )}
       </div>
