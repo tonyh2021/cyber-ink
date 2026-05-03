@@ -12540,6 +12540,459 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "p9ojK",
+      "x": 2310,
+      "y": 0,
+      "name": "Toast Components",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 480,
+      "fill": "$surface-panel",
+      "cornerRadius": "$radius-card",
+      "stroke": {
+        "align": "inside",
+        "thickness": 1,
+        "fill": "$border-default"
+      },
+      "layout": "vertical",
+      "gap": 32,
+      "padding": 32,
+      "children": [
+        {
+          "type": "text",
+          "id": "ammrk",
+          "name": "titleText",
+          "fill": "$text-muted",
+          "content": "TOAST NOTIFICATIONS",
+          "fontFamily": "$font-ui",
+          "fontSize": 11,
+          "fontWeight": "600",
+          "letterSpacing": 1
+        },
+        {
+          "type": "text",
+          "id": "zRAic",
+          "name": "subtitleText",
+          "fill": "$text-secondary",
+          "content": "Stream error and status feedback",
+          "fontFamily": "$font-ui",
+          "fontSize": 14,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "P1hApA",
+          "name": "Component/Toast/Error",
+          "reusable": true,
+          "width": "fill_container",
+          "fill": "$color-danger",
+          "cornerRadius": "$radius-standard",
+          "gap": 10,
+          "padding": [
+            10,
+            16
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "hct6E",
+              "name": "errorIcon",
+              "width": 18,
+              "height": 18,
+              "iconFontName": "circle-alert",
+              "iconFontFamily": "lucide",
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "frame",
+              "id": "Cnrud",
+              "name": "textWrap",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "sV7XN",
+                  "name": "message",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Something went wrong. Please try again.",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "icon_font",
+              "id": "pbpM0",
+              "name": "close",
+              "opacity": 0.7,
+              "width": 16,
+              "height": 16,
+              "iconFontName": "x",
+              "iconFontFamily": "lucide",
+              "fill": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "GEvk0",
+          "name": "Component/Toast/Warning",
+          "reusable": true,
+          "width": "fill_container",
+          "fill": "$color-warning",
+          "cornerRadius": "$radius-standard",
+          "gap": 10,
+          "padding": [
+            10,
+            16
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "iF36x",
+              "name": "warnIcon",
+              "width": 18,
+              "height": 18,
+              "iconFontName": "triangle-alert",
+              "iconFontFamily": "lucide",
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "frame",
+              "id": "sGtNh",
+              "name": "textWrap",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "tCx1o",
+                  "name": "message",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Generation stopped due to disconnection.",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "icon_font",
+              "id": "T02nrT",
+              "name": "close",
+              "opacity": 0.7,
+              "width": 16,
+              "height": 16,
+              "iconFontName": "x",
+              "iconFontFamily": "lucide",
+              "fill": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "N3CKPt",
+          "name": "Component/Toast/Success",
+          "reusable": true,
+          "width": "fill_container",
+          "fill": "$color-success",
+          "cornerRadius": "$radius-standard",
+          "gap": 10,
+          "padding": [
+            10,
+            16
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "neN2F",
+              "name": "successIcon",
+              "width": 18,
+              "height": 18,
+              "iconFontName": "circle-check",
+              "iconFontFamily": "lucide",
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "frame",
+              "id": "TYzar",
+              "name": "textWrap",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZpUDD",
+                  "name": "message",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Changes saved successfully.",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "icon_font",
+              "id": "LPwVr",
+              "name": "close",
+              "opacity": 0.7,
+              "width": 16,
+              "height": 16,
+              "iconFontName": "x",
+              "iconFontFamily": "lucide",
+              "fill": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "iPcpJ",
+          "name": "dividerLabel",
+          "fill": "$text-secondary",
+          "content": "With Description",
+          "fontFamily": "$font-ui",
+          "fontSize": 13,
+          "fontWeight": "600"
+        },
+        {
+          "id": "Y5tvCp",
+          "type": "ref",
+          "ref": "P1hApA",
+          "name": "Error with desc",
+          "descendants": {
+            "Cnrud": {
+              "type": "frame",
+              "id": "jNL8N",
+              "name": "textWrap",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "j0NFv",
+                  "name": "message",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Connection error",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "isk4e",
+                  "name": "description",
+                  "fill": "#FFFFFFCC",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Unable to connect. Please check your network and try again.",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 12
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "u0Frtw",
+          "type": "ref",
+          "ref": "GEvk0",
+          "name": "Warning with desc",
+          "descendants": {
+            "sGtNh": {
+              "type": "frame",
+              "id": "ceTDl",
+              "name": "textWrap",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vMhvn",
+                  "name": "message",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Generation failed",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "HLUAm",
+                  "name": "description",
+                  "fill": "#FFFFFFCC",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "The AI model returned an error. Please try again.",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 12
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "text",
+          "id": "q1kCbD",
+          "name": "ctxLabel",
+          "fill": "$text-secondary",
+          "content": "Toast Context — Workspace Page",
+          "fontFamily": "$font-ui",
+          "fontSize": 13,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "b0Yjm",
+          "name": "Context Preview",
+          "theme": {
+            "mode": "light"
+          },
+          "clip": true,
+          "width": 416,
+          "height": 200,
+          "fill": "$surface-canvas",
+          "cornerRadius": "$radius-standard",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-default"
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "l6kKnM",
+              "x": 0,
+              "y": 0,
+              "name": "tabStrip",
+              "width": 416,
+              "height": 36,
+              "fill": "$surface-card",
+              "gap": 16,
+              "padding": [
+                0,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "jTykq",
+                  "name": "tab1",
+                  "fill": "$text-muted",
+                  "content": "v1",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "LSHrJ",
+                  "name": "tab2",
+                  "fill": "$text-muted",
+                  "content": "v2",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "k6ezBI",
+                  "name": "tab3",
+                  "fill": "$brand-accent",
+                  "content": "v3",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "id": "piskv",
+              "type": "ref",
+              "ref": "GEvk0",
+              "width": 320,
+              "x": 48,
+              "y": 46,
+              "name": "contextToast",
+              "descendants": {
+                "tCx1o": {
+                  "content": "Failed to generate. Please try again."
+                }
+              }
+            },
+            {
+              "type": "rectangle",
+              "cornerRadius": 4,
+              "id": "QaYFG",
+              "x": 48,
+              "y": 100,
+              "name": "contentLine1",
+              "fill": "$border-default",
+              "width": 320,
+              "height": 8
+            },
+            {
+              "type": "rectangle",
+              "cornerRadius": 4,
+              "id": "O6aFB",
+              "x": 48,
+              "y": 116,
+              "name": "contentLine2",
+              "fill": "$border-default",
+              "width": 280,
+              "height": 8
+            },
+            {
+              "type": "rectangle",
+              "cornerRadius": 4,
+              "id": "jyQB2",
+              "x": 48,
+              "y": 132,
+              "name": "contentLine3",
+              "fill": "$border-default",
+              "width": 350,
+              "height": 8
+            },
+            {
+              "type": "rectangle",
+              "cornerRadius": 4,
+              "id": "X7the",
+              "x": 48,
+              "y": 148,
+              "name": "contentLine4",
+              "fill": "$border-default",
+              "width": 200,
+              "height": 8
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {
@@ -12723,7 +13176,7 @@
       "type": "color",
       "value": [
         {
-          "value": "#9a6800",
+          "value": "#E8930C",
           "theme": {
             "mode": "light"
           }

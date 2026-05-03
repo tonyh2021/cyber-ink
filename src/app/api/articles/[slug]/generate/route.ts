@@ -220,20 +220,12 @@ export async function POST(
   const meta = await readJson<ArticleMeta>(`articles/${slug}/meta.json`);
   const tree = await readJson<ArticleTree>(`articles/${slug}/tree.json`);
 
-  // Keep one slot for the incoming main version: delete old versions first, then generate.
   const prePrunableNodeNames = collectPrunableNodes(
     tree,
     MAX_MAIN_VERSIONS - 1,
   );
   const prePrunableSet = new Set(prePrunableNodeNames);
   const treeBeforeGenerate = pruneTree(tree, prePrunableSet);
-
-  await Promise.allSettled(
-    prePrunableNodeNames.flatMap((name) => [
-      fs.rm(`data/articles/${slug}/nodes/${name}.md`, { force: true }),
-      fs.rm(`data/articles/${slug}/evaluation/${name}.json`, { force: true }),
-    ]),
-  );
 
   const nodeName = nextNodeName(treeBeforeGenerate);
 
@@ -264,14 +256,6 @@ export async function POST(
     // no instruction file
   }
 
-  let outputRules = "";
-  try {
-    const { content } = await readMarkdown("instruction/output-rules.md");
-    outputRules = content;
-  } catch {
-    // no output rules file
-  }
-
   const { content: sourceContent } = await readMarkdown(
     `articles/${slug}/source.md`,
   );
@@ -280,7 +264,6 @@ export async function POST(
     profile: profileContent,
     references,
     commonInstruction,
-    outputRules,
     source: sourceContent,
     instruction,
   });
@@ -292,7 +275,6 @@ export async function POST(
       `[referenceGroup] ${referenceGroupName}`,
       `[refs] [${refFileNames.join(", ")}]`,
       `[commonInstruction] ${commonInstruction}`,
-      `[outputRules] ${outputRules}`,
       `[userInstruction] ${instruction}`,
     ].join("\n"),
   );
@@ -319,6 +301,17 @@ export async function POST(
     };
     await writeJson(`articles/${slug}/tree.json`, updatedTree);
     await updateArticleTitle(slug, text);
+
+    if (prePrunableNodeNames.length > 0) {
+      await Promise.allSettled(
+        prePrunableNodeNames.flatMap((name) => [
+          fs.rm(`data/articles/${slug}/nodes/${name}.md`, { force: true }),
+          fs.rm(`data/articles/${slug}/evaluation/${name}.json`, {
+            force: true,
+          }),
+        ]),
+      );
+    }
   }
 
   if (config.models.writing.provider === "mock") {
@@ -344,6 +337,7 @@ export async function POST(
     system: systemPrompt,
     messages: [{ role: "user", content: userMessage }],
     async onFinish({ text, usage }) {
+      if (request.signal.aborted) return;
       console.log(
         `[generate] ${slug}/${nodeName} | tokens: ${usage.inputTokens} in + ${usage.outputTokens} out`,
       );

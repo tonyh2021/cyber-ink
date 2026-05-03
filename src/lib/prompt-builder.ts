@@ -4,7 +4,6 @@ interface PromptInput {
   profile: string;
   references: string[];
   commonInstruction: string;
-  outputRules: string;
   source: string;
   instruction: string;
 }
@@ -15,7 +14,7 @@ interface PromptOutput {
 }
 
 export function buildPrompt(input: PromptInput): PromptOutput {
-  const { profile, references, commonInstruction, outputRules, source, instruction } = input;
+  const { profile, references, commonInstruction, source, instruction } = input;
 
   const parts = [
     "## Profile",
@@ -38,11 +37,6 @@ export function buildPrompt(input: PromptInput): PromptOutput {
     parts.push("## Style Instruction");
     parts.push(commonInstruction);
     parts.push("");
-  }
-
-  if (outputRules) {
-    parts.push("## Output Rules");
-    parts.push(outputRules);
   }
 
   const systemPrompt = parts.join("\n");

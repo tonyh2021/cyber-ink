@@ -153,15 +153,15 @@
   --border-active: oklch(0.489 0.0906 222.2);
 
   --color-success: oklch(0.513 0.1108 163);
-  --color-warning: oklch(0.556 0.1169 75.8);
+  --color-warning: oklch(0.733 0.1581 68.6);
   --color-danger: oklch(0.533 0.1956 18.4);
   --color-focus: oklch(0.53 0.1685 265.9);
   --color-best-node: oklch(0.554 0.1134 92.7);
 
   --success-bg: oklch(0.513 0.1108 163 / 0.1);
   --success-border: oklch(0.513 0.1108 163 / 0.3);
-  --warning-bg: oklch(0.556 0.1169 75.8 / 0.1);
-  --warning-border: oklch(0.556 0.1169 75.8 / 0.3);
+  --warning-bg: oklch(0.733 0.1581 68.6 / 0.1);
+  --warning-border: oklch(0.733 0.1581 68.6 / 0.3);
   --danger-bg: oklch(0.533 0.1956 18.4 / 0.08);
   --danger-border: oklch(0.533 0.1956 18.4 / 0.2);
   --draft-border: oklch(0.489 0.0906 222.2 / 0.3);

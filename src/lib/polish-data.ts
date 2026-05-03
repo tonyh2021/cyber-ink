@@ -1,6 +1,5 @@
 import fs from "fs/promises";
 import path from "path";
-import matter from "gray-matter";
 import {
   readMarkdown,
   writeMarkdown,
@@ -15,7 +14,6 @@ import type {
   PolishHistoryEntry,
   PolishStatus,
   PolishApplyChoice,
-  ArticleTree,
 } from "@/types";
 
 function polishDir(slug: string): string {

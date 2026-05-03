@@ -25,7 +25,6 @@ interface ProfileData {
 
 interface StylesPageProps {
   instruction: string;
-  outputRules: string;
   profile: ProfileData;
   references: ReferenceGroup[];
 }
@@ -67,7 +66,13 @@ function ReferenceCard({ filename, content }: ReferenceArticle) {
   );
 }
 
-function CollapsibleSection({ title, content }: { title: string; content: string }) {
+function CollapsibleSection({
+  title,
+  content,
+}: {
+  title: string;
+  content: string;
+}) {
   const [expanded, setExpanded] = useState(false);
   const preview = content.slice(0, 120).replace(/\n/g, " ").trim();
 
@@ -106,7 +111,11 @@ function CollapsibleSection({ title, content }: { title: string; content: string
   );
 }
 
-export function StylesPage({ instruction, outputRules, profile, references }: StylesPageProps) {
+export function StylesPage({
+  instruction,
+  profile,
+  references,
+}: StylesPageProps) {
   const { width: sidebarWidth } = useSidebar();
 
   return (
@@ -148,14 +157,9 @@ export function StylesPage({ instruction, outputRules, profile, references }: St
             </div>
           </section>
 
-          {/* Common Instruction */}
+          {/* Instruction */}
           {instruction && (
-            <CollapsibleSection title="Common Instruction" content={instruction} />
-          )}
-
-          {/* Output Rules */}
-          {outputRules && (
-            <CollapsibleSection title="Output Rules" content={outputRules} />
+            <CollapsibleSection title="Instruction" content={instruction} />
           )}
 
           {/* References */}

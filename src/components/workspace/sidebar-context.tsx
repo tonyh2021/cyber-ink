@@ -51,12 +51,19 @@ export function SidebarProvider({
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 768px)");
-    setIsNarrow(!mql.matches);
-    if (!mql.matches) setCollapsed(true);
+
+    function syncFromMql() {
+      const narrow = !mql.matches;
+      setIsNarrow(narrow);
+      if (narrow) setCollapsed(true);
+    }
+
+    queueMicrotask(syncFromMql);
 
     function handleChange(e: MediaQueryListEvent) {
-      setIsNarrow(!e.matches);
-      if (!userToggled) setCollapsed(!e.matches);
+      const narrow = !e.matches;
+      setIsNarrow(narrow);
+      if (!userToggled) setCollapsed(narrow);
     }
     mql.addEventListener("change", handleChange);
     return () => mql.removeEventListener("change", handleChange);

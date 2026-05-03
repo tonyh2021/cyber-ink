@@ -37,18 +37,22 @@
 - [ ] 6.3 Render inline error banner below OutputStream when `error` is truthy (show message, offer retry)
 - [ ] 6.4 Verify: clicking Stop aborts the stream mid-generation, content up to that point is preserved
 
-## 7. Node ActionBar
+## 7. Node ActionBar — DEPRECATED
 
-- [ ] 7.1 Create `src/components/workspace/node-action-bar.tsx` with Copy / Feedback+ / Feedback− / Branch / Optimize / Promote slots
-- [ ] 7.2 Implement Copy action (clipboard write + `data-copied` visual feedback)
-- [ ] 7.3 Add `hideWhenRunning` behavior: during generation, only Stop is visible; ActionBar hidden
-- [ ] 7.4 Add `autohide` behavior: in multi-node view, only bestNode shows ActionBar by default; others on hover
-- [ ] 7.5 Wire Feedback+/− to `POST /api/feedback` (depends on phase 4 API)
-- [ ] 7.6 Wire Branch/Optimize/Promote to respective APIs (depends on phase 3 APIs)
+~~- [ ] 7.1 Create `src/components/workspace/node-action-bar.tsx` with Copy / Feedback+ / Feedback− / Branch / Optimize / Promote slots~~
+~~- [ ] 7.2 Implement Copy action (clipboard write + `data-copied` visual feedback)~~
+~~- [ ] 7.3 Add `hideWhenRunning` behavior: during generation, only Stop is visible; ActionBar hidden~~
+~~- [ ] 7.4 Add `autohide` behavior: in multi-node view, only bestNode shows ActionBar by default; others on hover~~
+~~- [ ] 7.5 Wire Feedback+/− to `POST /api/feedback` (depends on phase 4 API)~~
+~~- [ ] 7.6 Wire Branch/Optimize/Promote to respective APIs (depends on phase 3 APIs)~~
 
-## 8. Verification (Phase B)
+> Deprecated: branching model was superseded by polish mode. Feedback/Branch/Optimize/Promote APIs were never designed.
 
-- [ ] 8.1 Test adaptive rate with varying chunk sizes — confirm smooth pacing without visible lag or jumps
-- [ ] 8.2 Test Stop mid-generation — confirm content preserved, UI resets cleanly, no orphan requests
-- [ ] 8.3 Test error states (409 one-shot, network failure) — confirm error banner appears with actionable message
-- [ ] 8.4 Test ActionBar Copy — confirm clipboard write and visual feedback
+## 8. Verification (Phase B) — DEPRECATED
+
+~~- [ ] 8.1 Test adaptive rate with varying chunk sizes — confirm smooth pacing without visible lag or jumps~~
+~~- [ ] 8.2 Test Stop mid-generation — confirm content preserved, UI resets cleanly, no orphan requests~~
+~~- [ ] 8.3 Test error states (409 one-shot, network failure) — confirm error banner appears with actionable message~~
+~~- [ ] 8.4 Test ActionBar Copy — confirm clipboard write and visual feedback~~
+
+> Deprecated: verification tasks for deprecated Group 7.

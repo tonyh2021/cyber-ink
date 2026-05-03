@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { FileText, Pencil, CircleCheck } from "lucide-react";
 import { ArticleCard } from "./article-card";
 import { DashboardEmpty } from "./dashboard-empty";
@@ -30,7 +29,6 @@ const stats = [
 
 export function Dashboard({ articles }: DashboardProps) {
   const { width: sidebarWidth } = useSidebar();
-  const router = useRouter();
 
   const counts = [articles.length, 0, 0];
 

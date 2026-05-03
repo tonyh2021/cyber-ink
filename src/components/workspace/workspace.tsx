@@ -13,6 +13,7 @@ import { PolishDiff } from "./polish/polish-diff";
 import { PolishApplyModal } from "./polish/polish-apply-modal";
 import { OutputStream } from "./output-stream";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { Toast } from "@/components/ui/toast";
 import { useSidebar } from "./sidebar-context";
 import type {
   PolishHistoryEntry,
@@ -87,6 +88,8 @@ export function Workspace({
   const [polishLoading, setPolishLoading] = useState(false);
   const [polishStreamText, setPolishStreamText] = useState("");
   const [showVersionLimit, setShowVersionLimit] = useState(false);
+  const [generationError, setGenerationError] = useState<string | null>(null);
+  const instructionRef = useRef<HTMLTextAreaElement>(null);
 
   const refreshTitle = useCallback(async () => {
     try {
@@ -100,17 +103,48 @@ export function Workspace({
     }
   }, [slug, refreshArticles]);
 
-  const { completion, isLoading, complete } = useCompletion({
+  const snapshotRef = useRef<{
+    nodes: NodeInfo[];
+    activeNode: string | null;
+    removedNodeContent: Record<string, string>;
+  } | null>(null);
+
+  const restoreSnapshot = useCallback(() => {
+    const snapshot = snapshotRef.current;
+    if (!snapshot) return;
+    snapshotRef.current = null;
+    pendingNodeRef.current = null;
+    setPendingNode(null);
+    setNodes(snapshot.nodes);
+    setActiveNode(snapshot.activeNode);
+    setNodeContent((prev) => ({ ...prev, ...snapshot.removedNodeContent }));
+    setTimeout(() => instructionRef.current?.focus(), 0);
+  }, []);
+
+  const { completion, isLoading, complete, stop } = useCompletion({
     api: `/api/articles/${slug}/generate`,
     streamProtocol: "text",
     onFinish: (_prompt, completion) => {
       const node = pendingNodeRef.current;
       if (!node) return;
+
+      if (!completion || completion.trim().length === 0) {
+        restoreSnapshot();
+        setGenerationError("Generation failed — empty response from provider");
+        return;
+      }
+
       pendingNodeRef.current = null;
       setPendingNode(null);
+      snapshotRef.current = null;
 
       setNodeContent((prev) => ({ ...prev, [node]: completion }));
       refreshTitle();
+    },
+    onError: (err) => {
+      if (err.name === "AbortError") return;
+      restoreSnapshot();
+      setGenerationError(err.message || "Generation failed");
     },
   });
 
@@ -144,21 +178,36 @@ export function Workspace({
       0,
     );
     const nextNode = `v${currentMaxVersion + 1}`;
-    pendingNodeRef.current = nextNode;
-    setPendingNode(nextNode);
 
-    let removedNode: string | null = null;
+    // Save snapshot before mutations for rollback on stop/error
+    const removedNodeContent: Record<string, string> = {};
     const newNodeInfo: NodeInfo = { node: nextNode, instruction };
     const nextNodes = [...nodes, newNodeInfo];
     const mainVersionNodes = nextNodes.filter((item) =>
       isMainVersionNode(item.node),
     );
 
+    let removedNode: string | null = null;
     if (mainVersionNodes.length > MAX_MAIN_VERSIONS) {
       const oldestMainVersion = mainVersionNodes.reduce((oldest, item) =>
         getNodeVersion(item.node) < getNodeVersion(oldest.node) ? item : oldest,
       );
       removedNode = oldestMainVersion.node;
+      if (nodeContent[removedNode]) {
+        removedNodeContent[removedNode] = nodeContent[removedNode];
+      }
+    }
+
+    snapshotRef.current = {
+      nodes: [...nodes],
+      activeNode,
+      removedNodeContent,
+    };
+
+    pendingNodeRef.current = nextNode;
+    setPendingNode(nextNode);
+
+    if (removedNode) {
       setNodes(nextNodes.filter((item) => item.node !== removedNode));
     } else {
       setNodes(nextNodes);
@@ -173,10 +222,17 @@ export function Workspace({
       });
     }
 
+    setGenerationError(null);
+
     await complete(instruction, {
       body: { instruction, source },
     });
   };
+
+  const handleStop = useCallback(() => {
+    stop();
+    restoreSnapshot();
+  }, [stop, restoreSnapshot]);
 
   const handleGenerate = () => {
     if (!instruction.trim() || !source.trim() || isLoading) return;
@@ -467,12 +523,14 @@ export function Workspace({
                   disabled={isLoading}
                 />
                 <InstructionInput
+                  ref={instructionRef}
                   value={instruction}
                   onChange={setInstruction}
                   disabled={isLoading}
                   loading={isLoading}
                   canGenerate={canGenerate}
                   onGenerate={handleGenerate}
+                  onStop={handleStop}
                 />
               </div>
 
@@ -490,6 +548,13 @@ export function Workspace({
           )}
         </div>
       </div>
+
+      {generationError && (
+        <Toast
+          message={generationError}
+          onDismiss={() => setGenerationError(null)}
+        />
+      )}
 
       {showVersionLimit && (
         <ConfirmDialog

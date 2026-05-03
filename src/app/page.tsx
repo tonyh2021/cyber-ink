@@ -1,4 +1,4 @@
-import { listDirs, readJson, readMarkdown, listFiles } from "@/lib/data";
+import { listDirs, readJson, readMarkdown } from "@/lib/data";
 import type { ArticleMeta, ArticleTree } from "@/types";
 import { Dashboard } from "@/components/dashboard/dashboard";
 
