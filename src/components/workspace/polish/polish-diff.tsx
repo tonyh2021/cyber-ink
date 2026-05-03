@@ -20,7 +20,7 @@ export function PolishDiff({
   rightTitle,
 }: PolishDiffProps) {
   return (
-    <div className="flex-1 overflow-y-auto text-sm [&_table]:w-full">
+    <div className="flex-1 min-h-0 min-w-0 overflow-auto text-sm [&_table]:w-full [&_td]:break-all [&_td]:whitespace-pre-wrap [&_pre]:whitespace-pre-wrap [&_pre]:break-all [&_pre]:overflow-hidden">
       <ReactDiffViewer
         oldValue={oldValue}
         newValue={newValue}

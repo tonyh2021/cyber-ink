@@ -111,6 +111,12 @@ export function PolishDialog({
     ? extractStreamingSummary(streamText)
     : null;
 
+  const latestRoundIndex = rounds.length > 0 ? rounds[rounds.length - 1].index : null;
+  const isViewingOldRound =
+    selectedRound !== null &&
+    latestRoundIndex !== null &&
+    selectedRound < latestRoundIndex;
+
   return (
     <div className="relative z-20 flex flex-col h-full w-full md:w-[440px] shrink-0 bg-surface-card shadow-[12px_0_12px_-4px_rgba(0,0,0,0.09)]">
       {/* Header */}
@@ -258,7 +264,7 @@ export function PolishDialog({
             value={instruction}
             onChange={(e) => onInstructionChange(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Describe what to polish..."
+            placeholder={isViewingOldRound ? `Viewing Round ${selectedRound + 1} — new instructions will modify the latest round` : "Describe what to polish..."}
             disabled={isLoading}
             rows={2}
             className="w-full resize-none bg-transparent p-3 pr-12 pb-3 text-[13px] leading-relaxed text-text-primary placeholder:text-text-muted focus:outline-none disabled:opacity-50"
