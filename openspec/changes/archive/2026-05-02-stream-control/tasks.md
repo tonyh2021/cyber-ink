@@ -26,6 +26,6 @@
 
 ## 5. Verification
 
-- [ ] 5.1 Manual test: generate → click Stop → pending node disappears, previous node restored, instruction text preserved, no files written to disk
-- [ ] 5.2 Manual test: generate with 5 versions (triggers prune) → Stop → all 5 versions still on disk
-- [ ] 5.3 Manual test: simulate error (e.g. invalid API key) → error banner appears, state rolls back, Generate button re-enabled
+- [x] 5.1 Manual test: generate → click Stop → pending node disappears, previous node restored, instruction text preserved, no files written to disk
+- [x] 5.2 Manual test: generate with 5 versions (triggers prune) → Stop → all 5 versions still on disk
+- [x] 5.3 Manual test: simulate error (e.g. invalid API key) → error banner appears, state rolls back, Generate button re-enabled

@@ -60,7 +60,7 @@ export const InstructionInput = forwardRef<
               type="button"
               onClick={onStop}
               title="Stop generation"
-              className="flex items-center justify-center w-8 h-8 rounded-standard bg-danger text-text-on-accent hover:bg-danger/80 transition-colors"
+              className="flex items-center justify-center w-8 h-8 rounded-standard bg-brand-accent text-text-on-accent hover:bg-brand-accent-hover transition-colors"
             >
               <Square size={14} fill="currentColor" />
             </button>
