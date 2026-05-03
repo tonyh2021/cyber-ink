@@ -93,8 +93,7 @@ export function Workspace({
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [polishQuote, setPolishQuote] = useState<string | null>(null);
   const instructionRef = useRef<HTMLTextAreaElement>(null);
-  const polishCanvasRef = useRef<HTMLDivElement>(null);
-  const textSelection = useTextSelection(polishCanvasRef);
+  const textSelection = useTextSelection();
 
   const refreshTitle = useCallback(async () => {
     try {
@@ -498,7 +497,7 @@ export function Workspace({
                   />
                 ) : (
                   <div
-                    ref={polishCanvasRef}
+                    ref={textSelection.containerRef}
                     className="flex-1 overflow-y-auto bg-surface-canvas pt-4 pb-8 px-4 md:px-10"
                   >
                     <OutputStream

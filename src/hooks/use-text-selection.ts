@@ -7,8 +7,9 @@ interface TextSelection {
   rect: DOMRect;
 }
 
-export function useTextSelection(containerRef: React.RefObject<HTMLElement | null>) {
+export function useTextSelection() {
   const [selection, setSelection] = useState<TextSelection | null>(null);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
   const popoverRef = useRef<HTMLElement | null>(null);
 
   const clear = useCallback(() => {
@@ -19,8 +20,11 @@ export function useTextSelection(containerRef: React.RefObject<HTMLElement | nul
     popoverRef.current = el;
   }, []);
 
+  const containerCallbackRef = useCallback((el: HTMLElement | null) => {
+    setContainer(el);
+  }, []);
+
   useEffect(() => {
-    const container = containerRef.current;
     if (!container) return;
 
     function handleMouseUp() {
@@ -60,7 +64,7 @@ export function useTextSelection(containerRef: React.RefObject<HTMLElement | nul
       document.removeEventListener("mousedown", handleMouseDown);
       container.removeEventListener("scroll", handleScroll, true);
     };
-  }, [containerRef, clear]);
+  }, [container]);
 
-  return { selection, clear, setPopoverRef };
+  return { selection, clear, setPopoverRef, containerRef: containerCallbackRef };
 }
