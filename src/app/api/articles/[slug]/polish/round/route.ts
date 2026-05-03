@@ -88,7 +88,7 @@ export async function POST(
     return NextResponse.json({ error: "Article not found" }, { status: 404 });
   }
 
-  let body: { instruction?: string };
+  let body: { instruction?: string; quote?: string };
   try {
     body = await request.json();
   } catch {
@@ -102,6 +102,7 @@ export async function POST(
     );
   }
   const instruction: string = body.instruction.trim();
+  const quote: string | undefined = body.quote?.trim() || undefined;
 
   const status = await getPolishStatus(slug);
   if (!status.active) {
@@ -119,10 +120,14 @@ export async function POST(
     // no config file — hardcoded rules suffice
   }
 
+  const aiInstruction = quote
+    ? quote.split("\n").map((l) => "> " + l).join("\n") + "\n\n" + instruction
+    : instruction;
+
   const { systemPrompt, messages } = buildPolishPrompt({
     original: status.original,
     history: status.history,
-    currentInstruction: instruction,
+    currentInstruction: aiInstruction,
     polishPromptConfig,
   });
 
@@ -131,8 +136,13 @@ export async function POST(
   async function persistRound(text: string): Promise<void> {
     const { summary, article } = parsePolishOutput(text);
     await savePolishRound(slug, article);
+    const userEntry: { role: "user"; content: string; quote?: string } = {
+      role: "user",
+      content: instruction,
+    };
+    if (quote) userEntry.quote = quote;
     await appendPolishHistory(slug, [
-      { role: "user", content: instruction },
+      userEntry,
       { role: "assistant", content: article, summary },
     ]);
     await updateArticleTitle(slug, article);

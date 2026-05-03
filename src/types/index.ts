@@ -97,6 +97,7 @@ export interface PolishHistoryEntry {
   content: string;
   summary?: string;
   error?: boolean;
+  quote?: string;
 }
 
 export type PolishStatus =

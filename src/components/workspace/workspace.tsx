@@ -12,9 +12,11 @@ import { PolishToolbar } from "./polish/polish-toolbar";
 import { PolishDiff } from "./polish/polish-diff";
 import { PolishApplyModal } from "./polish/polish-apply-modal";
 import { OutputStream } from "./output-stream";
+import { SelectionPopover } from "./polish/selection-popover";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Toast } from "@/components/ui/toast";
 import { useSidebar } from "./sidebar-context";
+import { useTextSelection } from "@/hooks/use-text-selection";
 import type {
   PolishHistoryEntry,
   PolishApplyChoice,
@@ -89,7 +91,10 @@ export function Workspace({
   const [polishStreamText, setPolishStreamText] = useState("");
   const [showVersionLimit, setShowVersionLimit] = useState(false);
   const [generationError, setGenerationError] = useState<string | null>(null);
+  const [polishQuote, setPolishQuote] = useState<string | null>(null);
   const instructionRef = useRef<HTMLTextAreaElement>(null);
+  const polishCanvasRef = useRef<HTMLDivElement>(null);
+  const textSelection = useTextSelection(polishCanvasRef);
 
   const refreshTitle = useCallback(async () => {
     try {
@@ -292,20 +297,23 @@ export function Workspace({
     if (!polishInstruction.trim() || polishLoading) return;
 
     const instructionText = polishInstruction;
+    const quoteText = polishQuote;
     setPolishInstruction("");
+    setPolishQuote(null);
     setPolishLoading(true);
     setPolishStreamText("");
 
-    setPolishHistory((prev) => [
-      ...prev,
-      { role: "user", content: instructionText },
-    ]);
+    const userEntry: PolishHistoryEntry = { role: "user", content: instructionText };
+    if (quoteText) userEntry.quote = quoteText;
+    setPolishHistory((prev) => [...prev, userEntry]);
 
     try {
+      const body: { instruction: string; quote?: string } = { instruction: instructionText };
+      if (quoteText) body.quote = quoteText;
       const res = await fetch(`/api/articles/${slug}/polish/round`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ instruction: instructionText }),
+        body: JSON.stringify(body),
       });
 
       if (!res.ok || !res.body) {
@@ -347,7 +355,7 @@ export function Workspace({
       setPolishLoading(false);
       setPolishStreamText("");
     }
-  }, [polishInstruction, polishLoading, slug, refreshTitle]);
+  }, [polishInstruction, polishQuote, polishLoading, slug, refreshTitle]);
 
   const handlePolishApply = useCallback(
     async (pick: PolishApplyChoice, roundIndex?: number) => {
@@ -455,6 +463,8 @@ export function Workspace({
                 onSend={handlePolishRound}
                 isLoading={polishLoading}
                 streamText={polishStreamText}
+                quote={polishQuote}
+                onClearQuote={() => setPolishQuote(null)}
               />
 
               {/* Polish right panel */}
@@ -487,11 +497,25 @@ export function Workspace({
                     rightTitle="Current"
                   />
                 ) : (
-                  <div className="flex-1 overflow-y-auto bg-surface-canvas pt-4 pb-8 px-4 md:px-10">
+                  <div
+                    ref={polishCanvasRef}
+                    className="flex-1 overflow-y-auto bg-surface-canvas pt-4 pb-8 px-4 md:px-10"
+                  >
                     <OutputStream
                       content={getPolishCanvasContent()}
                       isLoading={polishLoading}
                     />
+                    {!polishLoading && textSelection.selection && (
+                      <SelectionPopover
+                        rect={textSelection.selection.rect}
+                        onQuote={() => {
+                          setPolishQuote(textSelection.selection!.text);
+                          textSelection.clear();
+                          window.getSelection()?.removeAllRanges();
+                        }}
+                        popoverRef={textSelection.setPopoverRef}
+                      />
+                    )}
                   </div>
                 )}
               </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback, useMemo } from "react";
-import { Hammer, ArrowUp, AlertCircle } from "lucide-react";
+import { Hammer, ArrowUp, AlertCircle, X } from "lucide-react";
 import type { PolishHistoryEntry } from "@/types";
 
 interface PolishDialogProps {
@@ -15,6 +15,8 @@ interface PolishDialogProps {
   onSend: () => void;
   isLoading: boolean;
   streamText: string;
+  quote: string | null;
+  onClearQuote: () => void;
 }
 
 function extractStreamingSummary(text: string): string | null {
@@ -38,6 +40,8 @@ export function PolishDialog({
   onSend,
   isLoading,
   streamText,
+  quote,
+  onClearQuote,
 }: PolishDialogProps) {
   const threadRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -69,6 +73,7 @@ export function PolishDialog({
   const rounds = useMemo(() => {
     const result: Array<{
       instruction: string;
+      quote: string | undefined;
       summary: string | null;
       index: number;
       pending: boolean;
@@ -85,6 +90,7 @@ export function PolishDialog({
 
       result.push({
         instruction: entry.content,
+        quote: entry.quote,
         summary: hasAssistant
           ? next.error
             ? null
@@ -133,7 +139,24 @@ export function PolishDialog({
               <span className="text-[11px] font-semibold text-text-muted tracking-[0.5px]">
                 You
               </span>
-              <div className="mt-1 rounded-standard border border-border-default bg-surface-root p-3">
+              <div className="mt-1 rounded-standard border border-border-default bg-surface-root p-3 relative">
+                {round.quote && (
+                  <div className="border-l-2 border-brand-accent pl-2.5 mb-2 group/quote">
+                    <p className="text-[12px] text-text-secondary leading-relaxed italic truncate">
+                      {round.quote}
+                    </p>
+                    <div className="invisible opacity-0 group-hover/quote:visible group-hover/quote:opacity-100 transition-opacity duration-200 absolute -left-px -right-px -top-px z-50 rounded-standard border border-border-default bg-surface-root p-3 shadow-lg">
+                      <div className="border-l-2 border-brand-accent pl-2.5 mb-2">
+                        <p className="text-[12px] text-text-secondary leading-relaxed italic whitespace-pre-wrap">
+                          {round.quote}
+                        </p>
+                      </div>
+                      <p className="text-[13px] text-text-primary leading-relaxed">
+                        {round.instruction}
+                      </p>
+                    </div>
+                  </div>
+                )}
                 <p className="text-[13px] text-text-primary leading-relaxed">
                   {round.instruction}
                 </p>
@@ -213,6 +236,22 @@ export function PolishDialog({
 
       {/* Input area */}
       <div className="px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] bg-surface-card">
+        {quote && (
+          <div className="flex items-start gap-2 mb-2 px-1 group/inputquote">
+            <div className="flex-1 min-w-0 border-l-2 border-brand-accent pl-2.5 overflow-hidden max-h-[1.5em] group-hover/inputquote:max-h-[200px] transition-[max-height] duration-300 ease-in-out">
+              <p className="text-[12px] text-text-secondary leading-relaxed italic whitespace-pre-wrap">
+                {quote}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={onClearQuote}
+              className="shrink-0 p-0.5 text-text-muted hover:text-text-primary transition-colors"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
         <div className="relative rounded-standard border border-border-default bg-surface-root">
           <textarea
             ref={textareaRef}
