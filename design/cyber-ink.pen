@@ -6387,6 +6387,21 @@
               ]
             }
           ]
+        },
+        {
+          "id": "V8UZyt",
+          "type": "ref",
+          "ref": "GEvk0",
+          "name": "pageToast",
+          "width": 400,
+          "x": 520,
+          "y": 16,
+          "layoutPosition": "absolute",
+          "descendants": {
+            "tCx1o": {
+              "content": "Generation failed — empty response from provider"
+            }
+          }
         }
       ]
     },
@@ -12548,7 +12563,7 @@
       "y": 0,
       "name": "Toast Components",
       "theme": {
-        "mode": "light"
+        "mode": "dark"
       },
       "width": 480,
       "fill": "$surface-panel",
@@ -12931,20 +12946,6 @@
                   "fontWeight": "600"
                 }
               ]
-            },
-            {
-              "id": "piskv",
-              "type": "ref",
-              "ref": "GEvk0",
-              "width": 320,
-              "x": 48,
-              "y": 46,
-              "name": "contextToast",
-              "descendants": {
-                "tCx1o": {
-                  "content": "Failed to generate. Please try again."
-                }
-              }
             },
             {
               "type": "rectangle",
