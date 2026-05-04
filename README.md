@@ -6,7 +6,7 @@ A file-system-based AI writing decision engine with version exploration and mult
 
 ## Core Principles
 
-Control-first · Source-driven · Markdown-native · Version-structured
+Control-first · Source-driven · Markdown-native · Version-structured · Client-editable
 
 ## What It Does
 
@@ -19,11 +19,11 @@ CyberInk generates multiple drafts from raw material, lets you polish content th
 ```
 Source material (paste)
     ↓
-Prompt Builder (profile + references + instruction + output rules)
+Prompt Builder (profile + references + instruction)
     ↓
-Generation Engine → v1.md, v2.md, ... (max 5, oldest pruned)
+Generation Engine → v1.md, v2.md, ... (max 5, oldest pruned) [stop/abort supported]
     ↓
-Polish Engine → multi-round conversational editing
+Polish Engine → multi-round conversational editing (with text selection quoting)
     ↓
 User applies preferred round
 ```
@@ -31,7 +31,11 @@ User applies preferred round
 ### Version Model
 
 - **generate** — Creates sequential versions (v1, v2, v3, ...) from source material
-- **polish** — Multi-round in-place editing of a selected version; apply any round or discard
+- **polish** — Multi-round in-place editing of a selected version; apply any round or discard. Supports quoting selected text for precise polish instructions.
+
+### Editable Styles
+
+Style data (profile, instruction, polish prompt, references) is editable in-browser via the Styles page and persisted to localStorage. On first load, styles are seeded from `/data/` files. Generate and polish APIs accept client-side style data with filesystem fallback. Each style item supports import/export as `.md` files.
 
 ## Tech Stack
 
@@ -42,6 +46,7 @@ User applies preferred round
 | Writing Model    | Claude (configurable)                            |
 | Markdown Parsing | gray-matter                                      |
 | Diff Rendering   | react-diff-viewer-continued                      |
+| Client Storage   | localStorage (editable styles)                   |
 | Config           | `.env` (API keys) + `/data/config.json` (models) |
 
 ## Project Structure
@@ -52,7 +57,6 @@ User applies preferred round
   /profiles/default.md                   # Channel identity
   /instruction/
     instruction.md                       # Writing style instruction
-    output-rules.md                      # Output format rules
     polish-prompt.md                     # Polish assistant system prompt
   /references/[group-name]/
     1.md, 2.md, ...                      # Reference articles for technique extraction

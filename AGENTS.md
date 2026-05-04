@@ -20,7 +20,10 @@ CyberInk is a Markdown-native AI writing decision engine with version exploratio
 - **Polish is multi-round conversational editing.** User can apply any round by index or revert to original. Polish sessions are temporary and removed on apply/discard.
 - **Filesystem is the database.** All persistence uses Markdown files + JSON. No external DB.
 - **`tree.json` is the source of truth** for node relationships (rootNode, bestNode, latestNode, nodes).
-- **Prompt content lives in `/data/` files.** The prompt builder (`src/lib/prompt-builder.ts`) only handles structure — never hardcode prompt text in code.
+- **Prompt content lives in `/data/` files.** The prompt builder (`src/lib/prompt-builder.ts`) only handles structure — never hardcode prompt text in code. Output rules were removed; only profile, references, and instruction remain.
+- **Generation supports stop/abort.** Version pruning is deferred to `onFinish` with abort guard — never prune during streaming.
+- **Style data is client-editable.** `StylesProvider` seeds localStorage from `/data/` on first load. Generate and polish APIs accept style data from the client with filesystem fallback. Never remove the filesystem fallback path.
+- **Polish supports text selection quoting.** Users can select text in the canvas, quote it via popover, and the quote is prepended to the polish instruction. The `quote` field in `PolishHistoryEntry` is optional.
 - **Prompt Builder output must be deterministic** — same inputs produce the same system prompt.
 - **API keys live in `.env` only.** Model selection lives in `/data/config.json`. Never mix the two.
 

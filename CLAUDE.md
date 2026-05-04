@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 CyberInk — A file-system-based AI writing decision engine with version exploration and multi-round polish. Users provide source material, generate sequential drafts, polish content through conversational editing, and select a version to keep.
 
-Core principles: Control-first · Source-driven · Markdown-native · Version-structured
+Core principles: Control-first · Source-driven · Markdown-native · Version-structured · Client-editable
 
 ## Tech Stack
 
@@ -15,6 +15,7 @@ Core principles: Control-first · Source-driven · Markdown-native · Version-st
 - **Models**: Configured via `/data/config.json` — writing model (Claude) for generation and polish
 - **Markdown parsing**: gray-matter
 - **Diff rendering**: react-diff-viewer-continued
+- **Client storage**: localStorage (editable styles)
 - **Config**: API keys in `.env` only
 
 ## Build & Dev Commands
@@ -34,7 +35,7 @@ pnpm lint            # Lint check
 
 ### Core Flow
 
-Source (paste) → `source.md` → Prompt Builder (profile + references + instruction + output rules + source) → generate `v1.md` → user generates more versions / polishes → user applies preferred version
+Source (paste) → `source.md` → Prompt Builder (profile + references + instruction + source) → generate `v1.md` → user generates more versions / polishes → user applies preferred version
 
 ### Version Model
 
@@ -49,7 +50,6 @@ Source (paste) → `source.md` → Prompt Builder (profile + references + instru
   /profiles/default.md                 # Channel identity (YAML frontmatter + body)
   /instruction/
     instruction.md                     # Writing style instruction (injected as "Style Instruction")
-    output-rules.md                    # Output format rules (injected as "Output Rules")
     polish-prompt.md                   # Polish assistant system prompt
   /references/[group-name]/
     1.md, 2.md, ...                    # Reference articles for writing technique extraction
@@ -74,8 +74,10 @@ Source (paste) → `source.md` → Prompt Builder (profile + references + instru
 
 ## Key Concepts
 
-- **Prompt Builder** (`src/lib/prompt-builder.ts`): Pure function. System prompt assembled from Profile → Reference Articles (technique extraction) → Style Instruction → Output Rules. User message contains Source Material + user instruction. All prompt content lives in `/data/` files; the builder only handles structure.
-- **Polish** (`buildPolishPrompt`): Multi-round conversational editing. System prompt from `polish-prompt.md`. Conversation uses a sliding window of the last 3 rounds. User can apply any round by index or revert to original.
+- **Prompt Builder** (`src/lib/prompt-builder.ts`): Pure function. System prompt assembled from Profile → Reference Articles (technique extraction) → Style Instruction. User message contains Source Material + user instruction. All prompt content lives in `/data/` files; the builder only handles structure.
+- **Stream Control**: Generation supports stop/abort. Stop button replaces generate button during streaming, with full state rollback on abort. Version pruning is deferred to `onFinish` with abort guard for data safety.
+- **Polish** (`buildPolishPrompt`): Multi-round conversational editing. System prompt from `polish-prompt.md`. Conversation uses a sliding window of the last 3 rounds. User can apply any round by index or revert to original. Supports **text selection quote-to-instruct** — user selects text in the canvas, quotes it, and the quote is prepended to the polish instruction for precise context.
+- **Editable Styles** (`src/components/styles-provider.tsx`, `src/hooks/use-styles.ts`): Style data (profile, instruction, polish prompt, references) is editable in-browser via the Styles page and persisted to localStorage. `StylesProvider` wraps the app and seeds localStorage from `/data/` files on first load. Generate and polish APIs accept style data from the client; filesystem is the fallback. Import/export supported per style item.
 
 ## Design System
 
