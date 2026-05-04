@@ -54,11 +54,17 @@ export interface AppConfig {
 export interface GenerateInput {
   instruction: string;
   source?: string;
+  profile?: string;
+  commonInstruction?: string;
+  references?: string[];
 }
 
 export const GenerateInputSchema = z.object({
   instruction: z.string().min(1),
   source: z.string().optional(),
+  profile: z.string().optional(),
+  commonInstruction: z.string().optional(),
+  references: z.array(z.string()).optional(),
 });
 
 export interface ArticleSummary {
@@ -111,4 +117,28 @@ export type PolishStatus =
   | { active: false };
 
 export type PolishApplyChoice = "original" | "round";
+
+export interface StoredStyleProfile {
+  name: string;
+  description: string;
+  content: string;
+}
+
+export interface StoredStyleReferenceArticle {
+  name: string;
+  filename: string;
+  content: string;
+}
+
+export interface StoredStyleReferenceGroup {
+  groupName: string;
+  articles: StoredStyleReferenceArticle[];
+}
+
+export interface StoredStyles {
+  profile: StoredStyleProfile;
+  instruction: string;
+  polishPrompt: string;
+  references: StoredStyleReferenceGroup[];
+}
 

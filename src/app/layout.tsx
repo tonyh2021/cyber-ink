@@ -7,8 +7,9 @@ import {
 } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { SidebarProvider } from "@/components/workspace/sidebar-context";
-import { listDirs, readJson } from "@/lib/data";
-import type { ArticleMeta, ArticleTree } from "@/types";
+import { StylesProvider } from "@/components/styles-provider";
+import { listDirs, listFiles, readJson, readMarkdown } from "@/lib/data";
+import type { ArticleMeta, ArticleTree, StoredStyles } from "@/types";
 import "./globals.css";
 
 const sourceSans = Source_Sans_3({
@@ -37,6 +38,67 @@ export const metadata: Metadata = {
   title: "CyberInk",
   description: "AI writing decision engine",
 };
+
+async function getSeedStyles(): Promise<StoredStyles | null> {
+  try {
+    const [profileResult, instructionResult, polishPromptResult, references] =
+      await Promise.all([
+        readMarkdown("profiles/default.md")
+          .then(({ frontmatter, content }) => ({
+            name: (frontmatter.name as string) || "default",
+            description: (frontmatter.description as string) || "",
+            content,
+          }))
+          .catch(() => null),
+        readMarkdown("instruction/instruction.md")
+          .then(({ content }) => content)
+          .catch(() => null),
+        readMarkdown("instruction/polish-prompt.md")
+          .then(({ content }) => content)
+          .catch(() => null),
+        listDirs("references")
+          .then((dirs) =>
+            Promise.all(
+              dirs.map(async (dir) => {
+                try {
+                  const files = await listFiles(`references/${dir}`, ".md");
+                  const articles = await Promise.all(
+                    files.sort().map(async (f) => {
+                      const { content } = await readMarkdown(
+                        `references/${dir}/${f}`,
+                      );
+                      return { name: dir, filename: f, content };
+                    }),
+                  );
+                  return { groupName: dir, articles };
+                } catch {
+                  return null;
+                }
+              }),
+            ),
+          )
+          .then((groups) => groups.filter((g) => g !== null))
+          .catch(() => []),
+      ]);
+
+    if (!profileResult && !instructionResult && !polishPromptResult) {
+      return null;
+    }
+
+    return {
+      profile: profileResult ?? {
+        name: "default",
+        description: "",
+        content: "",
+      },
+      instruction: instructionResult ?? "",
+      polishPrompt: polishPromptResult ?? "",
+      references,
+    };
+  } catch {
+    return null;
+  }
+}
 
 async function getArticles() {
   let slugs: string[] = [];
@@ -75,7 +137,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const articles = await getArticles();
+  const [articles, seedStyles] = await Promise.all([
+    getArticles(),
+    getSeedStyles(),
+  ]);
   return (
     <html
       lang="en"
@@ -84,9 +149,11 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="data-theme" defaultTheme="system">
-          <SidebarProvider initialArticles={articles}>
-            {children}
-          </SidebarProvider>
+          <StylesProvider seedStyles={seedStyles}>
+            <SidebarProvider initialArticles={articles}>
+              {children}
+            </SidebarProvider>
+          </StylesProvider>
         </ThemeProvider>
       </body>
     </html>

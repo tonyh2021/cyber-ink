@@ -211,7 +211,13 @@ export async function POST(
     );
   }
 
-  const { instruction, source } = parsed.data;
+  const {
+    instruction,
+    source,
+    profile: bodyProfile,
+    commonInstruction: bodyCommonInstruction,
+    references: bodyReferences,
+  } = parsed.data;
 
   if (source !== undefined) {
     await writeMarkdown(`articles/${slug}/source.md`, {}, source);
@@ -230,30 +236,50 @@ export async function POST(
   const nodeName = nextNodeName(treeBeforeGenerate);
 
   const config = await getConfig();
-  const referenceGroupName = meta.styleRef ?? "default";
-  const { content: profileContent } = await readMarkdown("profiles/default.md");
 
-  const references: string[] = [];
-  const refFileNames: string[] = [];
-  try {
-    const refFiles = await listFiles(`references/${referenceGroupName}`, ".md");
-    for (const f of refFiles.sort()) {
-      const { content } = await readMarkdown(
-        `references/${referenceGroupName}/${f}`,
-      );
-      references.push(content);
-      refFileNames.push(f);
-    }
-  } catch {
-    // no reference directory
+  let profileContent: string;
+  if (bodyProfile !== undefined) {
+    profileContent = bodyProfile;
+  } else {
+    const { content } = await readMarkdown("profiles/default.md");
+    profileContent = content;
   }
 
-  let commonInstruction = "";
-  try {
-    const { content } = await readMarkdown("instruction/instruction.md");
-    commonInstruction = content;
-  } catch {
-    // no instruction file
+  let references: string[];
+  const refFileNames: string[] = [];
+  if (bodyReferences !== undefined) {
+    references = bodyReferences;
+  } else {
+    references = [];
+    const referenceGroupName = meta.styleRef ?? "default";
+    try {
+      const refFiles = await listFiles(
+        `references/${referenceGroupName}`,
+        ".md",
+      );
+      for (const f of refFiles.sort()) {
+        const { content } = await readMarkdown(
+          `references/${referenceGroupName}/${f}`,
+        );
+        references.push(content);
+        refFileNames.push(f);
+      }
+    } catch {
+      // no reference directory
+    }
+  }
+
+  let commonInstruction: string;
+  if (bodyCommonInstruction !== undefined) {
+    commonInstruction = bodyCommonInstruction;
+  } else {
+    commonInstruction = "";
+    try {
+      const { content } = await readMarkdown("instruction/instruction.md");
+      commonInstruction = content;
+    } catch {
+      // no instruction file
+    }
   }
 
   const { content: sourceContent } = await readMarkdown(
@@ -271,10 +297,9 @@ export async function POST(
   console.log(
     [
       `[generate] ${slug}`,
-      `[profile] ${profileContent}`,
-      `[referenceGroup] ${referenceGroupName}`,
-      `[refs] [${refFileNames.join(", ")}]`,
-      `[commonInstruction] ${commonInstruction}`,
+      `[profile] ${profileContent.slice(0, 80)}`,
+      `[refs] ${bodyReferences ? `${references.length} from client` : `[${refFileNames.join(", ")}]`}`,
+      `[commonInstruction] ${commonInstruction.slice(0, 80)}`,
       `[userInstruction] ${instruction}`,
     ].join("\n"),
   );

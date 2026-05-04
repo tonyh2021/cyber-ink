@@ -17,6 +17,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Toast } from "@/components/ui/toast";
 import { useSidebar } from "./sidebar-context";
 import { useTextSelection } from "@/hooks/use-text-selection";
+import { useStyles } from "@/hooks/use-styles";
 import type {
   PolishHistoryEntry,
   PolishApplyChoice,
@@ -57,6 +58,7 @@ export function Workspace({
   initialContent = {},
 }: WorkspaceProps) {
   const { width: sidebarWidth, setCollapsed, refreshArticles } = useSidebar();
+  const { styles } = useStyles();
   const [articleTitle, setArticleTitle] = useState(title);
 
   useEffect(() => {
@@ -228,8 +230,18 @@ export function Workspace({
 
     setGenerationError(null);
 
+    const allReferences = styles.references.flatMap((group) =>
+      group.articles.map((a) => a.content),
+    );
+
     await complete(instruction, {
-      body: { instruction, source },
+      body: {
+        instruction,
+        source,
+        profile: styles.profile.content,
+        commonInstruction: styles.instruction,
+        references: allReferences,
+      },
     });
   };
 
@@ -238,8 +250,16 @@ export function Workspace({
     restoreSnapshot();
   }, [stop, restoreSnapshot]);
 
+  const [styleWarning, setStyleWarning] = useState<string | null>(null);
+
   const handleGenerate = () => {
     if (!instruction.trim() || !source.trim() || isLoading) return;
+
+    if (!styles.profile.content.trim()) {
+      setStyleWarning("Profile is not configured. Generation quality may be affected.");
+    } else if (!styles.instruction.trim()) {
+      setStyleWarning("Writing instruction is not configured.");
+    }
 
     const mainVersionCount = nodes.filter((item) =>
       isMainVersionNode(item.node),
@@ -307,7 +327,10 @@ export function Workspace({
     setPolishHistory((prev) => [...prev, userEntry]);
 
     try {
-      const body: { instruction: string; quote?: string } = { instruction: instructionText };
+      const body: { instruction: string; quote?: string; polishPrompt?: string } = {
+        instruction: instructionText,
+        polishPrompt: styles.polishPrompt,
+      };
       if (quoteText) body.quote = quoteText;
       const res = await fetch(`/api/articles/${slug}/polish/round`, {
         method: "POST",
@@ -354,7 +377,7 @@ export function Workspace({
       setPolishLoading(false);
       setPolishStreamText("");
     }
-  }, [polishInstruction, polishQuote, polishLoading, slug, refreshTitle]);
+  }, [polishInstruction, polishQuote, polishLoading, slug, refreshTitle, styles.polishPrompt]);
 
   const handlePolishApply = useCallback(
     async (pick: PolishApplyChoice, roundIndex?: number) => {
@@ -576,6 +599,13 @@ export function Workspace({
         <Toast
           message={generationError}
           onDismiss={() => setGenerationError(null)}
+        />
+      )}
+
+      {styleWarning && (
+        <Toast
+          message={styleWarning}
+          onDismiss={() => setStyleWarning(null)}
         />
       )}
 

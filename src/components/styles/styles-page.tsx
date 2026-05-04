@@ -1,122 +1,50 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import matter from "gray-matter";
 import { useSidebar } from "@/components/workspace/sidebar-context";
 import { ArticleSidebar } from "@/components/workspace/article-sidebar";
 import { NewArticleFab } from "@/components/shared/new-article-fab";
+import { useStyles } from "@/hooks/use-styles";
+import { downloadMd, readFileAsText, openFilePicker } from "./style-file-utils";
+import { EditableSection } from "./editable-section";
+import { ReferencesSection } from "./references-section";
 
-interface ReferenceArticle {
-  name: string;
-  filename: string;
-  content: string;
-}
-
-interface ReferenceGroup {
-  name: string;
-  references: ReferenceArticle[];
-}
-
-interface ProfileData {
-  name: string;
-  description: string;
-  content: string;
-}
-
-interface StylesPageProps {
-  instruction: string;
-  profile: ProfileData;
-  references: ReferenceGroup[];
-}
-
-function ReferenceCard({ filename, content }: ReferenceArticle) {
-  const [expanded, setExpanded] = useState(false);
-  const preview = content.slice(0, 150).replace(/\n/g, " ");
-
-  return (
-    <div className="rounded-card border border-border-default bg-surface-card shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center gap-2 p-4 text-left"
-      >
-        {expanded ? (
-          <ChevronDown size={14} className="text-text-muted shrink-0" />
-        ) : (
-          <ChevronRight size={14} className="text-text-muted shrink-0" />
-        )}
-        <span className="text-[13px] font-medium text-text-primary">
-          {filename}
-        </span>
-        {!expanded && (
-          <span className="text-[12px] text-text-muted truncate ml-2">
-            {preview}…
-          </span>
-        )}
-      </button>
-      {expanded && (
-        <div className="px-5 pb-5 pt-0">
-          <div className="bg-surface-canvas rounded-standard p-4 max-h-[400px] overflow-y-auto">
-            <pre className="font-mono text-[12px] leading-relaxed text-text-secondary whitespace-pre-wrap">
-              {content}
-            </pre>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function CollapsibleSection({
-  title,
-  content,
-}: {
-  title: string;
-  content: string;
-}) {
-  const [expanded, setExpanded] = useState(false);
-  const preview = content.slice(0, 120).replace(/\n/g, " ").trim();
-
-  return (
-    <section className="flex flex-col gap-3">
-      <h2 className="text-base font-semibold text-text-primary tracking-[-0.2px]">
-        {title}
-      </h2>
-      <div className="rounded-card border border-border-default bg-surface-card shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="w-full flex items-center gap-2 p-4 text-left"
-        >
-          {expanded ? (
-            <ChevronDown size={14} className="text-text-muted shrink-0" />
-          ) : (
-            <ChevronRight size={14} className="text-text-muted shrink-0" />
-          )}
-          {!expanded && (
-            <span className="text-[12px] text-text-muted truncate">
-              {preview}…
-            </span>
-          )}
-        </button>
-        {expanded && (
-          <div className="px-5 pb-5 pt-0">
-            <div className="bg-surface-canvas rounded-standard p-4 max-h-[400px] overflow-y-auto">
-              <pre className="font-mono text-[12px] leading-relaxed text-text-secondary whitespace-pre-wrap">
-                {content}
-              </pre>
-            </div>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-export function StylesPage({
-  instruction,
-  profile,
-  references,
-}: StylesPageProps) {
+export function StylesPage() {
+  const { styles, updateProfile, updateInstruction, updatePolishPrompt } =
+    useStyles();
   const { width: sidebarWidth } = useSidebar();
+
+  function exportProfile() {
+    const md = matter.stringify(styles.profile.content, {
+      name: styles.profile.name,
+      description: styles.profile.description,
+    });
+    downloadMd("profile.md", md);
+  }
+
+  async function importProfile() {
+    const files = await openFilePicker(".md", false);
+    if (!files || files.length === 0) return;
+    const raw = await readFileAsText(files[0]);
+    const { data, content } = matter(raw);
+    updateProfile({
+      name: (data.name as string) || styles.profile.name,
+      description: (data.description as string) || styles.profile.description,
+      content: content.trim(),
+    });
+  }
+
+  function exportSection(filename: string, content: string) {
+    downloadMd(filename, content);
+  }
+
+  async function importSection(onSave: (value: string) => void) {
+    const files = await openFilePicker(".md", false);
+    if (!files || files.length === 0) return;
+    const raw = await readFileAsText(files[0]);
+    const { content } = matter(raw);
+    onSave(content.trim());
+  }
 
   return (
     <div className="h-screen flex bg-surface-card">
@@ -131,63 +59,37 @@ export function StylesPage({
               Styles
             </h1>
             <p className="text-sm text-text-secondary">
-              Writing profile and reference articles
+              Configure your writing style
             </p>
           </div>
 
-          {/* Profile */}
-          <section className="flex flex-col gap-3">
-            <h2 className="text-base font-semibold text-text-primary tracking-[-0.2px]">
-              Profile
-            </h2>
-            <div className="rounded-card border border-border-default bg-surface-card p-5 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-sm font-semibold text-text-primary">
-                  {profile.name}
-                </span>
-              </div>
-              {profile.description && (
-                <p className="text-[13px] text-text-secondary mb-3">
-                  {profile.description}
-                </p>
-              )}
-              <pre className="font-mono text-[12px] leading-relaxed text-text-secondary whitespace-pre-wrap">
-                {profile.content}
-              </pre>
-            </div>
-          </section>
+          <EditableSection
+            title="Profile"
+            value={styles.profile.content}
+            onSave={(content) => updateProfile({ ...styles.profile, content })}
+            onExport={exportProfile}
+            onImport={importProfile}
+          />
 
-          {/* Instruction */}
-          {instruction && (
-            <CollapsibleSection title="Instruction" content={instruction} />
-          )}
+          <EditableSection
+            title="Instruction"
+            value={styles.instruction}
+            onSave={updateInstruction}
+            onExport={() => exportSection("instruction.md", styles.instruction)}
+            onImport={() => importSection(updateInstruction)}
+          />
 
-          {/* References */}
-          {references.map((reference) => (
-            <section key={reference.name} className="flex flex-col gap-3">
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-semibold text-text-primary tracking-[-0.2px]">
-                  References
-                </h2>
-                <span className="text-[11px] font-mono text-text-muted bg-surface-root px-1.5 py-0.5 rounded">
-                  {reference.name}: {reference.references.length} references
-                </span>
-              </div>
-              <div className="flex flex-col gap-2">
-                {reference.references.map((reference) => (
-                  <ReferenceCard
-                    key={reference.filename}
-                    name={reference.name}
-                    filename={reference.filename}
-                    content={reference.content}
-                  />
-                ))}
-              </div>
-            </section>
-          ))}
-          {references.length === 0 && (
-            <p className="text-sm text-text-muted">No styles found.</p>
-          )}
+          <EditableSection
+            title="Polish Prompt"
+            value={styles.polishPrompt}
+            onSave={updatePolishPrompt}
+            onExport={() =>
+              exportSection("polish-prompt.md", styles.polishPrompt)
+            }
+            onImport={() => importSection(updatePolishPrompt)}
+          />
+
+          <ReferencesSection />
         </div>
       </div>
       <NewArticleFab />

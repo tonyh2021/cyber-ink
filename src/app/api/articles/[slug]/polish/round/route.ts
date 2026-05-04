@@ -88,7 +88,7 @@ export async function POST(
     return NextResponse.json({ error: "Article not found" }, { status: 404 });
   }
 
-  let body: { instruction?: string; quote?: string };
+  let body: { instruction?: string; quote?: string; polishPrompt?: string };
   try {
     body = await request.json();
   } catch {
@@ -112,12 +112,17 @@ export async function POST(
     );
   }
 
-  let polishPromptConfig = "";
-  try {
-    const { content } = await readMarkdown("instruction/polish-prompt.md");
-    polishPromptConfig = content;
-  } catch {
-    // no config file — hardcoded rules suffice
+  let polishPromptConfig: string;
+  if (body.polishPrompt !== undefined) {
+    polishPromptConfig = body.polishPrompt;
+  } else {
+    polishPromptConfig = "";
+    try {
+      const { content } = await readMarkdown("instruction/polish-prompt.md");
+      polishPromptConfig = content;
+    } catch {
+      // no config file — hardcoded rules suffice
+    }
   }
 
   const aiInstruction = quote
